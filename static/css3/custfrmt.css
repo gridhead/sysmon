@@ -1,0 +1,54 @@
+@font-face {
+    font-family: "Barlow-Regular";
+    src: url("../font/brlw-rlar.woff");
+}
+
+@font-face {
+    font-family: "Barlow-Bold";
+    src: url("../font/brlw-bold.woff");
+}
+
+@font-face {
+    font-family: "Barlow-Italic";
+    src: url("../font/brlw-ital.woff");
+}
+
+@font-face {
+    font-family: "Barlow-Bold-Italic";
+    src: url("../font/brlw-bdit.woff");
+}
+
+.headelem {
+    font-family: "Barlow-Bold";
+    color: #000000;
+}
+
+.hugeelem {
+    font-family: "Barlow-Bold-Italic";
+    color: #000000;
+}
+
+.normelem {
+    font-family: "Barlow-Regular";
+    color: #000000;
+}
+
+.italelem {
+    font-family: "Barlow-Italic";
+    color: #000000;
+}
+
+.forggrin {
+    background-color: rgb(32,192,160);
+}
+
+.headcard {
+    padding-left: 30px;
+    padding-right: 30px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.blcktint {
+    color: #000000;
+}
