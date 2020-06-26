@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>System Monitor</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="{{ url_for("static", filename="css3/uikit.min.css") }}" />
+        <link rel="stylesheet" href="{{ url_for("static", filename="css3/custfrmt.css") }}" />
+        <script src="{{ url_for("static", filename="jscn/uikit.min.js") }}"></script>
+        <script src="{{ url_for("static", filename="jscn/uikit-icons.min.js") }}"></script>
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+        <script type=text/javascript>
+                $(function() {
+                  $('a#test').bind('click', function() {
+                    $.getJSON('/background_process_test',
+                        function(data) {
+                            document.write(Date());
+                    });
+                return false;
+              });
+            });
+        </script>
+        <script type="text/javascript">
+            async function UpdateValues() {
+                while (1)
+                {
+                    await new Promise(r => setTimeout(r, 2000));
+                    $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
+                    $.getJSON($SCRIPT_ROOT+"/virtdata",
+                        function(data) {
+                            $("#virttomr").text(data.virttomr+" Bytes")
+                            $("#virtavbl").text(data.virtavbl+" Bytes")
+                            $("#virtperc").text("Virtual ("+data.virtperc+"%)")
+                            $("#virtused").text(data.virtused+" Bytes")
+                            $("#virtactv").text(data.virtactv+" Bytes")
+                            $("#virtbufr").text(data.virtbufr+" Bytes")
+                            $("#virtcach").text(data.virtcach+" Bytes")
+                            $("#virtshrd").text(data.virtshrd+" Bytes")
+                            $("#virtslab").text(data.virtslab+" Bytes")
+                            $("#cpuload").text(data.retndata+" %")
+                            $("#ram").text(data.ram+" %")
+                            $("#disk").text(data.disk+" %")
+                            var virtprog = document.getElementById("virtprog");
+                            virtprog.value=data.virtperc;
+                        });
+                    }
+                }
+                function TextProc()
+                {
+                    var ttletext = document.getElementById("ttletext");
+                    ttletext.innerText = "Processor";
+                }
+        </script>
+    </head>
+    <body onload="UpdateValues()">
+        <div class="uk-container">
+            <br/>
+            <div class="uk-card uk-card-default">
+                <div class="uk-card-header uk-padding-small forggrin">
+                    <div class="uk-grid-small uk-flex-middle" uk-grid>
+                        <div class="uk-width-auto">
+                            <img class="uk-border-circle" width="40" height="40" src="{{ url_for("static", filename="imgs/datalogo.png") }}">
+                        </div>
+                        <div class="uk-width-expand">
+                            <h3 class="uk-card-title uk-margin-remove-bottom headelem">System Monitor</h3>
+                            <p class="uk-text-meta uk-margin-remove-top normelem"><time datetime="2016-04-01T19:00">Initial Build by t0xic0der (26 June 2020)</time></p>
+                        </div>
+                    </div>
+                </div>
+                <div class="uk-card-body uk-padding-small">
+                    <h3 id="ttletext" class="headelem">Dashboard</h3>
+                    <ul class="headelem" uk-tab>
+                        <li><a onclick="TextProc()" href="#">Processor</a></li>
+                        <li><a onclick="TextMmry()" href="#">Memory</a></li>
+                        <li><a onclick="TextDsks()" href="#">Disks</a></li>
+                        <li><a onclick="TextNtwk()" href="#">Network</a></li>
+                        <li><a onclick="TextSnsr()" href="#">Sensors</a></li>
+                        <li><a onclick="TextMisc()" href="#">Miscellaneous</a></li>
+                        <li><a onclick="TextAbot()" href="#">About</a></li>
+                    </ul>
+                    <ul class="uk-switcher uk-margin">
+                        <li>Hello!</li>
+                        <li>
+                            <h3 id="virtperc" class="uk-card-title headelem">Virtual (0%)</h3>
+                            <progress id="virtprog" class="uk-progress" value="0" max="100" style="color: #008080;"></progress>
+                            <table class="uk-table uk-table-small uk-table-divider normelem">
+                                <tbody>
+                                    <tr>
+                                        <td>Total</td>
+                                        <td id="virttomr">0</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Available</td>
+                                        <td id="virtavbl">0</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Used</td>
+                                        <td id="virtused">0</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Active</td>
+                                        <td id="virtactv">0</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Buffers</td>
+                                        <td id="virtbufr">0</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Cached</td>
+                                        <td id="virtcach">0</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Shared</td>
+                                        <td id="virtshrd">0</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Slab</td>
+                                        <td id="virtslab">0</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </li>
+                        <li>Bazinga!</li>
+                        <li>Bazinga!</li>
+                        <li>Bazinga!</li>
+                        <li>
+                            <h3 class="uk-card-title headelem">System Information</h3>
+                            <dl class="uk-description-list">
+                                <dt class="headelem">Variant</dt>
+                                <dd class="normelem">
+                                    {% for indx in range(systarry|length) %}
+                                        {{ systarry[indx] }}
+                                        {% if indx != (systarry|length) - 1 %}
+                                            /
+                                        {% endif %}
+                                    {% endfor %}
+                                </dd>
+                                {% for key, value in retndata.items() %}
+                                <dt class="headelem">{{ key }}</dt>
+                                <dd class="normelem">{{ value }}</dd>
+                                {% endfor %}
+                            </dl>
+                        </li>
+                        <li>Bazinga!</li>
+                    </ul>
+                </div>
+                <div class="uk-card-footer uk-padding-small forggrin">
+                    <a href="#" class="uk-button uk-button-text">Read more</a>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
