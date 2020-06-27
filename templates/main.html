@@ -65,6 +65,13 @@
                             cpupfill.value=data.cpuprcnt[indx];
                         }
                     });
+                $.getJSON($SCRIPT_ROOT+"/cpuclock/",
+                    function(data) {
+                        for (let indx = 0; indx < {{ cpuquant }}; indx ++)
+                        {
+                            $("#cpu-ctext-"+indx).text(data.cpuclock[indx][0] + "MHz of Min " + data.cpuclock[indx][1] + "MHz and Max " + data.cpuclock[indx][2] + "MHz")
+                        }
+                    });
                 $.getJSON($SCRIPT_ROOT+"/cpustats/",
                     function(data) {
                         $("#cpus-stat-ctxs").text(data.cpustats["ctxs"])
@@ -112,7 +119,8 @@
                         <li>
                             <h3 id="cptmtext" class="uk-card-title headelem">CPU Usage</h3>
                             {% for indx in range(cpuquant) %}
-                                <h4 id="cpu-utext-{{ indx }}" class="headelem uk-margin-small">CPU #{{ indx }} (0%)</h4>
+                                <h4 id="cpu-utext-{{ indx }}" class="hugeelem uk-margin-remove">CPU #{{ indx }} (0%)</h4>
+                                <p id="cpu-ctext-{{ indx }}" class="uk-text-meta uk-margin-remove normelem">0 MHz of Min 0 MHz and Max 0 MHz</p>
                                 <progress id="cpu-usage-{{ indx }}" class="uk-progress uk-margin-small" value="0" max="100" style="color: #008080;"></progress>
                             {% endfor %}
                             <h3 id="cptmtext" class="uk-card-title headelem">CPU Times</h3>
