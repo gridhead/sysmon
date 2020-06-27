@@ -89,3 +89,13 @@ def GetCPUStatistics():
 def GetCPUUsagePercent():
     cpuprcnt = psutil.cpu_percent(percpu=True)
     return cpuprcnt
+
+def GetCPUStatistics():
+    cpustats = psutil.cpu_stats()
+    retndata = {
+        "ctxs": cpustats.ctx_switches,
+        "intr": cpustats.interrupts,
+        "soft": cpustats.soft_interrupts,
+        "sysc": cpustats.syscalls,
+    }
+    return retndata

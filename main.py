@@ -48,5 +48,11 @@ def cpuprcnt():
     retndata = jsonify(cpuprcnt=retndata)
     return retndata
 
+@app.route("/cpustats/", methods=["GET"])
+def cpustats():
+    retndata = back.GetCPUStatistics()
+    retnjson = jsonify(cpustats=retndata)
+    return retnjson
+
 if __name__ == "__main__":
     app.run(port=9696, host="0.0.0.0")
