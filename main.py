@@ -22,7 +22,7 @@ def stuff():
     cpu=str(psutil.cpu_freq(True))
     return jsonify(cpu=cpu)
 
-@app.route("/virtdata", methods=["GET"])
+@app.route("/virtdata/", methods=["GET"])
 def virtdata():
     retndata = back.GetVirtualMemoryData()
     retnjson = jsonify(virttomr=retndata["Total"],
@@ -36,11 +36,17 @@ def virtdata():
                        virtslab=retndata["Slab"])
     return retnjson
 
-@app.route("/cputimes", methods=["GET"])
+@app.route("/cputimes/", methods=["GET"])
 def cputimes():
     retndata = back.GetCPUStatistics()
     retnjson = jsonify(cputimes=retndata)
     return retnjson
+
+@app.route("/cpuprcnt/", methods=["GET"])
+def cpuprcnt():
+    retndata = back.GetCPUUsagePercent()
+    retndata = jsonify(cpuprcnt=retndata)
+    return retndata
 
 if __name__ == "__main__":
     app.run(port=9696, host="0.0.0.0")
