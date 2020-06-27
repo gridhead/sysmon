@@ -26,7 +26,7 @@
             {
                 await new Promise(r => setTimeout(r, 1000));
                 $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
-                $.getJSON($SCRIPT_ROOT+"/virtdata",
+                $.getJSON($SCRIPT_ROOT+"/virtdata/",
                     function(data) {
                         $("#virttomr").text(data.virttomr+" Bytes")
                         $("#virtavbl").text(data.virtavbl+" Bytes")
@@ -40,7 +40,7 @@
                         var virtprog = document.getElementById("virtprog");
                         virtprog.value=data.virtperc;
                     });
-                $.getJSON($SCRIPT_ROOT+"/cputimes",
+                $.getJSON($SCRIPT_ROOT+"/cputimes/",
                     function(data) {
                         for (let indx = 0; indx < {{ cpuquant }}; indx ++)
                         {
@@ -56,6 +56,15 @@
                             $("#time-gtnc-"+indx).text(data.cputimes[indx][9])
                         }
                     });
+                $.getJSON($SCRIPT_ROOT+"/cpuprcnt/",
+                    function(data) {
+                        for (let indx = 0; indx < {{ cpuquant }}; indx ++)
+                        {
+                            $("#cpu-utext-"+indx).text("CPU #"+indx+" ("+data.cpuprcnt[indx]+"%)")
+                            var cpupfill = document.getElementById("cpu-usage-"+indx);
+                            cpupfill.value=data.cpuprcnt[indx];
+                        }
+                    });
                 }
             }
             function MenuTextSetter(ActiveMenuText)
@@ -66,7 +75,7 @@
         </script>
     </head>
     <body onload="UpdateValues()">
-        <div class="uk-container">
+        <div class="uk-container uk-container-small">
             <br/>
             <div class="uk-card uk-card-default">
                 <div class="uk-card-header uk-padding-small forggrin">
@@ -94,7 +103,12 @@
                     </ul>
                     <ul class="uk-switcher uk-margin">
                         <li>
-                            Hello!
+                            <h3 id="cptmtext" class="uk-card-title headelem">CPU Usage</h3>
+                            {% for indx in range(cpuquant) %}
+                                <h4 id="cpu-utext-{{ indx }}" class="headelem uk-margin-small">CPU #{{ indx }} (0%)</h4>
+                                <progress id="cpu-usage-{{ indx }}" class="uk-progress uk-margin-small" value="0" max="100" style="color: #008080;"></progress>
+                            {% endfor %}
+                            <h3 id="cptmtext" class="uk-card-title headelem">CPU Times</h3>
                             <table class="uk-table uk-table-small uk-table-divider normelem">
                                 <thead>
                                     <tr>
@@ -195,7 +209,7 @@
                     </ul>
                 </div>
                 <div class="uk-card-footer uk-padding-small forggrin">
-                    <a href="#" class="uk-button uk-button-text">Read more</a>
+                    <a href="#" class="uk-button uk-button-text headelem">Read more</a>
                 </div>
             </div>
         </div>
