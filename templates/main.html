@@ -65,6 +65,13 @@
                             cpupfill.value=data.cpuprcnt[indx];
                         }
                     });
+                $.getJSON($SCRIPT_ROOT+"/cpustats/",
+                    function(data) {
+                        $("#cpus-stat-ctxs").text(data.cpustats["ctxs"])
+                        $("#cpus-stat-intr").text(data.cpustats["intr"])
+                        $("#cpus-stat-soft").text(data.cpustats["soft"])
+                        $("#cpus-stat-sysc").text(data.cpustats["sysc"])
+                    });
                 }
             }
             function MenuTextSetter(ActiveMenuText)
@@ -141,6 +148,25 @@
                                         <td id="time-gtnc-{{ indx }}" >0</td>
                                     </tr>
                                     {% endfor %}
+                                </tbody>
+                            </table>
+                            <h3 id="cptmtext" class="uk-card-title headelem">CPU Statistics</h3>
+                            <table class="uk-table uk-table-small uk-table-divider normelem">
+                                <thead>
+                                    <tr>
+                                        <th>CTXS</th>
+                                        <th>INTR</th>
+                                        <th>SOFT</th>
+                                        <th>SYSC</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td id="cpus-stat-ctxs">0</td>
+                                        <td id="cpus-stat-intr">0</td>
+                                        <td id="cpus-stat-soft">0</td>
+                                        <td id="cpus-stat-sysc">0</td>
+                                    </tr>
                                 </tbody>
                             </table>
                         </li>
