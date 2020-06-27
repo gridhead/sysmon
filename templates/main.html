@@ -22,34 +22,47 @@
         </script>
         <script type="text/javascript">
             async function UpdateValues() {
-                while (1)
-                {
-                    await new Promise(r => setTimeout(r, 2000));
-                    $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
-                    $.getJSON($SCRIPT_ROOT+"/virtdata",
-                        function(data) {
-                            $("#virttomr").text(data.virttomr+" Bytes")
-                            $("#virtavbl").text(data.virtavbl+" Bytes")
-                            $("#virtperc").text("Virtual ("+data.virtperc+"%)")
-                            $("#virtused").text(data.virtused+" Bytes")
-                            $("#virtactv").text(data.virtactv+" Bytes")
-                            $("#virtbufr").text(data.virtbufr+" Bytes")
-                            $("#virtcach").text(data.virtcach+" Bytes")
-                            $("#virtshrd").text(data.virtshrd+" Bytes")
-                            $("#virtslab").text(data.virtslab+" Bytes")
-                            $("#cpuload").text(data.retndata+" %")
-                            $("#ram").text(data.ram+" %")
-                            $("#disk").text(data.disk+" %")
-                            var virtprog = document.getElementById("virtprog");
-                            virtprog.value=data.virtperc;
-                        });
-                    }
+            while (1)
+            {
+                await new Promise(r => setTimeout(r, 1000));
+                $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
+                $.getJSON($SCRIPT_ROOT+"/virtdata",
+                    function(data) {
+                        $("#virttomr").text(data.virttomr+" Bytes")
+                        $("#virtavbl").text(data.virtavbl+" Bytes")
+                        $("#virtperc").text("Virtual ("+data.virtperc+"%)")
+                        $("#virtused").text(data.virtused+" Bytes")
+                        $("#virtactv").text(data.virtactv+" Bytes")
+                        $("#virtbufr").text(data.virtbufr+" Bytes")
+                        $("#virtcach").text(data.virtcach+" Bytes")
+                        $("#virtshrd").text(data.virtshrd+" Bytes")
+                        $("#virtslab").text(data.virtslab+" Bytes")
+                        var virtprog = document.getElementById("virtprog");
+                        virtprog.value=data.virtperc;
+                    });
+                $.getJSON($SCRIPT_ROOT+"/cputimes",
+                    function(data) {
+                        for (let indx = 0; indx < {{ cpuquant }}; indx ++)
+                        {
+                            $("#time-user-"+indx).text(data.cputimes[indx][0])
+                            $("#time-nice-"+indx).text(data.cputimes[indx][1])
+                            $("#time-syst-"+indx).text(data.cputimes[indx][2])
+                            $("#time-idle-"+indx).text(data.cputimes[indx][3])
+                            $("#time-iowt-"+indx).text(data.cputimes[indx][4])
+                            $("#time-ireq-"+indx).text(data.cputimes[indx][5])
+                            $("#time-soft-"+indx).text(data.cputimes[indx][6])
+                            $("#time-stel-"+indx).text(data.cputimes[indx][7])
+                            $("#time-gest-"+indx).text(data.cputimes[indx][8])
+                            $("#time-gtnc-"+indx).text(data.cputimes[indx][9])
+                        }
+                    });
                 }
-                function TextProc()
-                {
-                    var ttletext = document.getElementById("ttletext");
-                    ttletext.innerText = "Processor";
-                }
+            }
+            function MenuTextSetter(ActiveMenuText)
+            {
+                var ttletext = document.getElementById("ttletext");
+                ttletext.innerText = "Dashboard / " + ActiveMenuText;
+            }
         </script>
     </head>
     <body onload="UpdateValues()">
@@ -70,16 +83,53 @@
                 <div class="uk-card-body uk-padding-small">
                     <h3 id="ttletext" class="headelem">Dashboard</h3>
                     <ul class="headelem" uk-tab>
-                        <li><a onclick="TextProc()" href="#">Processor</a></li>
-                        <li><a onclick="TextMmry()" href="#">Memory</a></li>
-                        <li><a onclick="TextDsks()" href="#">Disks</a></li>
-                        <li><a onclick="TextNtwk()" href="#">Network</a></li>
-                        <li><a onclick="TextSnsr()" href="#">Sensors</a></li>
-                        <li><a onclick="TextMisc()" href="#">Miscellaneous</a></li>
-                        <li><a onclick="TextAbot()" href="#">About</a></li>
+                        <li><a onclick="MenuTextSetter('Processor')" href="#">Processor</a></li>
+                        <li><a onclick="MenuTextSetter('Memory')" href="#">Memory</a></li>
+                        <li><a onclick="MenuTextSetter('Disks')" href="#">Disks</a></li>
+                        <li><a onclick="MenuTextSetter('Network')" href="#">Network</a></li>
+                        <li><a onclick="MenuTextSetter('Sensors')" href="#">Sensors</a></li>
+                        <li><a onclick="MenuTextSetter('Thermal')" href="#">Thermal</a></li>
+                        <li><a onclick="MenuTextSetter('Miscellaneous')" href="#">Miscellaneous</a></li>
+                        <li><a onclick="MenuTextSetter('About')" href="#">About</a></li>
                     </ul>
                     <ul class="uk-switcher uk-margin">
-                        <li>Hello!</li>
+                        <li>
+                            Hello!
+                            <table class="uk-table uk-table-small uk-table-divider normelem">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>USER</th>
+                                        <th>NICE</th>
+                                        <th>SYST</th>
+                                        <th>IDLE</th>
+                                        <th>IOWT</th>
+                                        <th>IREQ</th>
+                                        <th>SOFT</th>
+                                        <th>STEL</th>
+                                        <th>GEST</th>
+                                        <th>GTNC</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for indx in range(cpuquant) %}
+                                    <tr>
+                                        <td id="time-cpun-{{ indx }}" >CPU #{{ indx }}</td>
+                                        <td id="time-user-{{ indx }}" >0</td>
+                                        <td id="time-nice-{{ indx }}" >0</td>
+                                        <td id="time-syst-{{ indx }}" >0</td>
+                                        <td id="time-idle-{{ indx }}" >0</td>
+                                        <td id="time-iowt-{{ indx }}" >0</td>
+                                        <td id="time-ireq-{{ indx }}" >0</td>
+                                        <td id="time-soft-{{ indx }}" >0</td>
+                                        <td id="time-stel-{{ indx }}" >0</td>
+                                        <td id="time-gest-{{ indx }}" >0</td>
+                                        <td id="time-gtnc-{{ indx }}" >0</td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </li>
                         <li>
                             <h3 id="virtperc" class="uk-card-title headelem">Virtual (0%)</h3>
                             <progress id="virtprog" class="uk-progress" value="0" max="100" style="color: #008080;"></progress>
