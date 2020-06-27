@@ -85,3 +85,7 @@ def GetCPUStatistics():
             singlist.append(jndx)
         timelist.append(singlist)
     return timelist
+
+def GetCPUUsagePercent():
+    cpuprcnt = psutil.cpu_percent(percpu=True)
+    return cpuprcnt
