@@ -8,7 +8,8 @@ app = Flask(__name__)
 def json():
     retndata = back.GetOSUnameData()
     systarry = back.RecognizeSystem()
-    return render_template("main.html", retndata=retndata, systarry=systarry)
+    cpuquant = back.GetCPULogicalCount()
+    return render_template("main.html", retndata=retndata, systarry=systarry, cpuquant=cpuquant)
 
 # background process happening without any refreshing
 @app.route('/background_process_test')
@@ -33,6 +34,12 @@ def virtdata():
                        virtcach=retndata["Cached"],
                        virtshrd=retndata["Shared"],
                        virtslab=retndata["Slab"])
+    return retnjson
+
+@app.route("/cputimes", methods=["GET"])
+def cputimes():
+    retndata = back.GetCPUStatistics()
+    retnjson = jsonify(cputimes=retndata)
     return retnjson
 
 if __name__ == "__main__":
