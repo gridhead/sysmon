@@ -17,10 +17,12 @@ def background_process_test():
     print("Hello")
     return "nothing"
 
+
 @app.route('/_stuff', methods= ['GET'])
 def stuff():
     cpu=str(psutil.cpu_freq(True))
     return jsonify(cpu=cpu)
+
 
 @app.route("/virtdata/", methods=["GET"])
 def virtdata():
@@ -36,11 +38,13 @@ def virtdata():
                        virtslab=retndata["Slab"])
     return retnjson
 
+
 @app.route("/cputimes/", methods=["GET"])
 def cputimes():
-    retndata = back.GetCPUStatistics()
+    retndata = back.GetCPUStateTimes()
     retnjson = jsonify(cputimes=retndata)
     return retnjson
+
 
 @app.route("/cpuprcnt/", methods=["GET"])
 def cpuprcnt():
@@ -48,11 +52,20 @@ def cpuprcnt():
     retndata = jsonify(cpuprcnt=retndata)
     return retndata
 
+
 @app.route("/cpustats/", methods=["GET"])
 def cpustats():
     retndata = back.GetCPUStatistics()
     retnjson = jsonify(cpustats=retndata)
     return retnjson
+
+
+@app.route("/cpuclock/", methods=["GET"])
+def cpuclock():
+    retndata = back.GetCPUClockSpeed()
+    retnjson = jsonify(cpuclock=retndata)
+    return retnjson
+
 
 if __name__ == "__main__":
     app.run(port=9696, host="0.0.0.0")

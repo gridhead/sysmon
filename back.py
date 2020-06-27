@@ -76,7 +76,7 @@ scpustats(ctx_switches=11033914, interrupts=5066753, soft_interrupts=4870922, sy
 '''
 
 
-def GetCPUStatistics():
+def GetCPUStateTimes():
     timedata = psutil.cpu_times(percpu=True)
     timelist = []
     for indx in timedata:
@@ -99,3 +99,13 @@ def GetCPUStatistics():
         "sysc": cpustats.syscalls,
     }
     return retndata
+
+def GetCPUClockSpeed():
+    cpuclock = psutil.cpu_freq(percpu=True)
+    cloklist = []
+    for indx in cpuclock:
+        singlist = []
+        for jndx in indx:
+            singlist.append(jndx)
+        cloklist.append(singlist)
+    return cloklist
