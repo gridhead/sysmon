@@ -90,6 +90,27 @@
                         var swapfill = document.getElementById("swapprog");
                         swapfill.value = data.swapinfo[3];
                     });
+                $.getJSON($SCRIPT_ROOT+"/diousage/",
+                    function(data) {
+                        //console.log(data.diousage)
+                        //console.log(data.diousage)
+                        for (let indx = 0; indx < {{ dionames|length }}; indx ++)
+                        {
+                            console.log(data.diousage[indx][1])
+                            var diourdct = document.getElementById("disk-rdct-"+indx);
+                            diourdct.value = data.diousage[indx][3];
+                            //console.log(indx)
+                            $("#disk-rdct-"+indx).text(data.diousage[indx][0])
+                            $("#disk-wrct-"+indx).text(data.diousage[indx][1])
+                            $("#disk-rdbt-"+indx).text(data.diousage[indx][2])
+                            $("#disk-wrbt-"+indx).text(data.diousage[indx][3])
+                            $("#disk-rdtm-"+indx).text(data.diousage[indx][4])
+                            $("#disk-wrtm-"+indx).text(data.diousage[indx][5])
+                            $("#disk-wrmc-"+indx).text(data.diousage[indx][6])
+                            $("#disk-rdmc-"+indx).text(data.diousage[indx][7])
+                            $("#disk-bstm-"+indx).text(data.diousage[indx][8])
+                        }
+                    });
                 }
             }
             function MenuTextSetter(ActiveMenuText)
@@ -131,7 +152,7 @@
                             <h3 id="cptmtext" class="uk-card-title headelem">CPU Usage</h3>
                             {% for indx in range(cpuquant) %}
                                 <h4 id="cpu-utext-{{ indx }}" class="hugeelem uk-margin-remove">CPU #{{ indx }} (0%)</h4>
-                                <p id="cpu-ctext-{{ indx }}" class="uk-text-meta uk-margin-remove normelem">0MHz of Min 0MHz and Max0 MHz</p>
+                                <p id="cpu-ctext-{{ indx }}" class="uk-text-meta uk-margin-remove normelem">0MHz of Min 0MHz and Max 0 MHz</p>
                                 <progress id="cpu-usage-{{ indx }}" class="uk-progress uk-margin-small" value="0" max="100" style="color: #008080;"></progress>
                             {% endfor %}
                             <h3 id="cptmtext" class="uk-card-title headelem">CPU Times</h3>
@@ -244,11 +265,44 @@
                             </table>
                         </li>
                         <li>
+                            <h3 class="uk-card-title headelem">Usage</h3>
+                            <table class="uk-table uk-table-small uk-table-divider normelem">
+                                <thead>
+                                    <tr>
+                                        <th>PART</th>
+                                        <th>RDCT</th>
+                                        <th>WRCT</th>
+                                        <th>RDBT</th>
+                                        <th>WRBT</th>
+                                        <th>RDTM</th>
+                                        <th>WRTM</th>
+                                        <th>WRMC</th>
+                                        <th>RDMC</th>
+                                        <th>BSTM</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for indx in range(dionames|length) %}
+                                    <tr>
+                                        <td id="disk-part-{{ indx }}">{{ dionames[indx] }}</td>
+                                        <td id="disk-rdct-{{ indx }}">0</td>
+                                        <td id="disk-wrct-{{ indx }}">0</td>
+                                        <td id="disk-rdbt-{{ indx }}">0</td>
+                                        <td id="disk-wrbt-{{ indx }}">0</td>
+                                        <td id="disk-rdtm-{{ indx }}">0</td>
+                                        <td id="disk-wrtm-{{ indx }}">0</td>
+                                        <td id="disk-wrmc-{{ indx }}">0</td>
+                                        <td id="disk-rdmc-{{ indx }}">0</td>
+                                        <td id="disk-bstm-{{ indx }}">0</td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
                             <h3 class="uk-card-title headelem">Partitions</h3>
                             {% for indx in diskpart %}
                             <div uk-alert class="uk-margin-small">
                                 <h4 class="headelem uk-margin-remove">{{ indx[0] }} ({{ indx[1] }})</h4>
-                                <p class="normelem uk-margin-remove"><strong>FSYS</strong> {{ indx[2] }} / <strong>OPTS</strong> {{ indx[3] }}</p>
+                                <p class="normelem uk-margin-remove"><span class="headelem">FSYS</span> {{ indx[2] }} / <span class="headelem">OPTS</span> {{ indx[3] }}</p>
                             </div>
                             {% endfor %}
                         </li>
@@ -280,5 +334,6 @@
                 </div>
             </div>
         </div>
+        <br/>
     </body>
 </html>
