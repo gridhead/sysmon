@@ -12,7 +12,11 @@ def json():
     cpuquant = back.GetCPULogicalCount()
     diskpart = back.GetAllDiskPartitions()
     dionames = list(back.GetDiskIOUsage()[1].keys())
-    return render_template("main.html", retndata=retndata, systarry=systarry, cpuquant=cpuquant, diskpart=diskpart, dionames=dionames)
+    netnames = list(back.GetNetworkIOUsage()[1].keys())
+    return render_template("main.html", retndata=retndata,
+                           systarry=systarry, cpuquant=cpuquant,
+                           diskpart=diskpart, dionames=dionames,
+                           netnames=netnames)
 
 
 # background process hmainening without any refreshing
@@ -82,6 +86,13 @@ def cpuclock():
 def diousage():
     retndata = back.GetDiskIOUsage()[0]
     retnjson = jsonify(diousage=retndata)
+    return retnjson
+
+
+@main.route("/netusage/", methods=["GET"])
+def netusage():
+    retndata = back.GetNetworkIOUsage()[0]
+    retnjson = jsonify(netusage=retndata)
     return retnjson
 
 

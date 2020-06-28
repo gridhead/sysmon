@@ -130,3 +130,10 @@ def GetDiskIOUsage():
     for indx in diousage.keys():
         dioulist.append(diousage[indx])
     return dioulist, diousage
+
+def GetNetworkIOUsage():
+    netusage = psutil.net_io_counters(pernic=True)
+    netulist = []
+    for indx in netusage.keys():
+        netulist.append(netusage[indx])
+    return netulist, netusage
