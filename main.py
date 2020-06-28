@@ -11,7 +11,8 @@ def json():
     systarry = back.RecognizeSystem()
     cpuquant = back.GetCPULogicalCount()
     diskpart = back.GetAllDiskPartitions()
-    return render_template("main.html", retndata=retndata, systarry=systarry, cpuquant=cpuquant, diskpart=diskpart)
+    dionames = list(back.GetDiskIOUsage()[1].keys())
+    return render_template("main.html", retndata=retndata, systarry=systarry, cpuquant=cpuquant, diskpart=diskpart, dionames=dionames)
 
 
 # background process hmainening without any refreshing
@@ -74,6 +75,13 @@ def swapinfo():
 def cpuclock():
     retndata = back.GetCPUClockSpeed()
     retnjson = jsonify(cpuclock=retndata)
+    return retnjson
+
+
+@main.route("/diousage/", methods=["GET"])
+def diousage():
+    retndata = back.GetDiskIOUsage()[0]
+    retnjson = jsonify(diousage=retndata)
     return retnjson
 
 

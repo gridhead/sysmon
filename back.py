@@ -123,3 +123,10 @@ def GetCPUClockSpeed():
             singlist.append(jndx)
         cloklist.append(singlist)
     return cloklist
+
+def GetDiskIOUsage():
+    diousage = psutil.disk_io_counters(perdisk=True)
+    dioulist = []
+    for indx in diousage.keys():
+        dioulist.append(diousage[indx])
+    return dioulist, diousage
