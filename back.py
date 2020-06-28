@@ -104,6 +104,16 @@ def GetSwapMemoryInfo():
     swapinfo = psutil.swap_memory()
     return swapinfo
 
+def GetAllDiskPartitions():
+    diskpart = psutil.disk_partitions(all=True)
+    disklist = []
+    for indx in diskpart:
+        singlist = []
+        for jndx in indx:
+            singlist.append(jndx)
+        disklist.append(singlist)
+    return disklist
+
 def GetCPUClockSpeed():
     cpuclock = psutil.cpu_freq(percpu=True)
     cloklist = []

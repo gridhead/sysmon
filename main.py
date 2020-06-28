@@ -10,7 +10,8 @@ def json():
     retndata = back.GetOSUnameData()
     systarry = back.RecognizeSystem()
     cpuquant = back.GetCPULogicalCount()
-    return render_template("main.html", retndata=retndata, systarry=systarry, cpuquant=cpuquant)
+    diskpart = back.GetAllDiskPartitions()
+    return render_template("main.html", retndata=retndata, systarry=systarry, cpuquant=cpuquant, diskpart=diskpart)
 
 
 # background process hmainening without any refreshing
