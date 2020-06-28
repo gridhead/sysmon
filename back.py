@@ -100,6 +100,10 @@ def GetCPUStatistics():
     }
     return retndata
 
+def GetSwapMemoryInfo():
+    swapinfo = psutil.swap_memory()
+    return swapinfo
+
 def GetCPUClockSpeed():
     cpuclock = psutil.cpu_freq(percpu=True)
     cloklist = []
