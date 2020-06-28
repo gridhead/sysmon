@@ -28,15 +28,15 @@
                 $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
                 $.getJSON($SCRIPT_ROOT+"/virtdata/",
                     function(data) {
-                        $("#virttomr").text(data.virttomr+" Bytes")
-                        $("#virtavbl").text(data.virtavbl+" Bytes")
+                        $("#virttomr").text(data.virttomr)
+                        $("#virtavbl").text(data.virtavbl)
                         $("#virtperc").text("Virtual ("+data.virtperc+"%)")
-                        $("#virtused").text(data.virtused+" Bytes")
-                        $("#virtactv").text(data.virtactv+" Bytes")
-                        $("#virtbufr").text(data.virtbufr+" Bytes")
-                        $("#virtcach").text(data.virtcach+" Bytes")
-                        $("#virtshrd").text(data.virtshrd+" Bytes")
-                        $("#virtslab").text(data.virtslab+" Bytes")
+                        $("#virtused").text(data.virtused)
+                        $("#virtactv").text(data.virtactv)
+                        $("#virtbufr").text(data.virtbufr)
+                        $("#virtcach").text(data.virtcach)
+                        $("#virtshrd").text(data.virtshrd)
+                        $("#virtslab").text(data.virtslab)
                         var virtprog = document.getElementById("virtprog");
                         virtprog.value=data.virtperc;
                     });
@@ -62,7 +62,7 @@
                         {
                             $("#cpu-utext-"+indx).text("CPU #"+indx+" ("+data.cpuprcnt[indx]+"%)")
                             var cpupfill = document.getElementById("cpu-usage-"+indx);
-                            cpupfill.value=data.cpuprcnt[indx];
+                            cpupfill.value = data.cpuprcnt[indx];
                         }
                     });
                 $.getJSON($SCRIPT_ROOT+"/cpuclock/",
@@ -78,6 +78,17 @@
                         $("#cpus-stat-intr").text(data.cpustats["intr"])
                         $("#cpus-stat-soft").text(data.cpustats["soft"])
                         $("#cpus-stat-sysc").text(data.cpustats["sysc"])
+                    });
+                $.getJSON($SCRIPT_ROOT+"/swapinfo/",
+                    function(data) {
+                        $("#swaptotl").text(data.swapinfo[0])
+                        $("#swapused").text(data.swapinfo[1])
+                        $("#swapfree").text(data.swapinfo[2])
+                        $("#swapsine").text(data.swapinfo[4])
+                        $("#swapsout").text(data.swapinfo[5])
+                        $("#swapperc").text("Swap (" + data.swapinfo[3] + "%)")
+                        var swapfill = document.getElementById("upercent");
+                        swapfill.value = data.swapinfo[3];
                     });
                 }
             }
@@ -180,40 +191,54 @@
                         </li>
                         <li>
                             <h3 id="virtperc" class="uk-card-title headelem">Virtual (0%)</h3>
-                            <progress id="virtprog" class="uk-progress" value="0" max="100" style="color: #008080;"></progress>
+                            <progress id="virtprog" class="uk-progress uk-margin-small" value="0" max="100" style="color: #008080;"></progress>
                             <table class="uk-table uk-table-small uk-table-divider normelem">
+                                <thead>
+                                    <tr>
+                                        <th>TOTL</th>
+                                        <th>AVBL</th>
+                                        <th>USED</th>
+                                        <th>ACTV</th>
+                                        <th>BUFR</th>
+                                        <th>CACH</th>
+                                        <th>SHRD</th>
+                                        <th>SLAB</th>
+                                    </tr>
+                                </thead>
                                 <tbody>
                                     <tr>
-                                        <td>Total</td>
                                         <td id="virttomr">0</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Available</td>
                                         <td id="virtavbl">0</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Used</td>
                                         <td id="virtused">0</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Active</td>
                                         <td id="virtactv">0</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Buffers</td>
                                         <td id="virtbufr">0</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Cached</td>
                                         <td id="virtcach">0</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Shared</td>
                                         <td id="virtshrd">0</td>
-                                    </tr>
-                                    <tr>
-                                        <td>Slab</td>
                                         <td id="virtslab">0</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <h3 id="swapperc" class="uk-card-title headelem">Swap (0%)</h3>
+                            <progress id="swapprog" class="uk-progress uk-margin-small" value="0" max="100" style="color: #008080;"></progress>
+                            <table class="uk-table uk-table-small uk-table-divider normelem">
+                                <thead>
+                                    <tr>
+                                        <th>TOTL</th>
+                                        <th>USED</th>
+                                        <th>FREE</th>
+                                        <th>PERC</th>
+                                        <th>SINE</th>
+                                        <th>SOUT</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td id="swaptotl">0</td>
+                                        <td id="swapused">0</td>
+                                        <td id="swapfree">0</td>
+                                        <td id="swapperc">0</td>
+                                        <td id="swapsine">0</td>
+                                        <td id="swapsout">0</td>
                                     </tr>
                                 </tbody>
                             </table>
