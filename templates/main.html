@@ -92,11 +92,8 @@
                     });
                 $.getJSON($SCRIPT_ROOT+"/diousage/",
                     function(data) {
-                        //console.log(data.diousage)
-                        //console.log(data.diousage)
                         for (let indx = 0; indx < {{ dionames|length }}; indx ++)
                         {
-                            //console.log(data.diousage[indx][1])
                             $("#disk-rdct-"+indx).text(data.diousage[indx][0])
                             $("#disk-wrct-"+indx).text(data.diousage[indx][1])
                             $("#disk-rdbt-"+indx).text(data.diousage[indx][2])
@@ -112,19 +109,6 @@
                     function(data) {
                         for (let indx = 0; indx < {{ netnames|length }}; indx ++)
                         {
-                            /*
-                            <td id="netu-snic-{{ indx }}">{{ netnames[indx] }}</td>
-                            <td id="netu-bsnt-{{ indx }}">0</td>
-                            <td id="netu-brcv-{{ indx }}">0</td>
-                            <td id="netu-psnt-{{ indx }}">0</td>
-                            <td id="netu-pcnt-{{ indx }}">0</td>
-                            <td id="netu-erin-{{ indx }}">0</td>
-                            <td id="netu-eout-{{ indx }}">0</td>
-                            <td id="netu-dpin-{{ indx }}">0</td>
-                            <td id="netu-dout-{{ indx }}">0</td>
-                            */
-                            console.log(data.netusage[indx][1])
-                            //$("#netu-snic-"+indx).text(data.netusage[indx][0])
                             $("#netu-bsnt-"+indx).text(data.netusage[indx][0])
                             $("#netu-brcv-"+indx).text(data.netusage[indx][1])
                             $("#netu-psnt-"+indx).text(data.netusage[indx][2])
