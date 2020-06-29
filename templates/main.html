@@ -158,13 +158,13 @@
                     </ul>
                     <ul class="uk-switcher uk-margin">
                         <li>
-                            <h3 id="cptmtext" class="uk-card-title headelem">CPU Usage</h3>
+                            <h3 id="cptmtext" class="uk-card-title headelem">Usage</h3>
                             {% for indx in range(cpuquant) %}
                                 <h4 id="cpu-utext-{{ indx }}" class="hugeelem uk-margin-remove">CPU #{{ indx }} (0%)</h4>
                                 <p id="cpu-ctext-{{ indx }}" class="uk-text-meta uk-margin-remove normelem">0MHz of Min 0MHz and Max 0 MHz</p>
                                 <progress id="cpu-usage-{{ indx }}" class="uk-progress uk-margin-small" value="0" max="100" style="color: #008080;"></progress>
                             {% endfor %}
-                            <h3 id="cptmtext" class="uk-card-title headelem">CPU Times</h3>
+                            <h3 id="cptmtext" class="uk-card-title headelem">Times</h3>
                             <table class="uk-table uk-table-small uk-table-divider normelem">
                                 <thead>
                                     <tr>
@@ -199,7 +199,7 @@
                                     {% endfor %}
                                 </tbody>
                             </table>
-                            <h3 id="cptmtext" class="uk-card-title headelem">CPU Statistics</h3>
+                            <h3 id="cptmtext" class="uk-card-title headelem">Statistics</h3>
                             <table class="uk-table uk-table-small uk-table-divider normelem">
                                 <thead>
                                     <tr>
@@ -347,6 +347,18 @@
                                     {% endfor %}
                                 </tbody>
                             </table>
+                            <h3 class="uk-card-title headelem">Statistics</h3>
+                            {% for indx in netstats.keys() %}
+                            <div uk-alert class="uk-margin-small">
+                                <h4 class="headelem uk-margin-remove">{{ indx }} ({{ netstats[indx][0] }})</h4>
+                                <p class="normelem uk-margin-remove">
+                                    <span class="headelem">DUPLEX</span> {{ netstats[indx][1] }}
+                                </p>
+                                <p class="normelem uk-margin-remove">
+                                    <span class="headelem">SPD</span> {{ netstats[indx][2] }} / <span class="headelem">MTU</span> {{ netstats[indx][3] }}
+                                </p>
+                            </div>
+                            {% endfor %}
                             <h3 class="uk-card-title headelem">Addresses</h3>
                             {% for indx in netaddrs.keys() %}
                                 {% for jndx in netaddrs[indx] %}
