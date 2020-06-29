@@ -145,3 +145,7 @@ def GetNetworkStatistics():
 def GetNetworkIFAddresses():
     netaddrs = psutil.net_if_addrs()
     return netaddrs
+
+def GetSensorsTemperature():
+    senstemp = psutil.sensors_temperatures(fahrenheit=False)
+    return senstemp
