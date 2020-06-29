@@ -347,6 +347,20 @@
                                     {% endfor %}
                                 </tbody>
                             </table>
+                            <h3 class="uk-card-title headelem">Addresses</h3>
+                            {% for indx in netaddrs.keys() %}
+                                {% for jndx in netaddrs[indx] %}
+                                <div uk-alert class="uk-margin-small">
+                                    <h4 class="headelem uk-margin-remove">{{ indx }} ({{ jndx[1] }})</h4>
+                                    <p class="normelem uk-margin-remove">
+                                        <span class="headelem">FAMILY</span> {{ jndx[0] }} / <span class="headelem">NETMASK</span> {{ jndx[2] }}
+                                    </p>
+                                    <p class="normelem uk-margin-remove">
+                                        <span class="headelem">BROADCAST</span> {{ jndx[3] }} / <span class="headelem">PTP0</span> {{ jndx[4] }}
+                                    </p>
+                                </div>
+                                {% endfor %}
+                            {% endfor %}
                         </li>
                         <li>Bazinga!</li>
                         <li>Bazinga!</li>
