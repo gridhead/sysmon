@@ -138,6 +138,10 @@ def GetNetworkIOUsage():
         netulist.append(netusage[indx])
     return netulist, netusage
 
+def GetNetworkStatistics():
+    netstats = psutil.net_if_stats()
+    return netstats
+
 def GetNetworkIFAddresses():
     netaddrs = psutil.net_if_addrs()
     return netaddrs

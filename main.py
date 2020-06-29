@@ -14,10 +14,12 @@ def json():
     dionames = list(back.GetDiskIOUsage()[1].keys())
     netnames = list(back.GetNetworkIOUsage()[1].keys())
     netaddrs = back.GetNetworkIFAddresses()
+    netstats = back.GetNetworkStatistics()
     return render_template("main.html", retndata=retndata,
                            systarry=systarry, cpuquant=cpuquant,
                            diskpart=diskpart, dionames=dionames,
-                           netnames=netnames, netaddrs=netaddrs)
+                           netnames=netnames, netaddrs=netaddrs,
+                           netstats=netstats)
 
 
 # background process hmainening without any refreshing
