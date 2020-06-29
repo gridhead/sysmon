@@ -120,6 +120,19 @@
 
                         }
                     });
+                $.getJSON($SCRIPT_ROOT+"/senstemp/",
+                    function(data) {
+                        for (indx in data.senstemp)
+                        {
+                            for (let jndx = 0; jndx < data.senstemp[indx].length; jndx++)
+                            {
+                                $("#sens-temp-labl-"+indx+"-"+jndx).text(data.senstemp[indx][jndx][0])
+                                $("#sens-temp-curt-"+indx+"-"+jndx).text(data.senstemp[indx][jndx][1]+" C")
+                                $("#sens-temp-high-"+indx+"-"+jndx).text(data.senstemp[indx][jndx][2]+" C")
+                                $("#sens-temp-temp-"+indx+"-"+jndx).text(data.senstemp[indx][jndx][3]+" C")
+                            }
+                        }
+                    });
                 }
             }
             function MenuTextSetter(ActiveMenuText)
@@ -374,7 +387,32 @@
                                 {% endfor %}
                             {% endfor %}
                         </li>
-                        <li>Bazinga!</li>
+                        <li>
+                            <h3 class="uk-card-title headelem">Temperature</h3>
+                            {% for indx in senstemp.keys() %}
+                            <h4 class="headelem uk-margin-remove">{{ indx }}</h4>
+                            <table class="uk-table uk-table-small uk-table-divider normelem">
+                                <thead>
+                                    <tr>
+                                        <th class="uk-width-2-5">LABL</th>
+                                        <th class="uk-width-1-5">CURT</th>
+                                        <th class="uk-width-1-5">HIGH</th>
+                                        <th class="uk-width-1-5">CRIT</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for jndx in range(senstemp[indx]|length) %}
+                                    <tr>
+                                        <td id="sens-temp-labl-{{ indx }}-{{ jndx }}">{{ senstemp[indx][jndx][0] }}</td>
+                                        <td id="sens-temp-curt-{{ indx }}-{{ jndx }}">{{ senstemp[indx][jndx][1] }} C</td>
+                                        <td id="sens-temp-high-{{ indx }}-{{ jndx }}">{{ senstemp[indx][jndx][2] }} C</td>
+                                        <td id="sens-temp-crit-{{ indx }}-{{ jndx }}">{{ senstemp[indx][jndx][3] }} C</td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                            {% endfor %}
+                        </li>
                         <li>Bazinga!</li>
                         <li>Bazinga!</li>
                         <li>
