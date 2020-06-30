@@ -139,3 +139,37 @@ def GetSensorsBatteryStatus():
 def GetBootTime():
     boottime = time.ctime(psutil.boot_time())
     return boottime
+
+def GetProcessInfo():
+    procinfo = []
+    for indx in psutil.process_iter(["pid", "cpu_affinity", "cpu_percent",
+                                     "cpu_times", "create_time", "gids",
+                                     "memory_info", "memory_percent", "name",
+                                     "num_ctx_switches", "num_threads", "status",
+                                     "terminal", "threads", "uids",
+                                     "username"]):
+        procinfo.append(indx.info)
+    return procinfo
+
+'''
+>>> for proc in psutil.process_iter(['pid', 'name', 'username']):
+...     print(proc.info)
+['__class__', '__delattr__', '__dict__', '__dir__', '__doc__', '__eq__', '__format__', '__ge__', '__getattribute__', '__gt__', '__hash__', '__init__', '__init_subclass__', '__le__', '__lt__', '__module__', '__ne__', '__new__', '__reduce__', '__reduce_ex__', '__repr__', '__setattr__', '__sizeof__', '__str__', '__subclasshook__', '__weakref__', '_create_time', '_exe', '_gone', '_hash', '_ident', '_init', '_last_proc_cpu_times', '_last_sys_cpu_times', '_lock', '_name', '_pid', '_ppid', '_proc', '_send_signal', 'as_dict', 'children', 'cmdline', 'connections', 'cpu_affinity', 'cpu_num', 'cpu_percent', 'cpu_times', 'create_time', 'cwd', 'environ', 'exe', 'gids', 'io_counters', 'ionice', 'is_running', 'kill', 'memory_full_info', 'memory_info', 'memory_info_ex', 'memory_maps', 'memory_percent', 'name', 'nice', 'num_ctx_switches', 'num_fds', 'num_threads', 'oneshot', 'open_files', 'parent', 'parents', 'pid', 'ppid', 'resume', 'rlimit', 'send_signal', 'status', 'suspend', 'terminal', 'terminate', 'threads', 'uids', 'username', 'wait']
+
+PID
+CPU_AFFINITY
+CPU_PERCENT
+CPU_TIMES
+CREATE_TIME
+GIDS
+MEMORY_INFO_EX
+MEMORY_PERCENT
+NAME
+NUM_CTX_SWITCHES
+NUM_THREADS
+STATUS
+TERMINAL
+THREADS
+UIDS
+USERNAME
+'''

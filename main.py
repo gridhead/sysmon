@@ -14,6 +14,7 @@ def json():
     dionames = list(back.GetDiskIOUsage()[1].keys())
     netnames = list(back.GetNetworkIOUsage()[1].keys())
     #temnames = list(back.GetSensorsTemperature()[1].keys())
+    procinfo = back.GetProcessInfo()
 
     senstemp = back.GetSensorsTemperature()
     fanspeed = back.GetSensorsFanSpeed()
@@ -26,7 +27,8 @@ def json():
                            diskpart=diskpart, dionames=dionames,
                            netnames=netnames, netaddrs=netaddrs,
                            netstats=netstats, senstemp=senstemp,
-                           fanspeed=fanspeed, boottime=boottime)
+                           fanspeed=fanspeed, boottime=boottime,
+                           procinfo=procinfo)
 
 
 # background process hmainening without any refreshing
@@ -124,6 +126,13 @@ def fanspeed():
 def battstat():
     retndata = back.GetSensorsBatteryStatus()
     retnjson = jsonify(battstat=retndata)
+    return retnjson
+
+
+@main.route("/procinfo/", methods=["GET"])
+def procinfo():
+    retndata = back.GetProcessInfo()
+    retnjson = jsonify(procinfo=retndata)
     return retnjson
 
 
