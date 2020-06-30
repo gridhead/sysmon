@@ -133,6 +133,17 @@
                             }
                         }
                     });
+                $.getJSON($SCRIPT_ROOT+"/battstat/",
+                    function(data) {
+                        for (indx in data.battstat)
+                        {
+                            $("#batt-stat-perc").text(data.battstat[0])
+                            $("#batt-stat-secs").text(data.battstat[1])
+                            $("#batt-stat-plug").text(data.battstat[2])
+                            var battprog = document.getElementById("batt-stat-prog");
+                            battprog.value = data.battstat[0];
+                        }
+                    });
                 }
             }
             function MenuTextSetter(ActiveMenuText)
@@ -412,6 +423,11 @@
                                 </tbody>
                             </table>
                             {% endfor %}
+                            <h3 class="uk-card-title headelem">Battery</h3>
+                            <h4 class="hugeelem uk-margin-remove"><span id="batt-stat-perc">0</span>%</h4>
+                            <progress id="batt-stat-prog" class="uk-progress uk-margin-small" value="0" max="100" style="color: #008080;"></progress>
+                            <p class="normelem uk-margin-remove"><span class="headelem">SECS LEFT </span><span id="batt-stat-secs">span>0</span> secs</p>
+                            <p class="normelem uk-margin-remove"><span class="headelem">PLUGGED </span><span id="batt-stat-plug"> False</span></p>
                             <h3 class="uk-card-title headelem">Fans</h3>
                             {% for indx in fanspeed.keys() %}
                             <h4 class="headelem uk-margin-remove">{{ indx }}</h4>
