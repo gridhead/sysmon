@@ -149,3 +149,7 @@ def GetNetworkIFAddresses():
 def GetSensorsTemperature():
     senstemp = psutil.sensors_temperatures(fahrenheit=False)
     return senstemp
+
+def GetSensorsFanSpeed():
+    fanspeed = psutil.sensors_fans()
+    return fanspeed

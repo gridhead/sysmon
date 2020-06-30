@@ -16,6 +16,7 @@ def json():
     #temnames = list(back.GetSensorsTemperature()[1].keys())
 
     senstemp = back.GetSensorsTemperature()
+    fanspeed = back.GetSensorsFanSpeed()
 
     netaddrs = back.GetNetworkIFAddresses()
     netstats = back.GetNetworkStatistics()
@@ -23,7 +24,8 @@ def json():
                            systarry=systarry, cpuquant=cpuquant,
                            diskpart=diskpart, dionames=dionames,
                            netnames=netnames, netaddrs=netaddrs,
-                           netstats=netstats, senstemp=senstemp)
+                           netstats=netstats, senstemp=senstemp,
+                           fanspeed=fanspeed)
 
 
 # background process hmainening without any refreshing
@@ -107,6 +109,13 @@ def senstemp():
 def netusage():
     retndata = back.GetNetworkIOUsage()[0]
     retnjson = jsonify(netusage=retndata)
+    return retnjson
+
+
+@main.route("/fanspeed/", methods=["GET"])
+def fanspeed():
+    retndata = back.GetSensorsFanSpeed()
+    retnjson = jsonify(fanspeed=retndata)
     return retnjson
 
 
