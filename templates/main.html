@@ -144,7 +144,87 @@
                             battprog.value = data.battstat[0];
                         }
                     });
+                $.getJSON($SCRIPT_ROOT+"/procinfo/",
+                    function(data) {
+                        var proclist = document.getElementById("proclist");
+                        var procqant = proclist.rows.length
+                        for (let indx = 0; indx < procqant; indx++)
+                        {
+                            if (proclist.rows.length > 1)
+                            {
+                                proclist.deleteRow(1);
+                            }
+                        }
+                        var taskqant = data.procinfo.length;
+                        var procttle = document.getElementById("proc-info-ttle");
+                        procttle.innerText = "Active (" + taskqant + ")"
+                        for (let indx = 1; indx < taskqant; indx++)
+                        {
+                            var actirowe = proclist.insertRow(indx);
+                            var row0cell = actirowe.insertCell(0);
+                            var row1cell = actirowe.insertCell(1);
+                            var row2cell = actirowe.insertCell(2);
+                            var row3cell = actirowe.insertCell(3);
+                            var row4cell = actirowe.insertCell(4);
+                            var row5cell = actirowe.insertCell(5);
+                            var row6cell = actirowe.insertCell(6);
+
+                            var pmodname = "\""+String(data.procinfo[indx]['name'])+"\"";
+                            var pmodpide = "\""+String(data.procinfo[indx]['pid'])+"\"";
+                            var pmodcpaf = "\""+String(data.procinfo[indx]['cpu_affinity'])+"\"";
+                            var pmodcprc = "\""+String(data.procinfo[indx]['cpu_percent'])+"\"";
+                            var pmodcptm = "\""+String(data.procinfo[indx]['cpu_times'])+"\"";
+                            var pmodmktm = "\""+String(data.procinfo[indx]['create_time'])+"\"";
+                            var pmodgids = "\""+String(data.procinfo[indx]['gids'])+"\"";
+                            var pmodminf = "\""+String(data.procinfo[indx]['memory_info'])+"\"";
+                            var pmodmprc = "\""+String(data.procinfo[indx]['memory_percent'])+"\"";
+                            var pmodctxs = "\""+String(data.procinfo[indx]['num_ctx_switches'])+"\"";
+                            var pmodthqn = "\""+String(data.procinfo[indx]['num_threads'])+"\"";
+                            var pmodstat = "\""+String(data.procinfo[indx]['status'])+"\"";
+                            var pmodterm = "\""+String(data.procinfo[indx]['terminal'])+"\"";
+                            var pmodthrd = "\""+String(data.procinfo[indx]['threads'])+"\"";
+                            var pmoduids = "\""+String(data.procinfo[indx]['uids'])+"\"";
+                            var pmoduser = "\""+String(data.procinfo[indx]['username'])+"\"";
+
+                            var argument = pmodname + ", " + pmodpide + ", " + pmodcpaf + ", " + pmodcprc + ", " + pmodcptm + ", " + pmodmktm + ", " + pmodgids + ", " + pmodminf + ", " + pmodmprc + ", " + pmodctxs + ", " + pmodthqn + ", " + pmodstat + ", " + pmodterm + ", " + pmodthrd + ", " + pmoduids + ", " + pmoduser;
+
+                            //row0cell.innerHTML = "<a type='button' onclick='SetTitleModalProcess("+"'"+pmodname+"','"+pmodpide+"')' uk-toggle='target: #students-login-modal' class='uk-button uk-button-text headelem'>" + data.procinfo[indx]["name"] + "</a>";
+
+                            //row0cell.innerHTML = "<a type='button' onclick='SetTitleModalProcess("+pmodname+","+pmodpide+")' uk-toggle='target: #students-login-modal' class='uk-button uk-button-text headelem'>" + data.procinfo[indx]["name"] + "</a>";
+
+                            row0cell.innerHTML = "<a type='button' onclick='SetTitleModalProcess("+argument+")' uk-toggle='target: #students-login-modal' class='uk-button uk-button-text headelem'>" + data.procinfo[indx]["name"] + "</a>";
+
+                            //row0cell.innerHTML = "<a type='button' onclick='console.log("+data.procinfo[indx]['name']+")' uk-toggle='target: #students-login-modal' class='uk-button uk-button-text headelem'>" + data.procinfo[indx]["name"] + "</a>";
+
+                            row1cell.innerText = data.procinfo[indx]["username"];
+                            row2cell.innerText = data.procinfo[indx]["memory_percent"];
+                            row3cell.innerText = data.procinfo[indx]["cpu_percent"];
+                            row4cell.innerText = data.procinfo[indx]["num_threads"];
+                            row5cell.innerText = data.procinfo[indx]["terminal"];
+                            row6cell.innerText = data.procinfo[indx]["status"];
+                        }
+                    });
                 }
+            }
+            function SetTitleModalProcess(pmodname, pmodpide, pmodcpaf, pmodcprc, pmodcptm, pmodmktm, pmodgids, pmodminf, pmodmprc, pmodctxs, pmodthqn, pmodstat, pmodterm, pmodthrd, pmoduids, pmoduser)
+            {
+                document.getElementById("proc-boxe-name").innerText = pmodname;
+                document.getElementById("proc-boxe-pide").innerText = "PID : " + pmodpide;
+                document.getElementById("proc-boxe-cpaf").innerText = pmodcpaf;
+                document.getElementById("proc-boxe-cprc").innerText = pmodcprc + "%";
+                document.getElementById("proc-boxe-cptm").innerText = pmodcptm;
+                document.getElementById("proc-boxe-mktm").innerText = pmodmktm;
+                document.getElementById("proc-boxe-gids").innerText = pmodgids;
+                document.getElementById("proc-boxe-minf").innerText = pmodminf;
+                //pmodmprc, pmodctxs, pmodthqn, pmodstat, pmodterm, pmodthrd, pmoduids, pmoduser
+                document.getElementById("proc-boxe-mprc").innerText = pmodmprc + "%";
+                document.getElementById("proc-boxe-ctxs").innerText = pmodctxs;
+                document.getElementById("proc-boxe-thqn").innerText = pmodthqn;
+                document.getElementById("proc-boxe-stat").innerText = pmodstat;
+                document.getElementById("proc-boxe-term").innerText = pmodterm;
+                document.getElementById("proc-boxe-thrd").innerText = pmodthrd;
+                document.getElementById("proc-boxe-uids").innerText = pmoduids;
+                document.getElementById("proc-boxe-user").innerText = pmoduser;
             }
             function MenuTextSetter(ActiveMenuText)
             {
@@ -177,6 +257,7 @@
                         <li><a onclick="MenuTextSetter('Network')" href="#">Network</a></li>
                         <li><a onclick="MenuTextSetter('Sensors')" href="#">Sensors</a></li>
                         <li><a onclick="MenuTextSetter('Thermal')" href="#">Thermal</a></li>
+                        <li><a onclick="MenuTextSetter('Processes')" href="#">Processes</a></li>
                         <li><a onclick="MenuTextSetter('Miscellaneous')" href="#">Miscellaneous</a></li>
                         <li><a onclick="MenuTextSetter('About')" href="#">About</a></li>
                     </ul>
@@ -451,6 +532,35 @@
                             </table>
                             {% endfor %}
                         </li>
+                        <li>
+                            <h3 id="proc-info-ttle" class="headelem uk-margin-remove">Active ({{ procinfo|length }})</h3>
+                            <table id="proclist" class="uk-table uk-table-small uk-table-divider normelem">
+                                <thead>
+                                    <tr>
+                                        <th>NAME</th>
+                                        <th>USER</th>
+                                        <th>MPRC</th>
+                                        <th>CPRC</th>
+                                        <th>THRD</th>
+                                        <th>TERM</th>
+                                        <th>STAT</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for indx in range(procinfo|length) %}
+                                    <tr>
+                                        <td id="proc-info-name-{{ indx }}"><a type='button' uk-toggle='target: #students-login-modal' class='uk-button uk-button-text headelem'>{{ procinfo[indx]["name"] }}</a></td>
+                                        <td id="proc-info-user-{{ indx }}">{{ procinfo[indx]["username"] }}</td>
+                                        <td id="proc-info-mprc-{{ indx }}">{{ procinfo[indx]["memory_percent"] }}</td>
+                                        <td id="proc-info-cprc-{{ indx }}">{{ procinfo[indx]["cpu_percent"] }}</td>
+                                        <td id="proc-info-thrd-{{ indx }}">{{ procinfo[indx]["num_threads"] }}</td>
+                                        <td id="proc-info-term-{{ indx }}">{{ procinfo[indx]["terminal"] }}</td>
+                                        <td id="proc-info-stat-{{ indx }}">{{ procinfo[indx]["status"] }}</td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </li>
                         <li>Bazinga!</li>
                         <li>
                             <h3 class="uk-card-title headelem">System Information</h3>
@@ -480,5 +590,66 @@
             </div>
         </div>
         <br/>
+        <div id="students-login-modal" uk-modal>
+            <!--
+            var pmodname = "\""+String(data.procinfo[indx]['name'])+"\"";
+            var pmodpide = "\""+String(data.procinfo[indx]['pid'])+"\"";
+            var pmodcpaf = "\""+String(data.procinfo[indx]['cpu_affinity'])+"\"";
+            var pmodcprc = "\""+String(data.procinfo[indx]['cpu_percent'])+"\"";
+            var pmodcptm = "\""+String(data.procinfo[indx]['cpu_times'])+"\"";
+            var pmodmktm = "\""+String(data.procinfo[indx]['create_time'])+"\"";
+            var pmodgids = "\""+String(data.procinfo[indx]['gids'])+"\"";
+            var pmodminf = "\""+String(data.procinfo[indx]['memory_info'])+"\"";
+            var pmodmprc = "\""+String(data.procinfo[indx]['memory_percent'])+"\"";
+            var pmodctxs = "\""+String(data.procinfo[indx]['num_ctx_switches'])+"\"";
+            var pmodthqn = "\""+String(data.procinfo[indx]['num_threads'])+"\"";
+            var pmodstat = "\""+String(data.procinfo[indx]['status'])+"\"";
+            var pmodterm = "\""+String(data.procinfo[indx]['terminal'])+"\"";
+            var pmodthrd = "\""+String(data.procinfo[indx]['threads'])+"\"";
+            var pmoduids = "\""+String(data.procinfo[indx]['uids'])+"\"";
+            var pmoduser = "\""+String(data.procinfo[indx]['username'])+"\"";
+            -->
+            <div class="uk-modal-dialog uk-modal-body uk-margin-auto-vertical" style="padding: 0px;">
+                <button class="uk-modal-close-default" type="button" style="color: #000000;" uk-close></button>
+                <div class="uk-card uk-card-small uk-card-default uk-width-1-1@m">
+                    <div class="uk-card-header forggrin">
+                        <div class="uk-grid-small uk-flex-middle" uk-grid>
+                            <div class="uk-width-auto">
+                                <img class="uk-border-circle" width="40" height="40" src="{{ url_for("static", filename="imgs/datalogo.png") }}">
+                            </div>
+                            <div class="uk-width-expand">
+                                <h3 id="proc-boxe-name" class="uk-card-title uk-margin-remove-bottom headelem">Process name</h3>
+                                <p id="proc-boxe-pide" class="uk-text-meta uk-margin-remove-top normelem">PID</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="uk-card-body">
+                        <dl class="uk-description-list">
+                            <dt class="headelem">Task started at</dt><dd id="proc-boxe-mktm" class="normelem">0</dd>
+                            <dt class="headelem">Group IDs associated</dt><dd id="proc-boxe-gids" class="normelem">0</dd>
+                            <dt class="headelem">Memory statistics</dt><dd id="proc-boxe-minf" class="normelem">0</dd>
+                            <dt class="headelem">Memory usage</dt><dd id="proc-boxe-mprc" class="normelem">0</dd>
+
+                            <dt class="headelem">Processor affinity</dt><dd id="proc-boxe-cpaf" class="normelem">0</dd>
+                            <dt class="headelem">Processor usage</dt><dd id="proc-boxe-cprc" class="normelem">0</dd>
+                            <dt class="headelem">Time state</dt><dd id="proc-boxe-cptm" class="normelem">0</dd>
+
+                            <dt class="headelem">Context switches</dt><dd id="proc-boxe-ctxs" class="normelem">0</dd>
+                            <dt class="headelem">Thread count</dt><dd id="proc-boxe-thqn" class="normelem">0</dd>
+                            <dt class="headelem">Status</dt><dd id="proc-boxe-stat" class="normelem">0</dd>
+                            <dt class="headelem">Terminal</dt><dd id="proc-boxe-term" class="normelem">0</dd>
+                            <dt class="headelem">Threads</dt><dd id="proc-boxe-thrd" class="normelem">0</dd>
+                            <dt class="headelem">User IDs associated</dt><dd id="proc-boxe-uids" class="normelem">0</dd>
+                            <dt class="headelem">Started by</dt><dd id="proc-boxe-user" class="normelem">0</dd>
+                        </dl>
+                    </div>
+                    <div class="uk-card-footer forggrin">
+                        <a type='button' class='uk-button uk-button-text headelem'>KILL</a>
+                        &nbsp;&nbsp;&nbsp;&nbsp;
+                        <a type='button' class='uk-button uk-button-text headelem'>SUSPEND</a>
+                    </div>
+                </div>
+            </div>
+        </div>
     </body>
 </html>
