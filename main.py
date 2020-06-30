@@ -17,6 +17,7 @@ def json():
 
     senstemp = back.GetSensorsTemperature()
     fanspeed = back.GetSensorsFanSpeed()
+    boottime = back.GetBootTime()
 
     netaddrs = back.GetNetworkIFAddresses()
     netstats = back.GetNetworkStatistics()
@@ -25,7 +26,7 @@ def json():
                            diskpart=diskpart, dionames=dionames,
                            netnames=netnames, netaddrs=netaddrs,
                            netstats=netstats, senstemp=senstemp,
-                           fanspeed=fanspeed)
+                           fanspeed=fanspeed, boottime=boottime)
 
 
 # background process hmainening without any refreshing
