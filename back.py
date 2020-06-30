@@ -153,3 +153,7 @@ def GetSensorsTemperature():
 def GetSensorsFanSpeed():
     fanspeed = psutil.sensors_fans()
     return fanspeed
+
+def GetSensorsBatteryStatus():
+    battstat = psutil.sensors_battery()
+    return battstat

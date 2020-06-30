@@ -119,5 +119,12 @@ def fanspeed():
     return retnjson
 
 
+@main.route("/battstat/", methods=["GET"])
+def battstat():
+    retndata = back.GetSensorsBatteryStatus()
+    retnjson = jsonify(battstat=retndata)
+    return retnjson
+
+
 if __name__ == "__main__":
     main.run(port=9696, host="0.0.0.0")
