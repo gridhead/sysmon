@@ -46,13 +46,32 @@ An intuitive system performance monitoring tool
 - [ ] Add a documentation about theming guidelines
 - [ ] Add client-side theming option using Javascript, unretained across sessions
 - [ ] Add JQuery dependencies to be loaded up from local storage
-- [ ] Add custom font dependencies to be loaded up from local storage
+- [X] Add custom font dependencies to be loaded up from local storage
 - [ ] Add monotype fonts for numeric values
 - [ ] AJAX calls should replace the value of a `<span>` element only
 - [ ] Include functionality of server-side theming using Jinja
 - [ ] Clean up fetches which require creation and population separately
 - [ ] Limit endpoints to ONE by dispersing all information from single endpoint
 - [ ] Include JSON (or YAML) based customizations for enabling/disabling sections
+- [ ] Add a PRINT document button at the top-right corner of the UI
+- [ ] Prevent text-selection/drag-drop capabilities in the UI
+- [ ] Make a `document.window.href` for external links and ensure opening in new tab
+- [ ] Add dynamic refeshing functionality to disk partitions and network interfaces sect
+- [ ] Fix responsiveness in cards for disk partition listing
+- [ ] Trim numerical information to have much lesser accuracy
+- [ ] Correct tabinations and code sanity in the client-side code
+- [ ] Add functionality to switch the units for thermal data between celsius and fahrenheit
+- [ ] Add an obligatory dark mode feature (for everybody else has it now)
+
+
+## Bugs
+- Modern UI
+    - May require hard refreshing (`Ctrl+Shift+R`) followed by a normal refresh (`Ctrl+R`) to get proper data in knob
+    - Responsiveness is broken in cases where the line follows on to be too long without spaces
+    - CSS colors specified by the boilerplate do not match with the one specified in the standard
+    - The process modal does not refresh - data shown in the modal is at taken at the time of opening
+    - Multiple data elements are expressed in uncannily long, bigger and unnecessary accuracies
+    - Minor slow downs are expected as all data elements are fetched and refreshed separately
 
 ## Screenshots
 
