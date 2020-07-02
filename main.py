@@ -153,5 +153,27 @@ def modepage():
                            fanspeed=fanspeed, boottime=boottime, procinfo=procinfo)
 
 
+@main.route("/custpage/", methods=["GET"])
+def custpage():
+    retndata = back.GetOSUnameData()
+    cpuquant = back.GetCPULogicalCount()
+    diskpart = back.GetAllDiskPartitions()
+    dionames = list(back.GetDiskIOUsage()[1].keys())
+    netnames = list(back.GetNetworkIOUsage()[1].keys())
+    #temnames = list(back.GetSensorsTemperature()[1].keys())
+    procinfo = back.GetProcessInfo()
+    senstemp = back.GetSensorsTemperature()
+    fanspeed = back.GetSensorsFanSpeed()
+    boottime = back.GetBootTime()
+    netaddrs = back.GetNetworkIFAddresses()
+    netstats = back.GetNetworkStatistics()
+    thmcolor = "olive"
+    return render_template("cust.html", retndata=retndata, cpuquant=cpuquant,
+                           diskpart=diskpart, dionames=dionames, netnames=netnames,
+                           netaddrs=netaddrs, netstats=netstats, senstemp=senstemp,
+                           fanspeed=fanspeed, boottime=boottime, procinfo=procinfo,
+                           thmcolor=thmcolor)
+
+
 if __name__ == "__main__":
     main.run(port=9696, host="0.0.0.0")
