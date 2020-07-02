@@ -1,27 +1,14 @@
 <!DOCTYPE html>
-<!--
-This is a starter template page. Use this page to start your new project from
-scratch. This page gets rid of all links and provides the needed markup only.
--->
 <html lang="en">
 	<head>
 	  	<meta charset="utf-8">
 	  	<meta name="viewport" content="width=device-width, initial-scale=1">
 	  	<meta http-equiv="x-ua-compatible" content="ie=edge">
 	  	<title>System Monitor</title>
-
-        <!--<link rel="stylesheet" href="{{ url_for("static", filename="css3/uikit.min.css") }}" />-->
         <link rel="stylesheet" href="{{ url_for("static", filename="css3/custfrmt.css") }}" />
-        <!--<script src="{{ url_for("static", filename="jscn/uikit.min.js") }}"></script>-->
-        <!--<script src="{{ url_for("static", filename="jscn/uikit-icons.min.js") }}"></script>-->
-
         <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-
-        <!-- Font Awesome Icons -->
 	  	<link rel="stylesheet" href="{{ url_for("static", filename="plugins/fontawesome-free/css/all.min.css") }}" />
-	  	<!-- Theme style -->
 	  	<link rel="stylesheet" href="{{ url_for("static", filename="dist/css/adminlte.min.css") }}" />
-	  	<!-- Google Font: Source Sans Pro -->
 	  	<link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
         <script type="text/javascript">
             async function UpdateValues() {
@@ -178,7 +165,6 @@ scratch. This page gets rid of all links and provides the needed markup only.
                             var row5cell = actirowe.insertCell(5);
                             var row6cell = actirowe.insertCell(6);
                             var row7cell = actirowe.insertCell(7)
-
                             var pmodname = "\""+String(data.procinfo[indx]['name'])+"\"";
                             var pmodpide = "\""+String(data.procinfo[indx]['pid'])+"\"";
                             var pmodcpaf = "\""+String(data.procinfo[indx]['cpu_affinity'])+"\"";
@@ -195,39 +181,9 @@ scratch. This page gets rid of all links and provides the needed markup only.
                             var pmodthrd = "\""+String(data.procinfo[indx]['threads'])+"\"";
                             var pmoduids = "\""+String(data.procinfo[indx]['uids'])+"\"";
                             var pmoduser = "\""+String(data.procinfo[indx]['username'])+"\"";
-
                             var argument = pmodname + ", " + pmodpide + ", " + pmodcpaf + ", " + pmodcprc + ", " + pmodcptm + ", " + pmodmktm + ", " + pmodgids + ", " + pmodminf + ", " + pmodmprc + ", " + pmodctxs + ", " + pmodthqn + ", " + pmodstat + ", " + pmodterm + ", " + pmodthrd + ", " + pmoduids + ", " + pmoduser;
-
-                            //row0cell.innerHTML = "<a type='button' onclick='SetTitleModalProcess("+"'"+pmodname+"','"+pmodpide+"')' uk-toggle='target: #students-login-modal' class='uk-button uk-button-text headelem'>" + data.procinfo[indx]["name"] + "</a>";
-
-                            //row0cell.innerHTML = "<a type='button' onclick='SetTitleModalProcess("+pmodname+","+pmodpide+")' uk-toggle='target: #students-login-modal' class='uk-button uk-button-text headelem'>" + data.procinfo[indx]["name"] + "</a>";
-
-                            //row0cell.innerHTML = "<a type='button' onclick='SetTitleModalProcess("+argument+")' uk-toggle='target: #students-login-modal' class='uk-button uk-button-text headelem'>" + data.procinfo[indx]["name"] + "</a>";
-
-                            //row0cell.innerHTML = "<a type='button' onclick='console.log("+data.procinfo[indx]['name']+")' uk-toggle='target: #students-login-modal' class='uk-button uk-button-text headelem'>" + data.procinfo[indx]["name"] + "</a>";
-
-                            //CreateProcessModal(indx, pmodname, pmodpide, pmodcpaf, pmodcprc, pmodcptm, pmodmktm, pmodgids, pmodminf, pmodmprc, pmodctxs, pmodthqn, pmodstat, pmodterm, pmodthrd, pmoduids, pmoduser);
-
-
-                            // JQUERY STUNT var argument = indx + ", " + pmodname + ", " + pmodpide + ", " + pmodcpaf + ", " + pmodcprc + ", " + pmodcptm + ", " + pmodmktm + ", " + pmodgids + ", " + pmodminf + ", " + pmodmprc + ", " + pmodctxs + ", " + pmodthqn + ", " + pmodstat + ", " + pmodterm + ", " + pmodthrd + ", " + pmoduids + ", " + pmoduser;
-
                             row0cell.innerText = data.procinfo[indx]["pid"];
-
-
-                            /*
-                            <button type="button" class="btn btn-default" data-toggle="modal" data-target="#modal-default">
-                                Launch Default Modal
-                            </button>
-                            */
-
                             row1cell.innerHTML = "<a type='button' onclick='SetTitleModalProcess("+argument+")' data-toggle='modal' data-target='#single-process-modal' class='headelem'>" + data.procinfo[indx]["name"] + "</a>";
-
-                            //row1cell.innerHTML = "<a type='button' class='headelem ProcessInformation"+indx+">" + data.procinfo[indx]["name"] + "</a>";
-
-                            //row1cell.innerHTML = "<a type='button' class='headelem ProcessInformation"+indx+">" + data.procinfo[indx]["name"] + "</a>";
-
-                            // JQUERY STUNT row1cell.innerHTML = "<button id='proc-"+indx+"' type='button' onclick='CreateProcessModal("+argument+")' class='btn btn-default ProcessInformation" + indx + "'>" + data.procinfo[indx]["name"] + "</button>";
-
                             row2cell.innerText = data.procinfo[indx]["username"];
                             row3cell.innerText = data.procinfo[indx]["memory_percent"];
                             row4cell.innerText = data.procinfo[indx]["cpu_percent"];
@@ -238,49 +194,6 @@ scratch. This page gets rid of all links and provides the needed markup only.
                     });
                 }
             }
-            /*
-            <button type="button" class="btn btn-default ProcessInformation1">Launch Default Toasts with autohide</button>
-            */
-            /*
-            function CreateProcessModal(indx, pmodname, pmodpide, pmodcpaf, pmodcprc, pmodcptm, pmodmktm, pmodgids, pmodminf, pmodmprc, pmodctxs, pmodthqn, pmodstat, pmodterm, pmodthrd, pmoduids, pmoduser)
-            {
-                var procname = pmodname;
-                var procpide = pmodpide;
-                var bodycont = "<dl class='row'>" +
-                    "<dt class='col-sm-8'>Task started at</dt><dd id='proc-boxe-mktm' class='col-sm-4'>"+pmodmktm+"</dd>\n" +
-                    "<dt class='col-sm-8'>Groups IDs associated</dt><dd id='proc-boxe-gids' class='col-sm-4'>"+pmodgids+"</dd>\n" +
-                    "<dt class='col-sm-8'>Memory statistics</dt><dd id='proc-boxe-minf' class='col-sm-4'>"+pmodminf+"</dd>\n" +
-                    "<dt class='col-sm-8'>Memory usage</dt><dd id='proc-boxe-mprc' class='col-sm-4'>"+pmodmprc+"</dd>\n" +
-                    "<dt class='col-sm-8'>Processor affinity</dt><dd id='proc-boxe-cpaf' class='col-sm-4'>"+pmodcpaf+"</dd>\n" +
-                    "<dt class='col-sm-8'>Processor usage</dt><dd id='proc-boxe-cprc' class='col-sm-4'>"+pmodcprc+"</dd>\n" +
-                    "<dt class='col-sm-8'>Time state</dt><dd id='proc-boxe-tstt' class='col-sm-4'>"+0+"</dd>\n" +
-                    "<dt class='col-sm-8'>Context switches</dt><dd id='proc-boxe-ctxs' class='col-sm-4'>"+pmodctxs+"</dd>\n" +
-                    "<dt class='col-sm-8'>Thread count</dt><dd id='proc-boxe-thqn' class='col-sm-4'>"+pmodthqn+"</dd>\n" +
-                    "<dt class='col-sm-8'>Status</dt><dd id='proc-boxe-stat' class='col-sm-4'>"+pmodstat+"</dd>\n" +
-                    "<dt class='col-sm-8'>Terminal</dt><dd id='proc-boxe-term' class='col-sm-4'>"+pmodterm+"</dd>\n" +
-                    "<dt class='col-sm-8'>Threads</dt><dd id='proc-boxe-thrd' class='col-sm-4'>"+pmodthrd+"</dd>\n" +
-                    "<dt class='col-sm-8'>User IDs associated</dt><dd id='proc-boxe-uids' class='col-sm-4'>"+pmoduids+"</dd>\n" +
-                    "<dt class='col-sm-8'>Started by</dt><dd id='proc-boxe-user' class='col-sm-4'>"+pmoduser+"</dd>\n" +
-                    "</dl>" +
-                    "<button type='button' class='btn btn-sm btn-success'>KILL</button>&nbsp;&nbsp;" +
-                    "<button type='button' class='btn btn-sm btn-success'>SUSPEND</button>";
-                $(".ProcessInformation"+indx).click(function() {
-                    $(document).Toasts("create", {
-                        title: procname,
-                        position: "bottomRight",
-                        subtitle: procpide,
-                        autohide: true,
-                        delay: 750,
-                        body: bodycont,
-                    })
-                });
-            }
-            */
-            /*
-            <button type="button" class="btn btn-default" data-toggle="modal" data-target="#modal-default">
-                Launch Default Modal
-            </button>
-            */
             function SetTitleModalProcess(pmodname, pmodpide, pmodcpaf, pmodcprc, pmodcptm, pmodmktm, pmodgids, pmodminf, pmodmprc, pmodctxs, pmodthqn, pmodstat, pmodterm, pmodthrd, pmoduids, pmoduser)
             {
                 document.getElementById("proc-boxe-name").innerText = pmodname;
@@ -291,7 +204,6 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 document.getElementById("proc-boxe-mktm").innerText = pmodmktm;
                 document.getElementById("proc-boxe-gids").innerText = pmodgids;
                 document.getElementById("proc-boxe-minf").innerText = pmodminf;
-                //pmodmprc, pmodctxs, pmodthqn, pmodstat, pmodterm, pmodthrd, pmoduids, pmoduser
                 document.getElementById("proc-boxe-mprc").innerText = pmodmprc + "%";
                 document.getElementById("proc-boxe-ctxs").innerText = pmodctxs;
                 document.getElementById("proc-boxe-thqn").innerText = pmodthqn;
@@ -300,12 +212,6 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 document.getElementById("proc-boxe-thrd").innerText = pmodthrd;
                 document.getElementById("proc-boxe-uids").innerText = pmoduids;
                 document.getElementById("proc-boxe-user").innerText = pmoduser;
-                console.log(pmodpide);
-            }
-            function MenuTextSetter(ActiveMenuText)
-            {
-                var ttletext = document.getElementById("ttletext");
-                ttletext.innerText = "Dashboard / " + ActiveMenuText;
             }
         </script>
 	</head>
