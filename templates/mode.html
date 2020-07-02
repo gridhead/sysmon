@@ -273,7 +273,7 @@
 		  		</div>
 			</div>
 
-			<div id="sect-abot" class="content">
+			<div class="content">
 		  		<div class="container">
 
                     <div class="card card-maroon">
@@ -281,7 +281,6 @@
                             <h5 class="card-title m-0 headelem">Overview</h5>
                             <div class="card-tools">
                                 <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i></button>
-                                <button type="button" class="btn btn-tool" data-card-widget="remove"><i class="fas fa-times"></i></button>
                             </div>
                         </div>
                         <div class="card-body">
@@ -306,9 +305,12 @@
                         </div>
                     </div>
 
-                    <div class="card card-maroon">
+                    <div id="sect-abot" class="card card-maroon">
                         <div class="card-header">
                             <h5 class="card-title m-0 headelem">About</h5>
+                            <div class="card-tools">
+                                <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i></button>
+                            </div>
                         </div>
                         <div class="card-body">
                             <dl class="row">
@@ -406,6 +408,7 @@
                                 </div>
                                 <div class="tab-pane fade" id="proc-time" role="tabpanel" aria-labelledby="proc-time">
                                     <div class="card-body table-responsive p-0">
+                                        <p class="normelem">All values are expressed in seconds</p>
                                         <table id="proclist" class="table table-head-fixed text-nowrap table-sm">
                                             <thead>
                                                 <tr class="headelem">
@@ -500,18 +503,20 @@
                                     </div>
                                 </div>
                                 <div class="tab-pane fade" id="memo-phys" role="tabpanel" aria-labelledby="memo-phys">
+                                    <p class="normelem">All values are expressed in bytes</p>
                                     <dl class="row">
                                         <dt class="col-sm-8 headelem">Total</dt><dd id="memo-phys-tomr" class="col-sm-4 normelem">0 bytes</dd>
                                         <dt class="col-sm-8 headelem">Free</dt><dd id="memo-phys-avbl" class="col-sm-4 normelem">0 bytes</dd>
                                         <dt class="col-sm-8 headelem">Used</dt><dd id="memo-phys-used" class="col-sm-4 normelem">0 bytes</dd>
                                         <dt class="col-sm-8 headelem">Active</dt><dd id="memo-phys-actv" class="col-sm-4 normelem">0 bytes</dd>
-                                        <dt class="col-sm-8 headelem">Buffer</dt><dd id="memo-phys-bufr" class="col-sm-4 normelem">0 bytes</dd>
+                                        <dt class="col-sm-8 headelem">Buffers</dt><dd id="memo-phys-bufr" class="col-sm-4 normelem">0 bytes</dd>
                                         <dt class="col-sm-8 headelem">Cached</dt><dd id="memo-phys-cach" class="col-sm-4 normelem">0 bytes</dd>
                                         <dt class="col-sm-8 headelem">Shared</dt><dd id="memo-phys-shrd" class="col-sm-4 normelem">0 bytes</dd>
                                         <dt class="col-sm-8 headelem">Slab</dt><dd id="memo-phys-slab" class="col-sm-4 normelem">0 bytes</dd>
                                     </dl>
                                 </div>
                                 <div class="tab-pane fade" id="memo-virt" role="tabpanel" aria-labelledby="memo-virt">
+                                    <p class="normelem">All values are expressed in bytes</p>
                                     <dl class="row">
                                         <dt class="col-sm-8 headelem">Total</dt><dd id="memo-swap-tomr" class="col-sm-4 normelem">0 bytes</dd>
                                         <dt class="col-sm-8 headelem">Free</dt><dd id="memo-swap-avbl" class="col-sm-4 normelem">0 bytes</dd>
@@ -541,7 +546,7 @@
                         <div class="card-body">
                             <div class="tab-content" id="custom-tabs-two-tabContent">
                                 <div class="tab-pane fade show active" id="disk-usej" role="tabpanel" aria-labelledby="disk-usej">
-                                    <p>All values are expressed in bytes</p>
+                                    <p class="normelem">All values are expressed in bytes</p>
                                     <div class="card-body table-responsive p-0">
                                         <table id="proclist" class="table table-head-fixed text-nowrap table-sm">
                                             <thead>
