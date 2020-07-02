@@ -310,26 +310,28 @@ scratch. This page gets rid of all links and provides the needed markup only.
         </script>
 	</head>
 
-	<body class="hold-transition layout-top-nav" onload="UpdateValues()">
+	<body class="hold-transition layout-top-nav layout-navbar-fixed layout-footer-fixed" onload="UpdateValues()">
 
         <div class="wrapper">
 		  	<nav class="main-header navbar navbar-expand-md navbar-dark navbar-maroon">
 				<div class="container">
 			  		<a href="#" class="navbar-brand">
 						<img src="{{ url_for("static", filename="imgs/datalogo.svg") }}" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8; filter: invert(93%) sepia(94%) saturate(0%) hue-rotate(248deg) brightness(106%) contrast(106%);">
-						<span class="brand-text font-weight-light">&nbsp;System Monitor</span>
+						<span class="brand-text font-weight-bold">&nbsp;System Monitor</span>
 			  		</a>
 			  		<button class="navbar-toggler order-1" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
 						<span class="navbar-toggler-icon"></span>
 			  		</button>
 			  		<div class="collapse navbar-collapse order-3" id="navbarCollapse">
 					<ul class="navbar-nav">
-				  		<li class="nav-item">
-				    		<a href="index3.html" class="nav-link">Home</a>
-				  		</li>
-				  		<li class="nav-item">
-				    		<a href="#" class="nav-link">Contact</a>
-				  		</li>
+				  		<li class="nav-item"><a href="#sect-abot" class="nav-link">About</a></li>
+				  		<li class="nav-item"><a href="#sect-proc" class="nav-link">Processes</a></li>
+                        <li class="nav-item"><a href="#sect-cpud" class="nav-link">Processor</a></li>
+                        <li class="nav-item"><a href="#sect-memo" class="nav-link">Memory</a></li>
+                        <li class="nav-item"><a href="#sect-disk" class="nav-link">Disks</a></li>
+                        <li class="nav-item"><a href="#sect-netw" class="nav-link">Network</a></li>
+                        <li class="nav-item"><a href="#sect-sens" class="nav-link">Sensors</a></li>
+                        <li class="nav-item"><a href="#sect-thrm" class="nav-link">Thermal</a></li>
 					</ul>
 			  	</div>
 			  	<ul class="order-1 order-md-3 navbar-nav navbar-no-expand ml-auto">
@@ -357,12 +359,11 @@ scratch. This page gets rid of all links and provides the needed markup only.
 		  		</div>
 			</div>
 
-			<div class="content">
+			<div id="sect-abot" class="content">
 		  		<div class="container">
-
                     <div class="card card-maroon">
                         <div class="card-header">
-                            <h5 class="card-title m-0">System Information</h5>
+                            <h5 class="card-title m-0 text-bold">About</h5>
                         </div>
                         <div class="card-body">
                             <dl class="row">
@@ -385,9 +386,9 @@ scratch. This page gets rid of all links and provides the needed markup only.
                         </div>
                     </div>
 
-                    <div class="card card-maroon">
+                    <div id="sect-proc" class="card card-maroon">
                         <div class="card-header">
-                            <h5 id="proc-info-ttle" class="card-title m-0">Processes ({{ procinfo|length }})</h5>
+                            <h5 id="proc-info-ttle" class="card-title m-0 text-bold">Processes ({{ procinfo|length }})</h5>
                             <div class="card-tools">
                                 <div class="input-group input-group-sm" style="width: 200px;">
                                     <input type="text" name="table_search" class="form-control float-right" placeholder="Search">
@@ -431,7 +432,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                         </div>
                     </div>
 
-                    <div class="card card-maroon card-tabs">
+                    <div id="sect-cpud" class="card card-maroon card-tabs">
                         <div class="card-header p-0 pt-1">
                             <ul class="nav nav-tabs" id="custom-tabs-two-tab" role="tablist">
                                 <li class="nav-item">
@@ -517,7 +518,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                         </div>
                     </div>
 
-                    <div class="card card-maroon card-tabs">
+                    <div id="sect-memo" class="card card-maroon card-tabs">
                         <div class="card-header p-0 pt-1">
                             <ul class="nav nav-tabs" id="custom-tabs-two-tab" role="tablist">
                                 <li class="nav-item">
@@ -587,7 +588,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                         </div>
                     </div>
 
-                    <div class="card card-maroon card-tabs">
+                    <div id="sect-disk" class="card card-maroon card-tabs">
                         <div class="card-header p-0 pt-1">
                             <ul class="nav nav-tabs" id="custom-tabs-two-tab" role="tablist">
                                 <li class="nav-item">
@@ -663,7 +664,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                         </div>
                     </div>
 
-                    <div class="card card-maroon card-tabs">
+                    <div id="sect-netw" class="card card-maroon card-tabs">
                         <div class="card-header p-0 pt-1">
                             <ul class="nav nav-tabs" id="custom-tabs-two-tab" role="tablist">
                                 <li class="nav-item">
@@ -763,7 +764,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                         </div>
                     </div>
 
-                    <div class="card card-maroon card-tabs">
+                    <div id="sect-sens" class="card card-maroon card-tabs">
                         <div class="card-header p-0 pt-1">
                             <ul class="nav nav-tabs" id="custom-tabs-two-tab" role="tablist">
                                 <li class="nav-item">
@@ -823,7 +824,7 @@ scratch. This page gets rid of all links and provides the needed markup only.
                         </div>
                     </div>
 
-                    <div class="card card-maroon card-tabs">
+                    <div id="sect-thrm" class="card card-maroon card-tabs">
                         <div class="card-header p-0 pt-1">
                             <ul class="nav nav-tabs" id="custom-tabs-two-tab" role="tablist">
                                 <li class="nav-item">
@@ -917,10 +918,16 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 </div>
             </div>
         </div>
+        </div>
+        </div>
 
-		<footer class="main-footer">
-			<div class="float-right d-none d-sm-inline">Anything you want</div>
-			<strong>Copyright &copy; 2014-2019 <a href="https://adminlte.io">AdminLTE.io</a>.</strong> All rights reserved.
+		<footer class="main-footer bg-maroon">
+            <div class="container">
+                <div class="float-right d-none d-sm-inline">
+                    Created with <i class="fas fa-heart"></i> by <a class="text-bold" href="https://github.com/t0xic0der/" style="color:yellow;">t0xic0der</a>
+                </div>
+                <strong>SYSMON Modern v02072020. </strong><a href="https://github.com/t0xic0der/sysmon" style="color: yellow;">Contribute</a> here.
+            </div>
 		</footer>
 
 		<!--<script src="{{ url_for("static", filename="plugins/jquery/jquery.min.js") }}"></script>-->
