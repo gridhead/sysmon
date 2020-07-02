@@ -394,7 +394,7 @@
                                         {% for indx in range(cpuquant) %}
                                         <div class="col-md-12 col-sm-6 col-12">
                                             <div class="info-box bg-info bg-{{ thmcolor }}">
-                                                <span class="info-box-icon bg-white"><i class="fas fa-microchip" style="color: #d81b60;"></i></span>
+                                                <span class="info-box-icon bg-white"><i class="fas fa-microchip" style="color: {{ thmcolor }};"></i></span>
                                                 <div class="info-box-content">
                                                     <span id="cpuu-indx-{{ indx }}" class="info-box-text headelem">CPU #{{ indx }}</span>
                                                     <span id="cpuu-perc-{{ indx }}" class="info-box-number hugeelem">0%</span>
@@ -480,7 +480,7 @@
                                     <div class="row">
                                         <div class="col-md-12 col-sm-6 col-12">
                                             <div class="info-box bg-info bg-{{ thmcolor }}">
-                                                <span class="info-box-icon bg-white"><i class="fas fa-memory" style="color: #d81b60;"></i></span>
+                                                <span class="info-box-icon bg-white"><i class="fas fa-memory" style="color: {{ thmcolor }};"></i></span>
                                                 <div class="info-box-content">
                                                     <span id="memo-phys-name" class="info-box-text headelem">Physical memory</span>
                                                     <span id="memo-phys-perc" class="info-box-number hugeelem">0%</span>
@@ -491,7 +491,7 @@
                                         </div>
                                         <div class="col-md-12 col-sm-6 col-12">
                                             <div class="info-box bg-info bg-{{ thmcolor }}">
-                                                <span class="info-box-icon bg-white"><i class="far fa-copy" style="color: #d81b60;"></i></span>
+                                                <span class="info-box-icon bg-white"><i class="far fa-copy" style="color: {{ thmcolor }};"></i></span>
                                                 <div class="info-box-content">
                                                     <span id="memo-swap-name" class="info-box-text headelem">Virtual memory</span>
                                                     <span id="memo-swap-perc" class="info-box-number hugeelem">0%</span>
@@ -589,7 +589,7 @@
                                         {% for indx in diskpart %}
                                         <div class="col-md-12 col-sm-6 col-12">
                                             <div class="info-box bg-info bg-{{ thmcolor }}">
-                                                <span class="info-box-icon bg-white"><i class="fas fa-hdd" style="color: #d81b60;"></i></span>
+                                                <span class="info-box-icon bg-white"><i class="fas fa-hdd" style="color: {{ thmcolor }};"></i></span>
                                                 <div class="info-box-content">
                                                     <h5 class="info-box-text hugeelem">{{ indx[0] }} ({{ indx[1] }})</h5>
                                                     <span id="cpuu-text-{{ indx }}" class="normelem">
@@ -666,7 +666,7 @@
                                         {% for indx in netstats.keys() %}
                                         <div class="col-md-12 col-sm-6 col-12">
                                             <div class="info-box bg-info bg-{{ thmcolor }}">
-                                                <span class="info-box-icon bg-white"><i class="fas fa-hdd" style="color: #d81b60;"></i></span>
+                                                <span class="info-box-icon bg-white"><i class="fas fa-hdd" style="color: {{ thmcolor }};"></i></span>
                                                 <div class="info-box-content">
                                                     <h5 class="info-box-text headelem">{{ indx }} ({{ netstats[indx][0] }})</h5>
                                                     <span id="cpuu-text-{{ indx }}">
@@ -687,7 +687,7 @@
                                             {% for jndx in netaddrs[indx] %}
                                             <div class="col-md-12 col-sm-6 col-12">
                                                 <div class="info-box bg-info bg-{{ thmcolor }}">
-                                                    <span class="info-box-icon bg-white"><i class="fas fa-hdd" style="color: #d81b60;"></i></span>
+                                                    <span class="info-box-icon bg-white"><i class="fas fa-hdd" style="color: {{ thmcolor }};"></i></span>
                                                     <div class="info-box-content">
                                                         <h5 class="info-box-text headelem">{{ indx }} ({{ jndx[1] }})</h5>
                                                         <span id="cpuu-text-{{ indx }}">
@@ -725,7 +725,7 @@
                                     <div class="row">
                                         <div class="col-md-12 col-sm-6 col-12">
                                             <div class="info-box bg-info bg-{{ thmcolor }}">
-                                                <span class="info-box-icon bg-white"><i class="fas fa-microchip" style="color: #d81b60;"></i></span>
+                                                <span class="info-box-icon bg-white"><i class="fas fa-microchip" style="color: {{ thmcolor }};"></i></span>
                                                 <div class="info-box-content">
                                                     <span id="batt-ttle-text" class="info-box-text headelem">Battery</span>
                                                     <span id="batt-stat-perc" class="info-box-number hugeelem">0%</span>
