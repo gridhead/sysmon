@@ -388,6 +388,14 @@ scratch. This page gets rid of all links and provides the needed markup only.
                     <div class="card card-maroon">
                         <div class="card-header">
                             <h5 id="proc-info-ttle" class="card-title m-0">Processes ({{ procinfo|length }})</h5>
+                            <div class="card-tools">
+                                <div class="input-group input-group-sm" style="width: 200px;">
+                                    <input type="text" name="table_search" class="form-control float-right" placeholder="Search">
+                                    <div class="input-group-append">
+                                        <button type="submit" class="btn btn-default"><i class="fas fa-search"></i></button>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                         <div class="card-body">
                             <div class="card-body table-responsive p-0" style="height: 600px;">
