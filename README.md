@@ -44,6 +44,15 @@ An intuitive system performance monitoring tool
 - [ ] Add element in the frontend to help modify refresh rate from the frontend
 - [ ] Cleanup decorators in backend and optimize them for efficiency
 - [ ] Add a documentation about theming guidelines
+- [ ] Add client-side theming option using Javascript, unretained across sessions
+- [ ] Add JQuery dependencies to be loaded up from local storage
+- [ ] Add custom font dependencies to be loaded up from local storage
+- [ ] Add monotype fonts for numeric values
+- [ ] AJAX calls should replace the value of a `<span>` element only
+- [ ] Include functionality of server-side theming using Jinja
+- [ ] Clean up fetches which require creation and population separately
+- [ ] Limit endpoints to ONE by dispersing all information from single endpoint
+- [ ] Include JSON (or YAML) based customizations for enabling/disabling sections
 
 ## Screenshots
 
