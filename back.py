@@ -1,11 +1,12 @@
-import os, psutil, time
+import os, psutil, time, getpass
 
 def GetOSUnameData():
     unamdata = os.uname()
     retndata = {
         "System name": unamdata.sysname + " " + unamdata.release,
-        "Host name": unamdata.nodename + " (" + unamdata.machine + ") ",
+        "Host name": unamdata.nodename + " [" + unamdata.machine + "] ",
         "Version": unamdata.version,
+        "Username": getpass.getuser(),
     }
     return retndata
 
