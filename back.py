@@ -14,32 +14,6 @@ def GetCPULogicalCount():
     cpuquant = psutil.cpu_count(logical=True)
     return cpuquant
 
-def RecognizeSystem():
-    systarry = []
-    if psutil.AIX:
-        systarry.append("AIX")
-    if psutil.BSD:
-        systarry.append("BSD")
-    if psutil.FREEBSD:
-        systarry.append("FreeBSD")
-    if psutil.LINUX:
-        systarry.append("Linux")
-    if psutil.MACOS:
-        systarry.append("MacOS")
-    if psutil.NETBSD:
-        systarry.append("NetBSD")
-    if psutil.OPENBSD:
-        systarry.append("OpenBSD")
-    if psutil.OSX:
-        systarry.append("OSX")
-    if psutil.POSIX:
-        systarry.append("POSIX")
-    if psutil.SUNOS:
-        systarry.append("SunOS")
-    if psutil.WINDOWS:
-        systarry.append("Windows")
-    return systarry
-
 def GetVirtualMemoryData():
     bruhdata = psutil.virtual_memory()
     retndata = {

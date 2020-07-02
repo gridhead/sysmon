@@ -8,7 +8,6 @@ main = Flask(__name__)
 @main.route("/")
 def json():
     retndata = back.GetOSUnameData()
-    systarry = back.RecognizeSystem()
     cpuquant = back.GetCPULogicalCount()
     diskpart = back.GetAllDiskPartitions()
     dionames = list(back.GetDiskIOUsage()[1].keys())
@@ -22,12 +21,9 @@ def json():
 
     netaddrs = back.GetNetworkIFAddresses()
     netstats = back.GetNetworkStatistics()
-    return render_template("main.html", retndata=retndata,
-                           systarry=systarry, cpuquant=cpuquant,
-                           diskpart=diskpart, dionames=dionames,
-                           netnames=netnames, netaddrs=netaddrs,
-                           netstats=netstats, senstemp=senstemp,
-                           fanspeed=fanspeed, boottime=boottime,
+    return render_template("main.html", retndata=retndata, cpuquant=cpuquant,
+                           diskpart=diskpart, dionames=dionames, netnames=netnames, netaddrs=netaddrs,
+                           netstats=netstats, senstemp=senstemp, fanspeed=fanspeed, boottime=boottime,
                            procinfo=procinfo)
 
 
@@ -140,7 +136,6 @@ def procinfo():
 @main.route("/modepage/", methods=["GET"])
 def modepage():
     retndata = back.GetOSUnameData()
-    systarry = back.RecognizeSystem()
     cpuquant = back.GetCPULogicalCount()
     diskpart = back.GetAllDiskPartitions()
     dionames = list(back.GetDiskIOUsage()[1].keys())
@@ -152,13 +147,10 @@ def modepage():
     boottime = back.GetBootTime()
     netaddrs = back.GetNetworkIFAddresses()
     netstats = back.GetNetworkStatistics()
-    return render_template("mode.html", retndata=retndata,
-                           systarry=systarry, cpuquant=cpuquant,
-                           diskpart=diskpart, dionames=dionames,
-                           netnames=netnames, netaddrs=netaddrs,
-                           netstats=netstats, senstemp=senstemp,
-                           fanspeed=fanspeed, boottime=boottime,
-                           procinfo=procinfo)
+    return render_template("mode.html", retndata=retndata, cpuquant=cpuquant,
+                           diskpart=diskpart, dionames=dionames, netnames=netnames,
+                           netaddrs=netaddrs, netstats=netstats, senstemp=senstemp,
+                           fanspeed=fanspeed, boottime=boottime, procinfo=procinfo)
 
 
 if __name__ == "__main__":
