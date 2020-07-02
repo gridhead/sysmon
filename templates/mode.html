@@ -31,6 +31,8 @@
                         var physfill = document.getElementById("memo-phys-prog");
                         var percentg = "width: " + data.virtdata["Percent"] + "%";
                         physfill.style = percentg;
+                        var tronphys = document.getElementById("tron-phys-perc");
+                        tronphys.value = data.virtdata["Percent"];
                     });
                 $.getJSON($SCRIPT_ROOT+"/cputimes/",
                     function(data) {
@@ -53,10 +55,12 @@
                         for (let indx = 0; indx < {{ cpuquant }}; indx ++)
                         {
                             $("#cpuu-perc-"+indx).text(data.cpuprcnt[indx]+"%")
-                            $("#cpuu-perc-"+indx).text(data.cpuprcnt[indx]+"%")
                             var cpupfill = document.getElementById("cpuu-prog-"+indx);
                             var percentg = "width: " + data.cpuprcnt[indx] + "%";
                             cpupfill.style = percentg;
+                            var troncpuu = document.getElementById("tron-cpuu-perc");
+                            troncpuu.value = data.cpuprcnt[indx];
+
                         }
                     });
                 $.getJSON($SCRIPT_ROOT+"/cpuclock/",
@@ -85,6 +89,8 @@
                         var swapfill = document.getElementById("memo-swap-prog");
                         var percentg = "width: " + data.swapinfo[3] + "%";
                         swapfill.style = percentg;
+                        var tronswap = document.getElementById("tron-swap-perc");
+                        tronswap.value = data.swapinfo[3];
                     });
                 $.getJSON($SCRIPT_ROOT+"/diousage/",
                     function(data) {
@@ -138,6 +144,8 @@
                             var battfill = document.getElementById("batt-stat-prog");
                             var percentg = "width: " + data.battstat[0] + "%";
                             battfill.style = percentg;
+                            var tronbatt = document.getElementById("tron-batt-perc");
+                            tronbatt.value = data.battstat[0];
                         }
                     });
                 $.getJSON($SCRIPT_ROOT+"/procinfo/",
@@ -267,6 +275,37 @@
 
 			<div id="sect-abot" class="content">
 		  		<div class="container">
+
+                    <div class="card card-maroon">
+                        <div class="card-header">
+                            <h5 class="card-title m-0 headelem">Overview</h5>
+                            <div class="card-tools">
+                                <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i></button>
+                                <button type="button" class="btn btn-tool" data-card-widget="remove"><i class="fas fa-times"></i></button>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-6 col-md-3 text-center">
+                                    <input id="tron-cpuu-perc" type="text" class="knob" value="0" data-skin="tron" data-thickness="0.1" data-width="90" data-height="90" data-fgColor="maroon" data-readonly="true">
+                                    <div class="knob-label headelem">Processor</div>
+                                </div>
+                                <div class="col-6 col-md-3 text-center">
+                                    <input id="tron-phys-perc" type="text" class="knob" value="0" data-skin="tron" data-thickness="0.1" data-width="90" data-height="90" data-fgColor="maroon" data-readonly="true">
+                                    <div class="knob-label headelem">Physical</div>
+                                </div>
+                                <div class="col-6 col-md-3 text-center">
+                                    <input id="tron-swap-perc" type="text" class="knob" value="0" data-skin="tron" data-thickness="0.1" data-width="90" data-height="90" data-fgColor="maroon" data-readonly="true">
+                                    <div class="knob-label headelem">Virtual</div>
+                                </div>
+                                <div class="col-6 col-md-3 text-center">
+                                    <input id="tron-batt-perc" type="text" class="knob" value="0" data-skin="tron" data-thickness="0.1" data-width="90" data-height="90" data-fgColor="maroon" data-readonly="true">
+                                    <div class="knob-label headelem">Battery</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                     <div class="card card-maroon">
                         <div class="card-header">
                             <h5 class="card-title m-0 headelem">About</h5>
@@ -830,5 +869,44 @@
 		<!--<script src="{{ url_for("static", filename="plugins/jquery/jquery.min.js") }}"></script>-->
 		<script src="{{ url_for("static", filename="plugins/bootstrap/js/bootstrap.bundle.min.js") }}"></script>
 		<script src="{{ url_for("static", filename="dist/js/adminlte.min.js") }}"></script>
+        <script src="{{ url_for("static", filename="plugins/jquery-knob/jquery.knob.min.js") }}"></script>
+        <script>
+            $(function () {
+                $('.knob').knob({
+                    draw: function () {
+                        if (this.$.data('skin') == 'tron') {
+                            var a   = this.angle(this.cv),
+                            sa  = this.startAngle,
+                            sat = this.startAngle,
+                            ea, eat = sat + a, r = true
+                            this.g.lineWidth = this.lineWidth
+                            this.o.cursor
+                            && (sat = eat - 0.3)
+                            && (eat = eat + 0.3)
+                            if (this.o.displayPrevious) {
+                                ea = this.startAngle + this.angle(this.value)
+                                this.o.cursor
+                                && (sa = ea - 0.3)
+                                && (ea = ea + 0.3)
+                                this.g.beginPath()
+                                this.g.strokeStyle = this.previousColor
+                                this.g.arc(this.xy, this.xy, this.radius - this.lineWidth, sa, ea, false)
+                                this.g.stroke()
+                            }
+                            this.g.beginPath()
+                            this.g.strokeStyle = r ? this.o.fgColor : this.fgColor
+                            this.g.arc(this.xy, this.xy, this.radius - this.lineWidth, sat, eat, false)
+                            this.g.stroke()
+                            this.g.lineWidth = 2
+                            this.g.beginPath()
+                            this.g.strokeStyle = this.o.fgColor
+                            this.g.arc(this.xy, this.xy, this.radius - this.lineWidth + 1 + this.lineWidth * 2 / 3, 0, 2 * Math.PI, false)
+                            this.g.stroke()
+                            return false
+                        }
+                    }
+                }
+            )})
+        </script>
 	</body>
 </html>
