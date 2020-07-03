@@ -73,15 +73,16 @@ An intuitive system performance monitoring tool
 - [ ] Cleanup decorators in backend and optimize them for efficiency
 - [ ] Add a documentation about theming guidelines
 - [X] Add client-side theming option using Javascript, unretained across sessions
-- [ ] Add JQuery dependencies to be loaded up from local storage
+- [X] Add JQuery dependencies to be loaded up from local storage
 - [X] Add custom font dependencies to be loaded up from local storage
+- [X] Minimize CSS/JS dependencies and remove those which are unused
 - [ ] Add monotype fonts for numeric values
 - [ ] AJAX calls should replace the value of a `<span>` element only
 - [X] Include functionality of server-side theming using Jinja
 - [ ] Clean up fetches which require creation and population separately
 - [ ] Limit endpoints to ONE by dispersing all information from single endpoint
 - [ ] Include JSON (or YAML) based customizations for enabling/disabling sections
-- [ ] Add a PRINT document button at the top-right corner of the UI
+- [X] Add a PRINT document button at the top-right corner of the UI
 - [X] Prevent text-selection/drag-drop capabilities in the UI
 - [ ] Make a `document.window.href` for external links and ensure opening in new tab
 - [X] Add dynamic refreshing functionality to disk partitions and network interfaces sect
@@ -90,6 +91,7 @@ An intuitive system performance monitoring tool
 - [ ] Correct tabinations and code sanity in the client-side code
 - [ ] Add functionality to switch the units for thermal data between celsius and fahrenheit
 - [ ] Add an obligatory dark mode feature (for everybody else has it now)
+- [ ] Change `onclick` highlighting color on dropdown menus (It is by-default `primary` for all accents)
 
 ## Bugs
 - Modern UI
