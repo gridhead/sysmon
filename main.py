@@ -153,8 +153,8 @@ def modepage():
                            fanspeed=fanspeed, boottime=boottime, procinfo=procinfo)
 
 
-@main.route("/custpage/", methods=["GET"])
-def custpage():
+@main.route("/custpage/<thmcolor>/", methods=["GET"])
+def custpage(thmcolor="maroon"):
     retndata = back.GetOSUnameData()
     cpuquant = back.GetCPULogicalCount()
     diskpart = back.GetAllDiskPartitions()
@@ -167,7 +167,6 @@ def custpage():
     boottime = back.GetBootTime()
     netaddrs = back.GetNetworkIFAddresses()
     netstats = back.GetNetworkStatistics()
-    thmcolor = "olive"
     return render_template("cust.html", retndata=retndata, cpuquant=cpuquant,
                            diskpart=diskpart, dionames=dionames, netnames=netnames,
                            netaddrs=netaddrs, netstats=netstats, senstemp=senstemp,
