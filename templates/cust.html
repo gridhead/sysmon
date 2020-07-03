@@ -224,7 +224,7 @@
         </script>
 	</head>
 
-	<body class="hold-transition layout-top-nav layout-navbar-fixed layout-footer-fixed" onload="UpdateValues()">
+	<body class="hold-transition layout-top-nav layout-navbar-fixed layout-footer-fixed noselect" ondragstart="return false;" ondrop="return false;" onload="UpdateValues()">
 
         <div class="wrapper">
 		  	<nav class="main-header navbar navbar-expand-md navbar-dark navbar-{{ thmcolor }}">
@@ -249,17 +249,65 @@
 					</ul>
 			  	</div>
 			  	<ul class="order-1 order-md-3 navbar-nav navbar-no-expand ml-auto">
-					<li class="nav-item dropdown">
-				  		<a class="nav-link" data-toggle="dropdown" href="#">
-				    		<i class="fas fa-comments"></i>
-				    		<span class="badge badge-danger navbar-badge">3</span>
+                    <li class="nav-item" onclick="location.reload()">
+				  		<a class="nav-link">
+				    		<i class="fas fa-sync"></i>
+				  		</a>
+					</li>
+                    <li class="nav-item" onclick="window.print()">
+				  		<a class="nav-link">
+				    		<i class="fas fa-print"></i>
 				  		</a>
 					</li>
 					<li class="nav-item dropdown">
 				  		<a class="nav-link" data-toggle="dropdown" href="#">
-				    		<i class="far fa-bell"></i>
-				    		<span class="badge badge-warning navbar-badge">15</span>
+				    		<i class="fas fa-palette"></i>
 				  		</a>
+                        <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right normelem">
+                            <span class="dropdown-header headelem">21 Custom Accents</span>
+                            <div class="dropdown-divider"></div>
+                            <a href="{{ url_for("custpage", thmcolor="primary") }}" class="dropdown-item">Primary</a>
+                            <div class="dropdown-divider"></div>
+                            <a href="{{ url_for("custpage", thmcolor="secondary") }}" class="dropdown-item">Secondary</a>
+                            <div class="dropdown-divider"></div>
+                            <a href="{{ url_for("custpage", thmcolor="info") }}" class="dropdown-item">Information</a>
+                            <div class="dropdown-divider"></div>
+                            <a href="{{ url_for("custpage", thmcolor="success") }}" class="dropdown-item">Success</a>
+                            <div class="dropdown-divider"></div>
+                            <a href="{{ url_for("custpage", thmcolor="warning") }}" class="dropdown-item">Warning</a>
+                            <div class="dropdown-divider"></div>
+                            <a href="{{ url_for("custpage", thmcolor="danger") }}" class="dropdown-item">Danger</a>
+                            <div class="dropdown-divider"></div>
+                            <a href="{{ url_for("custpage", thmcolor="black") }}" class="dropdown-item">Black</a>
+                            <div class="dropdown-divider"></div>
+                            <a href="{{ url_for("custpage", thmcolor="gray-dark") }}" class="dropdown-item">Gray Dark</a>
+                            <div class="dropdown-divider"></div>
+                            <a href="{{ url_for("custpage", thmcolor="gray") }}" class="dropdown-item">Gray</a>
+                            <div class="dropdown-divider"></div>
+                            <a href="{{ url_for("custpage", thmcolor="light") }}" class="dropdown-item">Light</a>
+                            <div class="dropdown-divider"></div>
+                            <a href="{{ url_for("custpage", thmcolor="indigo") }}" class="dropdown-item">Indigo</a>
+                            <div class="dropdown-divider"></div>
+                            <a href="{{ url_for("custpage", thmcolor="lightblue") }}" class="dropdown-item">Light Blue</a>
+                            <div class="dropdown-divider"></div>
+                            <a href="{{ url_for("custpage", thmcolor="navy") }}" class="dropdown-item">Navy</a>
+                            <div class="dropdown-divider"></div>
+                            <a href="{{ url_for("custpage", thmcolor="purple") }}" class="dropdown-item">Purple</a>
+                            <div class="dropdown-divider"></div>
+                            <a href="{{ url_for("custpage", thmcolor="fuchsia") }}" class="dropdown-item">Fuchsia</a>
+                            <div class="dropdown-divider"></div>
+                            <a href="{{ url_for("custpage", thmcolor="pink") }}" class="dropdown-item">Pink</a>
+                            <div class="dropdown-divider"></div>
+                            <a href="{{ url_for("custpage", thmcolor="maroon") }}" class="dropdown-item">Maroon</a>
+                            <div class="dropdown-divider"></div>
+                            <a href="{{ url_for("custpage", thmcolor="orange") }}" class="dropdown-item">Orange</a>
+                            <div class="dropdown-divider"></div>
+                            <a href="{{ url_for("custpage", thmcolor="lime") }}" class="dropdown-item">Lime</a>
+                            <div class="dropdown-divider"></div>
+                            <a href="{{ url_for("custpage", thmcolor="teal") }}" class="dropdown-item">Teal</a>
+                            <div class="dropdown-divider"></div>
+                            <a href="{{ url_for("custpage", thmcolor="olive") }}" class="dropdown-item">Olive</a>
+                        </div>
 					</li>
 			  	</ul>
 			</div>
