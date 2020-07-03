@@ -1,43 +1,18 @@
-import os, psutil, time
+import os, psutil, time, getpass
 
 def GetOSUnameData():
     unamdata = os.uname()
     retndata = {
         "System name": unamdata.sysname + " " + unamdata.release,
-        "Host name": unamdata.nodename + " (" + unamdata.machine + ") ",
+        "Host name": unamdata.nodename + " [" + unamdata.machine + "] ",
         "Version": unamdata.version,
+        "Username": getpass.getuser(),
     }
     return retndata
 
 def GetCPULogicalCount():
     cpuquant = psutil.cpu_count(logical=True)
     return cpuquant
-
-def RecognizeSystem():
-    systarry = []
-    if psutil.AIX:
-        systarry.append("AIX")
-    if psutil.BSD:
-        systarry.append("BSD")
-    if psutil.FREEBSD:
-        systarry.append("FreeBSD")
-    if psutil.LINUX:
-        systarry.append("Linux")
-    if psutil.MACOS:
-        systarry.append("MacOS")
-    if psutil.NETBSD:
-        systarry.append("NetBSD")
-    if psutil.OPENBSD:
-        systarry.append("OpenBSD")
-    if psutil.OSX:
-        systarry.append("OSX")
-    if psutil.POSIX:
-        systarry.append("POSIX")
-    if psutil.SUNOS:
-        systarry.append("SunOS")
-    if psutil.WINDOWS:
-        systarry.append("Windows")
-    return systarry
 
 def GetVirtualMemoryData():
     bruhdata = psutil.virtual_memory()
@@ -139,3 +114,14 @@ def GetSensorsBatteryStatus():
 def GetBootTime():
     boottime = time.ctime(psutil.boot_time())
     return boottime
+
+def GetProcessInfo():
+    procinfo = []
+    for indx in psutil.process_iter(["pid", "cpu_affinity", "cpu_percent",
+                                     "cpu_times", "create_time", "gids",
+                                     "memory_info", "memory_percent", "name",
+                                     "num_ctx_switches", "num_threads", "status",
+                                     "terminal", "threads", "uids",
+                                     "username"]):
+        procinfo.append(indx.info)
+    return procinfo
