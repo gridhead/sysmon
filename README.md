@@ -6,6 +6,8 @@ An intuitive system performance monitoring tool
 - Relatively low overhead from the server during stat (approx. 4MB over runtime usage)
 - Easy and flexible customization of interface by replacing the assets with your own
 - Tweakable refresh times for dynamic information with endpoints powered by `psutil`
+- Report printing and dynamic refreshing buttons available at disposal
+- Hybrid cross-client theming engine built with upto 21 supported theming options
 
 ## Usage
 1.  Install and upgrade virtualenv if not already done by executing `pip3 install virtualenv --user`
@@ -17,7 +19,7 @@ An intuitive system performance monitoring tool
 7.  Take a note of the computer's IP address and make sure that it is reachable
 8.  Visit `http://<YOUR-IP-ADDRESS>:9696/primary` from the other device (or `http://localhost:9696/primary` on the same PC)
 9.  Take a look at the different themes available, refresh the monitor or print reports when needed.
-10.  When done tinkering, deactivate the virtual environment by executing `deactivate`
+10. When done tinkering, deactivate the virtual environment by executing `deactivate`
 11. Give stars to the repository if it was helpful
 
 ## Screenshots
@@ -63,7 +65,7 @@ An intuitive system performance monitoring tool
 - [X] Write client-side Jinja template and AJAX calls for **Thermal** information
 - [X] Write driver code and endpoint access code for **Processes** page
 - [X] Write client-side Jinja template and AJAX calls for **Processes** information
-- [ ] Add capacity to KILL/SUSPEND/RESUME etc. tasks from the modal
+- [ ] Add capacity to **KILL/SUSPEND/RESUME** etc. tasks from the modal
 - [ ] Highlight useful information in a much less granular manner
 - [ ] Add data visualization with line graph, bar graph and donut charts
 - [ ] Cleanup asynchronous calls and optimize them for speedup
