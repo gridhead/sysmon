@@ -230,692 +230,704 @@
 		  	<nav class="main-header navbar navbar-expand-md navbar-dark navbar-{{ thmcolor }}">
 				<div class="container">
 			  		<a href="#" class="navbar-brand">
-						<img src="{{ url_for("static", filename="imgs/datalogo.svg") }}" alt="AdminLTE Logo" class="brand-image img-circle elevation-3" style="opacity: .8; filter: invert(93%) sepia(94%) saturate(0%) hue-rotate(248deg) brightness(106%) contrast(106%);">
+						<img src="{{ url_for("static", filename="imgs/datalogo.svg") }}" class="brand-image img-circle" style="opacity: .8; filter: invert(93%) sepia(94%) saturate(0%) hue-rotate(248deg) brightness(106%) contrast(106%);">
 						<span class="brand-text font-weight-bold headelem">&nbsp;System Monitor</span>
 			  		</a>
 			  		<button class="navbar-toggler order-1" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
 						<span class="navbar-toggler-icon"></span>
 			  		</button>
-			  		<div class="collapse navbar-collapse order-3" id="navbarCollapse">
-					<ul class="navbar-nav normelem">
-				  		<li class="nav-item"><a href="#sect-abot" class="nav-link">About</a></li>
-				  		<li class="nav-item"><a href="#sect-proc" class="nav-link">Processes</a></li>
-                        <li class="nav-item"><a href="#sect-cpud" class="nav-link">Processor</a></li>
-                        <li class="nav-item"><a href="#sect-memo" class="nav-link">Memory</a></li>
-                        <li class="nav-item"><a href="#sect-disk" class="nav-link">Disks</a></li>
-                        <li class="nav-item"><a href="#sect-netw" class="nav-link">Network</a></li>
-                        <li class="nav-item"><a href="#sect-sens" class="nav-link">Sensors</a></li>
-                        <li class="nav-item"><a href="#sect-thrm" class="nav-link">Thermal</a></li>
-					</ul>
-			  	</div>
-			  	<ul class="order-1 order-md-3 navbar-nav navbar-no-expand ml-auto">
-                    <li class="nav-item" onclick="location.reload()">
-				  		<a class="nav-link">
-				    		<i class="fas fa-sync"></i>
-				  		</a>
-					</li>
-                    <li class="nav-item" onclick="window.print()">
-				  		<a class="nav-link">
-				    		<i class="fas fa-print"></i>
-				  		</a>
-					</li>
-					<li class="nav-item dropdown">
-				  		<a class="nav-link" data-toggle="dropdown" href="#">
-				    		<i class="fas fa-palette"></i>
-				  		</a>
-                        <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right normelem">
-                            <span class="dropdown-header headelem">21 Custom Accents</span>
-                            <div class="dropdown-divider"></div>
-                            <a href="{{ url_for("custpage", thmcolor="primary") }}" class="dropdown-item">Primary</a>
-                            <div class="dropdown-divider"></div>
-                            <a href="{{ url_for("custpage", thmcolor="secondary") }}" class="dropdown-item">Secondary</a>
-                            <div class="dropdown-divider"></div>
-                            <a href="{{ url_for("custpage", thmcolor="info") }}" class="dropdown-item">Information</a>
-                            <div class="dropdown-divider"></div>
-                            <a href="{{ url_for("custpage", thmcolor="success") }}" class="dropdown-item">Success</a>
-                            <div class="dropdown-divider"></div>
-                            <a href="{{ url_for("custpage", thmcolor="warning") }}" class="dropdown-item">Warning</a>
-                            <div class="dropdown-divider"></div>
-                            <a href="{{ url_for("custpage", thmcolor="danger") }}" class="dropdown-item">Danger</a>
-                            <div class="dropdown-divider"></div>
-                            <a href="{{ url_for("custpage", thmcolor="black") }}" class="dropdown-item">Black</a>
-                            <div class="dropdown-divider"></div>
-                            <a href="{{ url_for("custpage", thmcolor="gray-dark") }}" class="dropdown-item">Gray Dark</a>
-                            <div class="dropdown-divider"></div>
-                            <a href="{{ url_for("custpage", thmcolor="gray") }}" class="dropdown-item">Gray</a>
-                            <div class="dropdown-divider"></div>
-                            <a href="{{ url_for("custpage", thmcolor="light") }}" class="dropdown-item">Light</a>
-                            <div class="dropdown-divider"></div>
-                            <a href="{{ url_for("custpage", thmcolor="indigo") }}" class="dropdown-item">Indigo</a>
-                            <div class="dropdown-divider"></div>
-                            <a href="{{ url_for("custpage", thmcolor="lightblue") }}" class="dropdown-item">Light Blue</a>
-                            <div class="dropdown-divider"></div>
-                            <a href="{{ url_for("custpage", thmcolor="navy") }}" class="dropdown-item">Navy</a>
-                            <div class="dropdown-divider"></div>
-                            <a href="{{ url_for("custpage", thmcolor="purple") }}" class="dropdown-item">Purple</a>
-                            <div class="dropdown-divider"></div>
-                            <a href="{{ url_for("custpage", thmcolor="fuchsia") }}" class="dropdown-item">Fuchsia</a>
-                            <div class="dropdown-divider"></div>
-                            <a href="{{ url_for("custpage", thmcolor="pink") }}" class="dropdown-item">Pink</a>
-                            <div class="dropdown-divider"></div>
-                            <a href="{{ url_for("custpage", thmcolor="maroon") }}" class="dropdown-item">Maroon</a>
-                            <div class="dropdown-divider"></div>
-                            <a href="{{ url_for("custpage", thmcolor="orange") }}" class="dropdown-item">Orange</a>
-                            <div class="dropdown-divider"></div>
-                            <a href="{{ url_for("custpage", thmcolor="lime") }}" class="dropdown-item">Lime</a>
-                            <div class="dropdown-divider"></div>
-                            <a href="{{ url_for("custpage", thmcolor="teal") }}" class="dropdown-item">Teal</a>
-                            <div class="dropdown-divider"></div>
-                            <a href="{{ url_for("custpage", thmcolor="olive") }}" class="dropdown-item">Olive</a>
-                        </div>
-					</li>
-			  	</ul>
-			</div>
-		</nav>
-
-	  	<div class="content-wrapper">
-			<div class="content-header">
-		  		<div class="container">
-                    <h1 class="m-0 text-dark headelem">{{ retndata["Username"] }}@{{ retndata["Host name"] }}</h1>
-                    <h1 class="italelem"><small>{{ retndata["System name"] }}</small></h1>
-		  		</div>
-			</div>
-
-			<div class="content">
-		  		<div class="container">
-
-                    <div class="card card-{{ thmcolor }}">
-                        <div class="card-header">
-                            <h5 class="card-title m-0 headelem">Overview</h5>
-                            <div class="card-tools">
-                                <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i></button>
+                    <ul class="order-1 order-md-3 navbar-nav navbar-no-expand ml-auto">
+                        <li class="nav-item" onclick="location.reload()">
+                            <a class="nav-link">
+                                <i class="fas fa-sync"></i>
+                            </a>
+                        </li>
+                        <li class="nav-item" onclick="window.print()">
+                            <a class="nav-link">
+                                <i class="fas fa-print"></i>
+                            </a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link" data-toggle="dropdown" href="#">
+                                <i class="fas fa-bars"></i>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right normelem">
+                                <span class="dropdown-header headelem bg-{{ thmcolor }}">Sections</span>
+                                <div class="dropdown-divider"></div>
+                                <a onclick="window.location.href = '#sect-abot'" class="dropdown-item">About</a>
+                                <div class="dropdown-divider"></div>
+                                <a onclick="window.location.href = '#sect-proc'" class="dropdown-item">Processes</a>
+                                <div class="dropdown-divider"></div>
+                                <a onclick="window.location.href = '#sect-cpud'" class="dropdown-item">Processor</a>
+                                <div class="dropdown-divider"></div>
+                                <a onclick="window.location.href = '#sect-memo'" class="dropdown-item">Memory</a>
+                                <div class="dropdown-divider"></div>
+                                <a onclick="window.location.href = '#sect-disk'" class="dropdown-item">Disks</a>
+                                <div class="dropdown-divider"></div>
+                                <a onclick="window.location.href = '#sect-netw'" class="dropdown-item">Network</a>
+                                <div class="dropdown-divider"></div>
+                                <a onclick="window.location.href = '#sect-sens'" class="dropdown-item">Sensors</a>
+                                <div class="dropdown-divider"></div>
+                                <a onclick="window.location.href = '#sect-thrm'" class="dropdown-item">Thermal</a>
                             </div>
-                        </div>
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col-6 col-md-3 text-center">
-                                    <input id="tron-cpuu-perc" type="text" class="knob" value="0" data-skin="tron" data-thickness="0.1" data-width="90" data-height="90" data-fgColor="{{ thmcolor }}" data-readonly="true">
-                                    <div class="knob-label headelem">Processor</div>
-                                </div>
-                                <div class="col-6 col-md-3 text-center">
-                                    <input id="tron-phys-perc" type="text" class="knob" value="0" data-skin="tron" data-thickness="0.1" data-width="90" data-height="90" data-fgColor="{{ thmcolor }}" data-readonly="true">
-                                    <div class="knob-label headelem">Physical</div>
-                                </div>
-                                <div class="col-6 col-md-3 text-center">
-                                    <input id="tron-swap-perc" type="text" class="knob" value="0" data-skin="tron" data-thickness="0.1" data-width="90" data-height="90" data-fgColor="{{ thmcolor }}" data-readonly="true">
-                                    <div class="knob-label headelem">Virtual</div>
-                                </div>
-                                <div class="col-6 col-md-3 text-center">
-                                    <input id="tron-batt-perc" type="text" class="knob" value="0" data-skin="tron" data-thickness="0.1" data-width="90" data-height="90" data-fgColor="{{ thmcolor }}" data-readonly="true">
-                                    <div class="knob-label headelem">Battery</div>
-                                </div>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link" data-toggle="dropdown" href="#">
+                                <i class="fas fa-palette"></i>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right normelem">
+                                <span class="dropdown-header headelem bg-{{ thmcolor }}">Accents</span>
+                                <div class="dropdown-divider"></div>
+                                <a onclick="window.location.href = '{{ url_for("custpage", thmcolor="primary") }}'" class="dropdown-item">Primary</a>
+                                <div class="dropdown-divider"></div>
+                                <a onclick="window.location.href = '{{ url_for("custpage", thmcolor="secondary") }}'" class="dropdown-item">Secondary</a>
+                                <div class="dropdown-divider"></div>
+                                <a onclick="window.location.href = '{{ url_for("custpage", thmcolor="info") }}'" class="dropdown-item">Information</a>
+                                <div class="dropdown-divider"></div>
+                                <a onclick="window.location.href = '{{ url_for("custpage", thmcolor="success") }}'" class="dropdown-item">Success</a>
+                                <div class="dropdown-divider"></div>
+                                <a onclick="window.location.href = '{{ url_for("custpage", thmcolor="warning") }}'" class="dropdown-item">Warning</a>
+                                <div class="dropdown-divider"></div>
+                                <a onclick="window.location.href = '{{ url_for("custpage", thmcolor="danger") }}'" class="dropdown-item">Danger</a>
+                                <div class="dropdown-divider"></div>
+                                <a onclick="window.location.href = '{{ url_for("custpage", thmcolor="black") }}'" class="dropdown-item">Black</a>
+                                <div class="dropdown-divider"></div>
+                                <a onclick="window.location.href = '{{ url_for("custpage", thmcolor="gray-dark") }}'" class="dropdown-item">Gray Dark</a>
+                                <div class="dropdown-divider"></div>
+                                <a onclick="window.location.href = '{{ url_for("custpage", thmcolor="gray") }}'" class="dropdown-item">Gray</a>
+                                <div class="dropdown-divider"></div>
+                                <a onclick="window.location.href = '{{ url_for("custpage", thmcolor="light") }}'" class="dropdown-item">Light</a>
+                                <div class="dropdown-divider"></div>
+                                <a onclick="window.location.href = '{{ url_for("custpage", thmcolor="indigo") }}'" class="dropdown-item">Indigo</a>
+                                <div class="dropdown-divider"></div>
+                                <a onclick="window.location.href = '{{ url_for("custpage", thmcolor="lightblue") }}'" class="dropdown-item">Light Blue</a>
+                                <div class="dropdown-divider"></div>
+                                <a onclick="window.location.href = '{{ url_for("custpage", thmcolor="navy") }}'" class="dropdown-item">Navy</a>
+                                <div class="dropdown-divider"></div>
+                                <a onclick="window.location.href = '{{ url_for("custpage", thmcolor="purple") }}'" class="dropdown-item">Purple</a>
+                                <div class="dropdown-divider"></div>
+                                <a onclick="window.location.href = '{{ url_for("custpage", thmcolor="fuchsia") }}'" class="dropdown-item">Fuchsia</a>
+                                <div class="dropdown-divider"></div>
+                                <a onclick="window.location.href = '{{ url_for("custpage", thmcolor="pink") }}'" class="dropdown-item">Pink</a>
+                                <div class="dropdown-divider"></div>
+                                <a onclick="window.location.href = '{{ url_for("custpage", thmcolor="maroon") }}'" class="dropdown-item">Maroon</a>
+                                <div class="dropdown-divider"></div>
+                                <a onclick="window.location.href = '{{ url_for("custpage", thmcolor="orange") }}'" class="dropdown-item">Orange</a>
+                                <div class="dropdown-divider"></div>
+                                <a onclick="window.location.href = '{{ url_for("custpage", thmcolor="lime") }}'" class="dropdown-item">Lime</a>
+                                <div class="dropdown-divider"></div>
+                                <a onclick="window.location.href = '{{ url_for("custpage", thmcolor="teal") }}'" class="dropdown-item">Teal</a>
+                                <div class="dropdown-divider"></div>
+                                <a onclick="window.location.href = '{{ url_for("custpage", thmcolor="olive") }}'" class="dropdown-item">Olive</a>
                             </div>
-                        </div>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+
+            <div class="content-wrapper">
+                <div class="content-header">
+                    <div class="container">
+                        <h1 class="m-0 text-dark headelem">{{ retndata["Username"] }}@{{ retndata["Host name"] }}</h1>
+                        <h1 class="italelem"><small>{{ retndata["System name"] }}</small></h1>
                     </div>
+                </div>
 
-                    <div id="sect-abot" class="card card-{{ thmcolor }}">
-                        <div class="card-header">
-                            <h5 class="card-title m-0 headelem">About</h5>
-                            <div class="card-tools">
-                                <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i></button>
+                <div class="content">
+                    <div class="container">
+
+                        <div class="card card-{{ thmcolor }}">
+                            <div class="card-header">
+                                <h5 class="card-title m-0 headelem">Overview</h5>
+                                <div class="card-tools">
+                                    <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i></button>
+                                </div>
                             </div>
-                        </div>
-                        <div class="card-body">
-                            <dl class="row">
-                                {% for key, value in retndata.items() %}
-                                    <dt class="col-sm-4 headelem">{{ key }}</dt>
-                                    <dd class="col-sm-8 normelem">{{ value }}</dd>
-                                {% endfor %}
-                                <dt class="col-sm-4 headelem">Boot time</dt>
-                                <dd class="col-sm-8 normelem">{{ boottime }}</dd>
-                            </dl>
-                        </div>
-                    </div>
-
-                    <div id="sect-proc" class="card card-{{ thmcolor }}">
-                        <div class="card-header">
-                            <h5 id="proc-info-ttle" class="card-title m-0 headelem">Processes ({{ procinfo|length }})</h5>
-                            <div class="card-tools">
-                                <div class="input-group input-group-sm" style="width: 200px;">
-                                    <input type="text" name="table_search" class="form-control float-right normelem" placeholder="Search">
-                                    <div class="input-group-append">
-                                        <button type="submit" class="btn btn-default"><i class="fas fa-search"></i></button>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-6 col-md-3 text-center">
+                                        <input id="tron-cpuu-perc" type="text" class="knob" value="0" data-skin="tron" data-thickness="0.1" data-width="90" data-height="90" data-fgColor="{{ thmcolor }}" data-readonly="true">
+                                        <div class="knob-label headelem">Processor</div>
+                                    </div>
+                                    <div class="col-6 col-md-3 text-center">
+                                        <input id="tron-phys-perc" type="text" class="knob" value="0" data-skin="tron" data-thickness="0.1" data-width="90" data-height="90" data-fgColor="{{ thmcolor }}" data-readonly="true">
+                                        <div class="knob-label headelem">Physical</div>
+                                    </div>
+                                    <div class="col-6 col-md-3 text-center">
+                                        <input id="tron-swap-perc" type="text" class="knob" value="0" data-skin="tron" data-thickness="0.1" data-width="90" data-height="90" data-fgColor="{{ thmcolor }}" data-readonly="true">
+                                        <div class="knob-label headelem">Virtual</div>
+                                    </div>
+                                    <div class="col-6 col-md-3 text-center">
+                                        <input id="tron-batt-perc" type="text" class="knob" value="0" data-skin="tron" data-thickness="0.1" data-width="90" data-height="90" data-fgColor="{{ thmcolor }}" data-readonly="true">
+                                        <div class="knob-label headelem">Battery</div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="card-body">
-                            <div class="card-body table-responsive p-0" style="height: 600px;">
-                                <table id="proclist" class="table table-head-fixed text-nowrap table-sm">
-                                    <thead>
-                                        <tr class="headelem">
-                                            <th>PIDE</th>
-                                            <th>NAME</th>
-                                            <th>USER</th>
-                                            <th>MPRC</th>
-                                            <th>CPRC</th>
-                                            <th>THRD</th>
-                                            <th>TERM</th>
-                                            <th>STAT</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        {% for indx in range(procinfo|length) %}
-                                        <tr class="normelem">
-                                            <td id="proc-info-pide-{{ indx }}">{{ procinfo[indx]["pid"] }}</td>
-                                            <td id="proc-info-name-{{ indx }}"><a type="button" onclick="SetTitleModalProcess(argument)" data-toggle="modal" data-target="#single-process-modal" class="headelem">{{ procinfo[indx]["name"] }}</a></td>
-                                            <td id="proc-info-user-{{ indx }}">{{ procinfo[indx]["username"] }}</td>
-                                            <td id="proc-info-mprc-{{ indx }}">{{ procinfo[indx]["memory_percent"] }}</td>
-                                            <td id="proc-info-cprc-{{ indx }}">{{ procinfo[indx]["cpu_percent"] }}</td>
-                                            <td id="proc-info-thrd-{{ indx }}">{{ procinfo[indx]["num_threads"] }}</td>
-                                            <td id="proc-info-term-{{ indx }}">{{ procinfo[indx]["terminal"] }}</td>
-                                            <td id="proc-info-stat-{{ indx }}">{{ procinfo[indx]["status"] }}</td>
-                                        </tr>
-                                        {% endfor %}
-                                  </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
 
-                    <div id="sect-cpud" class="card card-{{ thmcolor }} card-tabs">
-                        <div class="card-header p-0 pt-1">
-                            <ul class="nav nav-tabs" id="custom-tabs-two-tab" role="tablist">
-                                <li class="nav-item">
-                                    <a class="nav-link disabled headelem" data-toggle="pill" role="tab">Processor</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link active normelem" id="proc-usej-butn" data-toggle="pill" href="#proc-usej" role="tab" aria-controls="proc-usej" aria-selected="true">Usage</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link normelem" id="proc-time-butn" data-toggle="pill" href="#proc-time" role="tab" aria-controls="proc-time" aria-selected="false">Times</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link normelem" id="proc-stat-butn" data-toggle="pill" href="#proc-stat" role="tab" aria-controls="proc-stat" aria-selected="false">Statistics</a>
-                                </li>
-                            </ul>
-                        </div>
-                        <div class="card-body">
-                            <div class="tab-content" id="custom-tabs-two-tabContent">
-                                <div class="tab-pane fade show active" id="proc-usej" role="tabpanel" aria-labelledby="proc-usej">
-                                    <div class="row">
-                                        {% for indx in range(cpuquant) %}
-                                        <div class="col-md-12 col-sm-6 col-12">
-                                            <div class="info-box bg-info bg-{{ thmcolor }}">
-                                                <span class="info-box-icon bg-white"><i class="fas fa-microchip" style="color: {{ thmcolor }};"></i></span>
-                                                <div class="info-box-content">
-                                                    <span id="cpuu-indx-{{ indx }}" class="info-box-text headelem">CPU #{{ indx }}</span>
-                                                    <span id="cpuu-perc-{{ indx }}" class="info-box-number hugeelem">0%</span>
-                                                    <div class="progress"><div id="cpuu-prog-{{ indx }}" class="progress-bar" style="width: 0%"></div></div>
-                                                    <span id="cpuu-text-{{ indx }}" class="progress-description normelem">0MHz in Min 0MHz and Max 0MHz</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        {% endfor %}
-                                    </div>
-                                </div>
-                                <div class="tab-pane fade" id="proc-time" role="tabpanel" aria-labelledby="proc-time">
-                                    <div class="card-body table-responsive p-0">
-                                        <p class="normelem">All values are expressed in seconds</p>
-                                        <table id="proclist" class="table table-head-fixed text-nowrap table-sm">
-                                            <thead>
-                                                <tr class="headelem">
-                                                    <th>#</th>
-                                                    <th>USER</th>
-                                                    <th>NICE</th>
-                                                    <th>SYST</th>
-                                                    <th>IDLE</th>
-                                                    <th>IOWT</th>
-                                                    <th>IREQ</th>
-                                                    <th>SOFT</th>
-                                                    <th>STEL</th>
-                                                    <th>GEST</th>
-                                                    <th>GTNC</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                {% for indx in range(cpuquant) %}
-                                                <tr class="normelem">
-                                                    <td id="time-cpun-{{ indx }}" >CPU #{{ indx }}</td>
-                                                    <td id="time-user-{{ indx }}" >0</td>
-                                                    <td id="time-nice-{{ indx }}" >0</td>
-                                                    <td id="time-syst-{{ indx }}" >0</td>
-                                                    <td id="time-idle-{{ indx }}" >0</td>
-                                                    <td id="time-iowt-{{ indx }}" >0</td>
-                                                    <td id="time-ireq-{{ indx }}" >0</td>
-                                                    <td id="time-soft-{{ indx }}" >0</td>
-                                                    <td id="time-stel-{{ indx }}" >0</td>
-                                                    <td id="time-gest-{{ indx }}" >0</td>
-                                                    <td id="time-gtnc-{{ indx }}" >0</td>
-                                                </tr>
-                                                {% endfor %}
-                                          </tbody>
-                                        </table>
-                                    </div>
-                                </div>
-                                <div class="tab-pane fade" id="proc-stat" role="tabpanel" aria-labelledby="proc-stat">
-                                    <dl class="row">
-                                        <dt class="col-sm-4 headelem">Context switches</dt><dd id="cpus-stat-ctxs" class="col-sm-8 normelem">0</dd>
-                                        <dt class="col-sm-4 headelem">Interrupts</dt><dd id="cpus-stat-intr" class="col-sm-8 normelem">0</dd>
-                                        <dt class="col-sm-4 headelem">Soft interrupts</dt><dd id="cpus-stat-soft" class="col-sm-8 normelem">0</dd>
-                                        <dt class="col-sm-4 headelem">System calls</dt><dd id="cpus-stat-sysc" class="col-sm-8 normelem">0</dd>
-                                    </dl>
+                        <div id="sect-abot" class="card card-{{ thmcolor }}">
+                            <div class="card-header">
+                                <h5 class="card-title m-0 headelem">About</h5>
+                                <div class="card-tools">
+                                    <button type="button" class="btn btn-tool" data-card-widget="collapse"><i class="fas fa-minus"></i></button>
                                 </div>
                             </div>
+                            <div class="card-body">
+                                <dl class="row">
+                                    {% for key, value in retndata.items() %}
+                                        <dt class="col-sm-4 headelem">{{ key }}</dt>
+                                        <dd class="col-sm-8 normelem">{{ value }}</dd>
+                                    {% endfor %}
+                                    <dt class="col-sm-4 headelem">Boot time</dt>
+                                    <dd class="col-sm-8 normelem">{{ boottime }}</dd>
+                                </dl>
+                            </div>
                         </div>
-                    </div>
 
-                    <div id="sect-memo" class="card card-{{ thmcolor }} card-tabs">
-                        <div class="card-header p-0 pt-1">
-                            <ul class="nav nav-tabs" id="custom-tabs-two-tab" role="tablist">
-                                <li class="nav-item">
-                                    <a class="nav-link disabled headelem" data-toggle="pill" role="tab">Memory</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link active normelem" id="memo-glms-butn" data-toggle="pill" href="#memo-glms" role="tab" aria-controls="memo-glms" aria-selected="true">Overview</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link normelem" id="memo-phys-butn" data-toggle="pill" href="#memo-phys" role="tab" aria-controls="memo-phys" aria-selected="false">Physical</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link normelem" id="memo-virt-butn" data-toggle="pill" href="#memo-virt" role="tab" aria-controls="memo-virt" aria-selected="false">Virtual</a>
-                                </li>
-                            </ul>
-                        </div>
-                        <div class="card-body">
-                            <div class="tab-content" id="custom-tabs-two-tabContent">
-                                <div class="tab-pane fade show active" id="memo-glms" role="tabpanel" aria-labelledby="memo-glms">
-                                    <div class="row">
-                                        <div class="col-md-12 col-sm-6 col-12">
-                                            <div class="info-box bg-info bg-{{ thmcolor }}">
-                                                <span class="info-box-icon bg-white"><i class="fas fa-memory" style="color: {{ thmcolor }};"></i></span>
-                                                <div class="info-box-content">
-                                                    <span id="memo-phys-name" class="info-box-text headelem">Physical memory</span>
-                                                    <span id="memo-phys-perc" class="info-box-number hugeelem">0%</span>
-                                                    <div class="progress"><div id="memo-phys-prog" class="progress-bar" style="width: 0%"></div></div>
-                                                    <span id="memo-phys-over" class="progress-description normelem">Using 0 bytes of 0 bytes</span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-12 col-sm-6 col-12">
-                                            <div class="info-box bg-info bg-{{ thmcolor }}">
-                                                <span class="info-box-icon bg-white"><i class="far fa-copy" style="color: {{ thmcolor }};"></i></span>
-                                                <div class="info-box-content">
-                                                    <span id="memo-swap-name" class="info-box-text headelem">Virtual memory</span>
-                                                    <span id="memo-swap-perc" class="info-box-number hugeelem">0%</span>
-                                                    <div class="progress"><div id="memo-swap-prog" class="progress-bar" style="width: 0%"></div></div>
-                                                    <span id="memo-swap-over" class="progress-description normelem">Using 0 bytes of 0 bytes</span>
-                                                </div>
-                                            </div>
+                        <div id="sect-proc" class="card card-{{ thmcolor }}">
+                            <div class="card-header">
+                                <h5 id="proc-info-ttle" class="card-title m-0 headelem">Processes ({{ procinfo|length }})</h5>
+                                <div class="card-tools">
+                                    <div class="input-group input-group-sm" style="width: 200px;">
+                                        <input type="text" name="table_search" class="form-control float-right normelem" placeholder="Search">
+                                        <div class="input-group-append">
+                                            <button type="submit" class="btn btn-default"><i class="fas fa-search"></i></button>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="tab-pane fade" id="memo-phys" role="tabpanel" aria-labelledby="memo-phys">
-                                    <p class="normelem">All values are expressed in bytes</p>
-                                    <dl class="row">
-                                        <dt class="col-sm-8 headelem">Total</dt><dd id="memo-phys-tomr" class="col-sm-4 normelem">0 bytes</dd>
-                                        <dt class="col-sm-8 headelem">Free</dt><dd id="memo-phys-avbl" class="col-sm-4 normelem">0 bytes</dd>
-                                        <dt class="col-sm-8 headelem">Used</dt><dd id="memo-phys-used" class="col-sm-4 normelem">0 bytes</dd>
-                                        <dt class="col-sm-8 headelem">Active</dt><dd id="memo-phys-actv" class="col-sm-4 normelem">0 bytes</dd>
-                                        <dt class="col-sm-8 headelem">Buffers</dt><dd id="memo-phys-bufr" class="col-sm-4 normelem">0 bytes</dd>
-                                        <dt class="col-sm-8 headelem">Cached</dt><dd id="memo-phys-cach" class="col-sm-4 normelem">0 bytes</dd>
-                                        <dt class="col-sm-8 headelem">Shared</dt><dd id="memo-phys-shrd" class="col-sm-4 normelem">0 bytes</dd>
-                                        <dt class="col-sm-8 headelem">Slab</dt><dd id="memo-phys-slab" class="col-sm-4 normelem">0 bytes</dd>
-                                    </dl>
-                                </div>
-                                <div class="tab-pane fade" id="memo-virt" role="tabpanel" aria-labelledby="memo-virt">
-                                    <p class="normelem">All values are expressed in bytes</p>
-                                    <dl class="row">
-                                        <dt class="col-sm-8 headelem">Total</dt><dd id="memo-swap-tomr" class="col-sm-4 normelem">0 bytes</dd>
-                                        <dt class="col-sm-8 headelem">Free</dt><dd id="memo-swap-avbl" class="col-sm-4 normelem">0 bytes</dd>
-                                        <dt class="col-sm-8 headelem">Used</dt><dd id="memo-swap-used" class="col-sm-4 normelem">0 bytes</dd>
-                                        <dt class="col-sm-8 headelem">Swapped in</dt><dd id="memo-swap-sine" class="col-sm-4 normelem">0 bytes</dd>
-                                        <dt class="col-sm-8 headelem">Swapped out</dt><dd id="memo-swap-sout" class="col-sm-4 normelem">0 bytes</dd>
-                                    </dl>
+                            </div>
+                            <div class="card-body">
+                                <div class="card-body table-responsive p-0" style="height: 600px;">
+                                    <table id="proclist" class="table table-head-fixed text-nowrap table-sm">
+                                        <thead>
+                                            <tr class="headelem">
+                                                <th>PIDE</th>
+                                                <th>NAME</th>
+                                                <th>USER</th>
+                                                <th>MPRC</th>
+                                                <th>CPRC</th>
+                                                <th>THRD</th>
+                                                <th>TERM</th>
+                                                <th>STAT</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {% for indx in range(procinfo|length) %}
+                                            <tr class="normelem">
+                                                <td id="proc-info-pide-{{ indx }}">{{ procinfo[indx]["pid"] }}</td>
+                                                <td id="proc-info-name-{{ indx }}"><a type="button" onclick="SetTitleModalProcess(argument)" data-toggle="modal" data-target="#single-process-modal" class="headelem">{{ procinfo[indx]["name"] }}</a></td>
+                                                <td id="proc-info-user-{{ indx }}">{{ procinfo[indx]["username"] }}</td>
+                                                <td id="proc-info-mprc-{{ indx }}">{{ procinfo[indx]["memory_percent"] }}</td>
+                                                <td id="proc-info-cprc-{{ indx }}">{{ procinfo[indx]["cpu_percent"] }}</td>
+                                                <td id="proc-info-thrd-{{ indx }}">{{ procinfo[indx]["num_threads"] }}</td>
+                                                <td id="proc-info-term-{{ indx }}">{{ procinfo[indx]["terminal"] }}</td>
+                                                <td id="proc-info-stat-{{ indx }}">{{ procinfo[indx]["status"] }}</td>
+                                            </tr>
+                                            {% endfor %}
+                                      </tbody>
+                                    </table>
                                 </div>
                             </div>
                         </div>
-                    </div>
 
-                    <div id="sect-disk" class="card card-{{ thmcolor }} card-tabs">
-                        <div class="card-header p-0 pt-1">
-                            <ul class="nav nav-tabs" id="custom-tabs-two-tab" role="tablist">
-                                <li class="nav-item">
-                                    <a class="nav-link disabled headelem" data-toggle="pill" role="tab">Disks</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link active normelem" id="disk-usej-butn" data-toggle="pill" href="#disk-usej" role="tab" aria-controls="disk-usej" aria-selected="true">Usage</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link normelem" id="disk-part-butn" data-toggle="pill" href="#disk-part" role="tab" aria-controls="disk-part" aria-selected="false">Partitions</a>
-                                </li>
-                            </ul>
-                        </div>
-                        <div class="card-body">
-                            <div class="tab-content" id="custom-tabs-two-tabContent">
-                                <div class="tab-pane fade show active" id="disk-usej" role="tabpanel" aria-labelledby="disk-usej">
-                                    <p class="normelem">All values are expressed in bytes</p>
-                                    <div class="card-body table-responsive p-0">
-                                        <table id="proclist" class="table table-head-fixed text-nowrap table-sm">
-                                            <thead>
-                                                <tr class="headelem">
-                                                    <th>PART</th>
-                                                    <th>RDCT</th>
-                                                    <th>WRCT</th>
-                                                    <th>RDBT</th>
-                                                    <th>WRBT</th>
-                                                    <th>RDTM</th>
-                                                    <th>WRTM</th>
-                                                    <th>WRMC</th>
-                                                    <th>RDMC</th>
-                                                    <th>BSTM</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                {% for indx in range(dionames|length) %}
-                                                <tr class="normelem">
-                                                    <td id="disk-part-{{ indx }}">{{ dionames[indx] }}</td>
-                                                    <td id="disk-rdct-{{ indx }}">0</td>
-                                                    <td id="disk-wrct-{{ indx }}">0</td>
-                                                    <td id="disk-rdbt-{{ indx }}">0</td>
-                                                    <td id="disk-wrbt-{{ indx }}">0</td>
-                                                    <td id="disk-rdtm-{{ indx }}">0</td>
-                                                    <td id="disk-wrtm-{{ indx }}">0</td>
-                                                    <td id="disk-wrmc-{{ indx }}">0</td>
-                                                    <td id="disk-rdmc-{{ indx }}">0</td>
-                                                    <td id="disk-bstm-{{ indx }}">0</td>
-                                                </tr>
-                                                {% endfor %}
-                                          </tbody>
-                                        </table>
-                                    </div>
-                                </div>
-                                <div class="tab-pane fade" id="disk-part" role="tabpanel" aria-labelledby="disk-part">
-                                    <p class="normelem">Dynamic refreshing for this section has not been worked upon. What if someone inserts a pendrive?</p>
-                                    <p class="normelem">Refreshing this every second would be a waste but adding a refresh button might just be useful.</p>
-                                    <div class="row">
-                                        {% for indx in diskpart %}
-                                        <div class="col-md-12 col-sm-6 col-12">
-                                            <div class="info-box bg-info bg-{{ thmcolor }}">
-                                                <span class="info-box-icon bg-white"><i class="fas fa-hdd" style="color: {{ thmcolor }};"></i></span>
-                                                <div class="info-box-content">
-                                                    <h5 class="info-box-text hugeelem">{{ indx[0] }} ({{ indx[1] }})</h5>
-                                                    <span id="cpuu-text-{{ indx }}" class="normelem">
-                                                        <span><span class="headelem">FSYS</span> {{ indx[2] }}</span><br/><span><span class="headelem">OPTS</span> {{ indx[3] }}</span>
-                                                    </span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        {% endfor %}
-                                    </div>
-                                </div>
+                        <div id="sect-cpud" class="card card-{{ thmcolor }} card-tabs">
+                            <div class="card-header p-0 pt-1">
+                                <ul class="nav nav-tabs" id="custom-tabs-two-tab" role="tablist">
+                                    <li class="nav-item">
+                                        <a class="nav-link disabled headelem" data-toggle="pill" role="tab">Processor</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link active normelem" id="proc-usej-butn" data-toggle="pill" href="#proc-usej" role="tab" aria-controls="proc-usej" aria-selected="true">Usage</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link normelem" id="proc-time-butn" data-toggle="pill" href="#proc-time" role="tab" aria-controls="proc-time" aria-selected="false">Times</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link normelem" id="proc-stat-butn" data-toggle="pill" href="#proc-stat" role="tab" aria-controls="proc-stat" aria-selected="false">Statistics</a>
+                                    </li>
+                                </ul>
                             </div>
-                        </div>
-                    </div>
-
-                    <div id="sect-netw" class="card card-{{ thmcolor }} card-tabs">
-                        <div class="card-header p-0 pt-1">
-                            <ul class="nav nav-tabs" id="custom-tabs-two-tab" role="tablist">
-                                <li class="nav-item">
-                                    <a class="nav-link disabled text-bold headelem" data-toggle="pill" role="tab">Network</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link active normelem" id="netw-usej-butn" data-toggle="pill" href="#netw-usej" role="tab" aria-controls="netw-usej" aria-selected="true">Usage</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link normelem" id="netw-stat-butn" data-toggle="pill" href="#netw-stat" role="tab" aria-controls="netw-stat" aria-selected="false">Statistics</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link normelem" id="netw-addr-butn" data-toggle="pill" href="#netw-addr" role="tab" aria-controls="netw-addr" aria-selected="false">Addresses</a>
-                                </li>
-                            </ul>
-                        </div>
-                        <div class="card-body">
-                            <div class="tab-content" id="custom-tabs-two-tabContent">
-                                <div class="tab-pane fade show active" id="netw-usej" role="tabpanel" aria-labelledby="netw-usej">
-                                    <p class="normelem">All values are expressed in bytes</p>
-                                    <div class="card-body table-responsive p-0">
-                                        <table id="proclist" class="table table-head-fixed text-nowrap table-sm">
-                                            <thead>
-                                                <tr class="headelem">
-                                                    <th>SNIC</th>
-                                                    <th>BSNT</th>
-                                                    <th>BRCV</th>
-                                                    <th>PSNT</th>
-                                                    <th>PRCV</th>
-                                                    <th>ERIN</th>
-                                                    <th>EOUT</th>
-                                                    <th>DPIN</th>
-                                                    <th>DOUT</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                {% for indx in range(netnames|length) %}
-                                                <tr class="normelem">
-                                                    <td id="netu-snic-{{ indx }}">{{ netnames[indx] }}</td>
-                                                    <td id="netu-bsnt-{{ indx }}">0</td>
-                                                    <td id="netu-brcv-{{ indx }}">0</td>
-                                                    <td id="netu-psnt-{{ indx }}">0</td>
-                                                    <td id="netu-prcv-{{ indx }}">0</td>
-                                                    <td id="netu-erin-{{ indx }}">0</td>
-                                                    <td id="netu-eout-{{ indx }}">0</td>
-                                                    <td id="netu-dpin-{{ indx }}">0</td>
-                                                    <td id="netu-dout-{{ indx }}">0</td>
-                                                </tr>
-                                                {% endfor %}
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
-                                <div class="tab-pane fade" id="netw-stat" role="tabpanel" aria-labelledby="netw-stat">
-                                    <p class="normelem">Dynamic refreshing for this section has not been worked upon. What if someone connects or disconnects from a network?</p>
-                                    <p class="normelem">Refreshing this every second would be a waste but adding a refresh button might just be useful.</p>
-                                    <div class="row">
-                                        {% for indx in netstats.keys() %}
-                                        <div class="col-md-12 col-sm-6 col-12">
-                                            <div class="info-box bg-info bg-{{ thmcolor }}">
-                                                <span class="info-box-icon bg-white"><i class="fas fa-share-alt" style="color: {{ thmcolor }};"></i></span>
-                                                <div class="info-box-content">
-                                                    <h5 class="info-box-text headelem">{{ indx }} ({{ netstats[indx][0] }})</h5>
-                                                    <span id="cpuu-text-{{ indx }}">
-                                                        <span class="normelem"><span class="headelem">DUPLEX</span> {{ netstats[indx][1] }}</span><br/>
-                                                        <span class="normelem"><span class="headelem">SPD</span> {{ netstats[indx][2] }} / <span class="headelem">MTU</span> {{ netstats[indx][3] }}</span>
-                                                    </span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        {% endfor %}
-                                    </div>
-                                </div>
-                                <div class="tab-pane fade" id="netw-addr" role="tabpanel" aria-labelledby="netw-addr">
-                                    <p class="normelem">Dynamic refreshing for this section has not been worked upon. What if someone connects or disconnects from a network?</p>
-                                    <p class="normelem">Refreshing this every second would be a waste but adding a refresh button might just be useful.</p>
-                                    <div class="row">
-                                        {% for indx in netaddrs.keys() %}
-                                            {% for jndx in netaddrs[indx] %}
+                            <div class="card-body">
+                                <div class="tab-content" id="custom-tabs-two-tabContent">
+                                    <div class="tab-pane fade show active" id="proc-usej" role="tabpanel" aria-labelledby="proc-usej">
+                                        <div class="row">
+                                            {% for indx in range(cpuquant) %}
                                             <div class="col-md-12 col-sm-6 col-12">
                                                 <div class="info-box bg-info bg-{{ thmcolor }}">
-                                                    <span class="info-box-icon bg-white"><i class="fas fa-map-marker-alt" style="color: {{ thmcolor }};"></i></span>
+                                                    <span class="info-box-icon bg-white"><i class="fas fa-microchip" style="color: {{ thmcolor }};"></i></span>
                                                     <div class="info-box-content">
-                                                        <h5 class="info-box-text headelem">{{ indx }} ({{ jndx[1] }})</h5>
-                                                        <span id="cpuu-text-{{ indx }}">
-                                                            <span class="normelem"><span class="headelem">FAMILY</span> {{ jndx[0] }} / <span class="headelem">NETMASK</span> {{ jndx[2] }}</span><br/>
-                                                            <span class="normelem"><span class="headelem">BROADCAST</span> {{ jndx[3] }} / <span class="headelem">PTP0</span> {{ jndx[4] }}</span>
+                                                        <span id="cpuu-indx-{{ indx }}" class="info-box-text headelem">CPU #{{ indx }}</span>
+                                                        <span id="cpuu-perc-{{ indx }}" class="info-box-number hugeelem">0%</span>
+                                                        <div class="progress"><div id="cpuu-prog-{{ indx }}" class="progress-bar" style="width: 0%"></div></div>
+                                                        <span id="cpuu-text-{{ indx }}" class="progress-description normelem">0MHz in Min 0MHz and Max 0MHz</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            {% endfor %}
+                                        </div>
+                                    </div>
+                                    <div class="tab-pane fade" id="proc-time" role="tabpanel" aria-labelledby="proc-time">
+                                        <div class="card-body table-responsive p-0">
+                                            <p class="normelem">All values are expressed in seconds</p>
+                                            <table id="proclist" class="table table-head-fixed text-nowrap table-sm">
+                                                <thead>
+                                                    <tr class="headelem">
+                                                        <th>#</th>
+                                                        <th>USER</th>
+                                                        <th>NICE</th>
+                                                        <th>SYST</th>
+                                                        <th>IDLE</th>
+                                                        <th>IOWT</th>
+                                                        <th>IREQ</th>
+                                                        <th>SOFT</th>
+                                                        <th>STEL</th>
+                                                        <th>GEST</th>
+                                                        <th>GTNC</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    {% for indx in range(cpuquant) %}
+                                                    <tr class="normelem">
+                                                        <td id="time-cpun-{{ indx }}" >CPU #{{ indx }}</td>
+                                                        <td id="time-user-{{ indx }}" >0</td>
+                                                        <td id="time-nice-{{ indx }}" >0</td>
+                                                        <td id="time-syst-{{ indx }}" >0</td>
+                                                        <td id="time-idle-{{ indx }}" >0</td>
+                                                        <td id="time-iowt-{{ indx }}" >0</td>
+                                                        <td id="time-ireq-{{ indx }}" >0</td>
+                                                        <td id="time-soft-{{ indx }}" >0</td>
+                                                        <td id="time-stel-{{ indx }}" >0</td>
+                                                        <td id="time-gest-{{ indx }}" >0</td>
+                                                        <td id="time-gtnc-{{ indx }}" >0</td>
+                                                    </tr>
+                                                    {% endfor %}
+                                              </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                    <div class="tab-pane fade" id="proc-stat" role="tabpanel" aria-labelledby="proc-stat">
+                                        <dl class="row">
+                                            <dt class="col-sm-4 headelem">Context switches</dt><dd id="cpus-stat-ctxs" class="col-sm-8 normelem">0</dd>
+                                            <dt class="col-sm-4 headelem">Interrupts</dt><dd id="cpus-stat-intr" class="col-sm-8 normelem">0</dd>
+                                            <dt class="col-sm-4 headelem">Soft interrupts</dt><dd id="cpus-stat-soft" class="col-sm-8 normelem">0</dd>
+                                            <dt class="col-sm-4 headelem">System calls</dt><dd id="cpus-stat-sysc" class="col-sm-8 normelem">0</dd>
+                                        </dl>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="sect-memo" class="card card-{{ thmcolor }} card-tabs">
+                            <div class="card-header p-0 pt-1">
+                                <ul class="nav nav-tabs" id="custom-tabs-two-tab" role="tablist">
+                                    <li class="nav-item">
+                                        <a class="nav-link disabled headelem" data-toggle="pill" role="tab">Memory</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link active normelem" id="memo-glms-butn" data-toggle="pill" href="#memo-glms" role="tab" aria-controls="memo-glms" aria-selected="true">Overview</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link normelem" id="memo-phys-butn" data-toggle="pill" href="#memo-phys" role="tab" aria-controls="memo-phys" aria-selected="false">Physical</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link normelem" id="memo-virt-butn" data-toggle="pill" href="#memo-virt" role="tab" aria-controls="memo-virt" aria-selected="false">Virtual</a>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="card-body">
+                                <div class="tab-content" id="custom-tabs-two-tabContent">
+                                    <div class="tab-pane fade show active" id="memo-glms" role="tabpanel" aria-labelledby="memo-glms">
+                                        <div class="row">
+                                            <div class="col-md-12 col-sm-6 col-12">
+                                                <div class="info-box bg-info bg-{{ thmcolor }}">
+                                                    <span class="info-box-icon bg-white"><i class="fas fa-memory" style="color: {{ thmcolor }};"></i></span>
+                                                    <div class="info-box-content">
+                                                        <span id="memo-phys-name" class="info-box-text headelem">Physical memory</span>
+                                                        <span id="memo-phys-perc" class="info-box-number hugeelem">0%</span>
+                                                        <div class="progress"><div id="memo-phys-prog" class="progress-bar" style="width: 0%"></div></div>
+                                                        <span id="memo-phys-over" class="progress-description normelem">Using 0 bytes of 0 bytes</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-12 col-sm-6 col-12">
+                                                <div class="info-box bg-info bg-{{ thmcolor }}">
+                                                    <span class="info-box-icon bg-white"><i class="far fa-copy" style="color: {{ thmcolor }};"></i></span>
+                                                    <div class="info-box-content">
+                                                        <span id="memo-swap-name" class="info-box-text headelem">Virtual memory</span>
+                                                        <span id="memo-swap-perc" class="info-box-number hugeelem">0%</span>
+                                                        <div class="progress"><div id="memo-swap-prog" class="progress-bar" style="width: 0%"></div></div>
+                                                        <span id="memo-swap-over" class="progress-description normelem">Using 0 bytes of 0 bytes</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="tab-pane fade" id="memo-phys" role="tabpanel" aria-labelledby="memo-phys">
+                                        <p class="normelem">All values are expressed in bytes</p>
+                                        <dl class="row">
+                                            <dt class="col-sm-8 headelem">Total</dt><dd id="memo-phys-tomr" class="col-sm-4 normelem">0 bytes</dd>
+                                            <dt class="col-sm-8 headelem">Free</dt><dd id="memo-phys-avbl" class="col-sm-4 normelem">0 bytes</dd>
+                                            <dt class="col-sm-8 headelem">Used</dt><dd id="memo-phys-used" class="col-sm-4 normelem">0 bytes</dd>
+                                            <dt class="col-sm-8 headelem">Active</dt><dd id="memo-phys-actv" class="col-sm-4 normelem">0 bytes</dd>
+                                            <dt class="col-sm-8 headelem">Buffers</dt><dd id="memo-phys-bufr" class="col-sm-4 normelem">0 bytes</dd>
+                                            <dt class="col-sm-8 headelem">Cached</dt><dd id="memo-phys-cach" class="col-sm-4 normelem">0 bytes</dd>
+                                            <dt class="col-sm-8 headelem">Shared</dt><dd id="memo-phys-shrd" class="col-sm-4 normelem">0 bytes</dd>
+                                            <dt class="col-sm-8 headelem">Slab</dt><dd id="memo-phys-slab" class="col-sm-4 normelem">0 bytes</dd>
+                                        </dl>
+                                    </div>
+                                    <div class="tab-pane fade" id="memo-virt" role="tabpanel" aria-labelledby="memo-virt">
+                                        <p class="normelem">All values are expressed in bytes</p>
+                                        <dl class="row">
+                                            <dt class="col-sm-8 headelem">Total</dt><dd id="memo-swap-tomr" class="col-sm-4 normelem">0 bytes</dd>
+                                            <dt class="col-sm-8 headelem">Free</dt><dd id="memo-swap-avbl" class="col-sm-4 normelem">0 bytes</dd>
+                                            <dt class="col-sm-8 headelem">Used</dt><dd id="memo-swap-used" class="col-sm-4 normelem">0 bytes</dd>
+                                            <dt class="col-sm-8 headelem">Swapped in</dt><dd id="memo-swap-sine" class="col-sm-4 normelem">0 bytes</dd>
+                                            <dt class="col-sm-8 headelem">Swapped out</dt><dd id="memo-swap-sout" class="col-sm-4 normelem">0 bytes</dd>
+                                        </dl>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="sect-disk" class="card card-{{ thmcolor }} card-tabs">
+                            <div class="card-header p-0 pt-1">
+                                <ul class="nav nav-tabs" id="custom-tabs-two-tab" role="tablist">
+                                    <li class="nav-item">
+                                        <a class="nav-link disabled headelem" data-toggle="pill" role="tab">Disks</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link active normelem" id="disk-usej-butn" data-toggle="pill" href="#disk-usej" role="tab" aria-controls="disk-usej" aria-selected="true">Usage</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link normelem" id="disk-part-butn" data-toggle="pill" href="#disk-part" role="tab" aria-controls="disk-part" aria-selected="false">Partitions</a>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="card-body">
+                                <div class="tab-content" id="custom-tabs-two-tabContent">
+                                    <div class="tab-pane fade show active" id="disk-usej" role="tabpanel" aria-labelledby="disk-usej">
+                                        <p class="normelem">All values are expressed in bytes</p>
+                                        <div class="card-body table-responsive p-0">
+                                            <table id="proclist" class="table table-head-fixed text-nowrap table-sm">
+                                                <thead>
+                                                    <tr class="headelem">
+                                                        <th>PART</th>
+                                                        <th>RDCT</th>
+                                                        <th>WRCT</th>
+                                                        <th>RDBT</th>
+                                                        <th>WRBT</th>
+                                                        <th>RDTM</th>
+                                                        <th>WRTM</th>
+                                                        <th>WRMC</th>
+                                                        <th>RDMC</th>
+                                                        <th>BSTM</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    {% for indx in range(dionames|length) %}
+                                                    <tr class="normelem">
+                                                        <td id="disk-part-{{ indx }}">{{ dionames[indx] }}</td>
+                                                        <td id="disk-rdct-{{ indx }}">0</td>
+                                                        <td id="disk-wrct-{{ indx }}">0</td>
+                                                        <td id="disk-rdbt-{{ indx }}">0</td>
+                                                        <td id="disk-wrbt-{{ indx }}">0</td>
+                                                        <td id="disk-rdtm-{{ indx }}">0</td>
+                                                        <td id="disk-wrtm-{{ indx }}">0</td>
+                                                        <td id="disk-wrmc-{{ indx }}">0</td>
+                                                        <td id="disk-rdmc-{{ indx }}">0</td>
+                                                        <td id="disk-bstm-{{ indx }}">0</td>
+                                                    </tr>
+                                                    {% endfor %}
+                                              </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                    <div class="tab-pane fade" id="disk-part" role="tabpanel" aria-labelledby="disk-part">
+                                        <p class="normelem">Dynamic refreshing for this section has not been worked upon. What if someone inserts a pendrive?</p>
+                                        <p class="normelem">Refreshing this every second would be a waste but adding a refresh button might just be useful.</p>
+                                        <div class="row">
+                                            {% for indx in diskpart %}
+                                            <div class="col-md-12 col-sm-6 col-12">
+                                                <div class="info-box bg-info bg-{{ thmcolor }}">
+                                                    <span class="info-box-icon bg-white"><i class="fas fa-hdd" style="color: {{ thmcolor }};"></i></span>
+                                                    <div class="info-box-content">
+                                                        <h5 class="info-box-text hugeelem">{{ indx[0] }} ({{ indx[1] }})</h5>
+                                                        <span id="cpuu-text-{{ indx }}" class="normelem">
+                                                            <span><span class="headelem">FSYS</span> {{ indx[2] }}</span><br/><span><span class="headelem">OPTS</span> {{ indx[3] }}</span>
                                                         </span>
                                                     </div>
                                                 </div>
                                             </div>
                                             {% endfor %}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="sect-netw" class="card card-{{ thmcolor }} card-tabs">
+                            <div class="card-header p-0 pt-1">
+                                <ul class="nav nav-tabs" id="custom-tabs-two-tab" role="tablist">
+                                    <li class="nav-item">
+                                        <a class="nav-link disabled text-bold headelem" data-toggle="pill" role="tab">Network</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link active normelem" id="netw-usej-butn" data-toggle="pill" href="#netw-usej" role="tab" aria-controls="netw-usej" aria-selected="true">Usage</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link normelem" id="netw-stat-butn" data-toggle="pill" href="#netw-stat" role="tab" aria-controls="netw-stat" aria-selected="false">Statistics</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link normelem" id="netw-addr-butn" data-toggle="pill" href="#netw-addr" role="tab" aria-controls="netw-addr" aria-selected="false">Addresses</a>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="card-body">
+                                <div class="tab-content" id="custom-tabs-two-tabContent">
+                                    <div class="tab-pane fade show active" id="netw-usej" role="tabpanel" aria-labelledby="netw-usej">
+                                        <p class="normelem">All values are expressed in bytes</p>
+                                        <div class="card-body table-responsive p-0">
+                                            <table id="proclist" class="table table-head-fixed text-nowrap table-sm">
+                                                <thead>
+                                                    <tr class="headelem">
+                                                        <th>SNIC</th>
+                                                        <th>BSNT</th>
+                                                        <th>BRCV</th>
+                                                        <th>PSNT</th>
+                                                        <th>PRCV</th>
+                                                        <th>ERIN</th>
+                                                        <th>EOUT</th>
+                                                        <th>DPIN</th>
+                                                        <th>DOUT</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    {% for indx in range(netnames|length) %}
+                                                    <tr class="normelem">
+                                                        <td id="netu-snic-{{ indx }}">{{ netnames[indx] }}</td>
+                                                        <td id="netu-bsnt-{{ indx }}">0</td>
+                                                        <td id="netu-brcv-{{ indx }}">0</td>
+                                                        <td id="netu-psnt-{{ indx }}">0</td>
+                                                        <td id="netu-prcv-{{ indx }}">0</td>
+                                                        <td id="netu-erin-{{ indx }}">0</td>
+                                                        <td id="netu-eout-{{ indx }}">0</td>
+                                                        <td id="netu-dpin-{{ indx }}">0</td>
+                                                        <td id="netu-dout-{{ indx }}">0</td>
+                                                    </tr>
+                                                    {% endfor %}
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                    <div class="tab-pane fade" id="netw-stat" role="tabpanel" aria-labelledby="netw-stat">
+                                        <p class="normelem">Dynamic refreshing for this section has not been worked upon. What if someone connects or disconnects from a network?</p>
+                                        <p class="normelem">Refreshing this every second would be a waste but adding a refresh button might just be useful.</p>
+                                        <div class="row">
+                                            {% for indx in netstats.keys() %}
+                                            <div class="col-md-12 col-sm-6 col-12">
+                                                <div class="info-box bg-info bg-{{ thmcolor }}">
+                                                    <span class="info-box-icon bg-white"><i class="fas fa-share-alt" style="color: {{ thmcolor }};"></i></span>
+                                                    <div class="info-box-content">
+                                                        <h5 class="info-box-text headelem">{{ indx }} ({{ netstats[indx][0] }})</h5>
+                                                        <span id="cpuu-text-{{ indx }}">
+                                                            <span class="normelem"><span class="headelem">DUPLEX</span> {{ netstats[indx][1] }}</span><br/>
+                                                            <span class="normelem"><span class="headelem">SPD</span> {{ netstats[indx][2] }} / <span class="headelem">MTU</span> {{ netstats[indx][3] }}</span>
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            {% endfor %}
+                                        </div>
+                                    </div>
+                                    <div class="tab-pane fade" id="netw-addr" role="tabpanel" aria-labelledby="netw-addr">
+                                        <p class="normelem">Dynamic refreshing for this section has not been worked upon. What if someone connects or disconnects from a network?</p>
+                                        <p class="normelem">Refreshing this every second would be a waste but adding a refresh button might just be useful.</p>
+                                        <div class="row">
+                                            {% for indx in netaddrs.keys() %}
+                                                {% for jndx in netaddrs[indx] %}
+                                                <div class="col-md-12 col-sm-6 col-12">
+                                                    <div class="info-box bg-info bg-{{ thmcolor }}">
+                                                        <span class="info-box-icon bg-white"><i class="fas fa-map-marker-alt" style="color: {{ thmcolor }};"></i></span>
+                                                        <div class="info-box-content">
+                                                            <h5 class="info-box-text headelem">{{ indx }} ({{ jndx[1] }})</h5>
+                                                            <span id="cpuu-text-{{ indx }}">
+                                                                <span class="normelem"><span class="headelem">FAMILY</span> {{ jndx[0] }} / <span class="headelem">NETMASK</span> {{ jndx[2] }}</span><br/>
+                                                                <span class="normelem"><span class="headelem">BROADCAST</span> {{ jndx[3] }} / <span class="headelem">PTP0</span> {{ jndx[4] }}</span>
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                {% endfor %}
+                                            {% endfor %}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="sect-sens" class="card card-{{ thmcolor }} card-tabs">
+                            <div class="card-header p-0 pt-1">
+                                <ul class="nav nav-tabs" id="custom-tabs-two-tab" role="tablist">
+                                    <li class="nav-item">
+                                        <a class="nav-link disabled headelem" data-toggle="pill" role="tab">Sensors</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link active normelem" id="sens-batt-butn" data-toggle="pill" href="#sens-batt" role="tab" aria-controls="sens-batt" aria-selected="true">Battery</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link normelem" id="sens-fans-butn" data-toggle="pill" href="#sens-fans" role="tab" aria-controls="sens-fans" aria-selected="false">Fans</a>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="card-body">
+                                <div class="tab-content" id="custom-tabs-two-tabContent">
+                                    <div class="tab-pane fade show active" id="sens-batt" role="tabpanel" aria-labelledby="sens-batt">
+                                        <div class="row">
+                                            <div class="col-md-12 col-sm-6 col-12">
+                                                <div class="info-box bg-info bg-{{ thmcolor }}">
+                                                    <span class="info-box-icon bg-white"><i class="fas fa-car-battery" style="color: {{ thmcolor }};"></i></span>
+                                                    <div class="info-box-content">
+                                                        <span id="batt-ttle-text" class="info-box-text headelem">Battery</span>
+                                                        <span id="batt-stat-perc" class="info-box-number hugeelem">0%</span>
+                                                        <div class="progress"><div id="batt-stat-prog" class="progress-bar" style="width: 0%"></div></div>
+                                                        <span class="progress-description">
+                                                            <span class="normelem"><span class="headelem">STANDBY</span> <span id="batt-stat-secs">0</span> secs / <span class="headelem">PLUGGED</span> <span id="batt-stat-plug" class="text-capitalize">FALSE</span></span>
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="tab-pane fade" id="sens-fans" role="tabpanel" aria-labelledby="sens-fans">
+                                        {% for indx in fanspeed.keys() %}
+                                        <h5 class="hugeelem">{{ indx }}</h5>
+                                        <div class="card-body table-responsive p-0">
+                                            <table id="proclist" class="table table-head-fixed text-nowrap table-sm">
+                                                <thead>
+                                                    <tr class="headelem">
+                                                        <th>LABL</th>
+                                                        <th>CURT</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    {% for jndx in range(fanspeed[indx]|length) %}
+                                                    <tr class="normelem">
+                                                        <td id="fans-peed-labl-{{ indx }}-{{ jndx }}">{{ fanspeed[indx][jndx][0] }}</td>
+                                                        <td id="fans-peed-curt-{{ indx }}-{{ jndx }}">{{ fanspeed[indx][jndx][1] }} RPM</td>
+                                                    </tr>
+                                                    {% endfor %}
+                                                </tbody>
+                                            </table>
+                                        {% endfor %}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="sect-thrm" class="card card-{{ thmcolor }} card-tabs">
+                            <div class="card-header p-0 pt-1">
+                                <ul class="nav nav-tabs" id="custom-tabs-two-tab" role="tablist">
+                                    <li class="nav-item">
+                                        <a class="nav-link disabled headelem" data-toggle="pill" role="tab">Thermal</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link active normelem" id="thrm-temp-butn" data-toggle="pill" href="#thrm-temp" role="tab" aria-controls="thrm-temp" aria-selected="true">Temperature</a>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="card-body">
+                                <div class="tab-content" id="custom-tabs-two-tabContent">
+                                    <div class="tab-pane fade show active" id="thrm-temp" role="tabpanel" aria-labelledby="thrm-temp">
+                                        {% for indx in senstemp.keys() %}
+                                        <h5 class="hugeelem">{{ indx }}</h5>
+                                        <div class="card-body table-responsive p-0">
+                                            <table id="proclist" class="table table-head-fixed text-nowrap table-sm">
+                                                <thead>
+                                                    <tr class="headelem">
+                                                        <th class="w-50">LABL</th>
+                                                        <th class="w-25">CURT</th>
+                                                        <th class="w-25">HIGH</th>
+                                                        <th class="w-25">CRIT</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    {% for jndx in range(senstemp[indx]|length) %}
+                                                    <tr class="normelem">
+                                                        <td id="sens-temp-labl-{{ indx }}-{{ jndx }}">{{ senstemp[indx][jndx][0] }}</td>
+                                                        <td id="sens-temp-curt-{{ indx }}-{{ jndx }}">{{ senstemp[indx][jndx][1] }} C</td>
+                                                        <td id="sens-temp-high-{{ indx }}-{{ jndx }}">{{ senstemp[indx][jndx][2] }} C</td>
+                                                        <td id="sens-temp-crit-{{ indx }}-{{ jndx }}">{{ senstemp[indx][jndx][3] }} C</td>
+                                                    </tr>
+                                                    {% endfor %}
+                                                </tbody>
+                                            </table>
+                                            <br/>
                                         {% endfor %}
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
+                </div>
+            </div>
 
-                    <div id="sect-sens" class="card card-{{ thmcolor }} card-tabs">
-                        <div class="card-header p-0 pt-1">
-                            <ul class="nav nav-tabs" id="custom-tabs-two-tab" role="tablist">
-                                <li class="nav-item">
-                                    <a class="nav-link disabled headelem" data-toggle="pill" role="tab">Sensors</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link active normelem" id="sens-batt-butn" data-toggle="pill" href="#sens-batt" role="tab" aria-controls="sens-batt" aria-selected="true">Battery</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link normelem" id="sens-fans-butn" data-toggle="pill" href="#sens-fans" role="tab" aria-controls="sens-fans" aria-selected="false">Fans</a>
-                                </li>
-                            </ul>
+            <div class="modal fade" id="single-process-modal">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header bg-{{ thmcolor }}">
+                            <h4 class="modal-title headelem" id="proc-boxe-name">Process</h4>
                         </div>
-                        <div class="card-body">
-                            <div class="tab-content" id="custom-tabs-two-tabContent">
-                                <div class="tab-pane fade show active" id="sens-batt" role="tabpanel" aria-labelledby="sens-batt">
-                                    <div class="row">
-                                        <div class="col-md-12 col-sm-6 col-12">
-                                            <div class="info-box bg-info bg-{{ thmcolor }}">
-                                                <span class="info-box-icon bg-white"><i class="fas fa-car-battery" style="color: {{ thmcolor }};"></i></span>
-                                                <div class="info-box-content">
-                                                    <span id="batt-ttle-text" class="info-box-text headelem">Battery</span>
-                                                    <span id="batt-stat-perc" class="info-box-number hugeelem">0%</span>
-                                                    <div class="progress"><div id="batt-stat-prog" class="progress-bar" style="width: 0%"></div></div>
-                                                    <span class="progress-description">
-                                                        <span class="normelem"><span class="headelem">STANDBY</span> <span id="batt-stat-secs">0</span> secs / <span class="headelem">PLUGGED</span> <span id="batt-stat-plug" class="text-capitalize">FALSE</span></span>
-                                                    </span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="tab-pane fade" id="sens-fans" role="tabpanel" aria-labelledby="sens-fans">
-                                    {% for indx in fanspeed.keys() %}
-                                    <h5 class="hugeelem">{{ indx }}</h5>
-                                    <div class="card-body table-responsive p-0">
-                                        <table id="proclist" class="table table-head-fixed text-nowrap table-sm">
-                                            <thead>
-                                                <tr class="headelem">
-                                                    <th>LABL</th>
-                                                    <th>CURT</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                {% for jndx in range(fanspeed[indx]|length) %}
-                                                <tr class="normelem">
-                                                    <td id="fans-peed-labl-{{ indx }}-{{ jndx }}">{{ fanspeed[indx][jndx][0] }}</td>
-                                                    <td id="fans-peed-curt-{{ indx }}-{{ jndx }}">{{ fanspeed[indx][jndx][1] }} RPM</td>
-                                                </tr>
-                                                {% endfor %}
-                                            </tbody>
-                                        </table>
-                                    {% endfor %}
-                                    </div>
-                                </div>
-                            </div>
+                        <div class="modal-body">
+                            <dl class="row">
+                                <dt class="col-sm-8 headelem">Process ID</dt>
+                                <dd id="proc-boxe-pide" class="col-sm-4 normelem">0</dd>
+                                <dt class="col-sm-8 headelem">Task started at</dt>
+                                <dd id="proc-boxe-mktm" class="col-sm-4 normelem">0</dd>
+                                <dt class="col-sm-8 headelem">Groups IDs associated</dt>
+                                <dd id="proc-boxe-gids" class="col-sm-4 normelem">0</dd>
+                                <dt class="col-sm-8 headelem">Memory statistics</dt>
+                                <dd id="proc-boxe-minf" class="col-sm-4 normelem">0</dd>
+                                <dt class="col-sm-8 headelem">Memory usage</dt>
+                                <dd id="proc-boxe-mprc" class="col-sm-4 normelem">0</dd>
+                                <dt class="col-sm-8 headelem">Processor affinity</dt>
+                                <dd id="proc-boxe-cpaf" class="col-sm-4 normelem">0</dd>
+                                <dt class="col-sm-8 headelem">Processor usage</dt>
+                                <dd id="proc-boxe-cprc" class="col-sm-4 normelem">0</dd>
+                                <dt class="col-sm-8 headelem">Time state</dt>
+                                <dd id="proc-boxe-cptm" class="col-sm-4 normelem">0</dd>
+                                <dt class="col-sm-8 headelem">Context switches</dt>
+                                <dd id="proc-boxe-ctxs" class="col-sm-4 normelem">0</dd>
+                                <dt class="col-sm-8 headelem">Thread count</dt>
+                                <dd id="proc-boxe-thqn" class="col-sm-4 normelem">0</dd>
+                                <dt class="col-sm-8 headelem">Status</dt>
+                                <dd id="proc-boxe-stat" class="col-sm-4 normelem">0</dd>
+                                <dt class="col-sm-8 headelem">Terminal</dt>
+                                <dd id="proc-boxe-term" class="col-sm-4 normelem">0</dd>
+                                <dt class="col-sm-8 headelem">Threads</dt>
+                                <dd id="proc-boxe-thrd" class="col-sm-4 normelem">0</dd>
+                                <dt class="col-sm-8 headelem">User IDs associated</dt>
+                                <dd id="proc-boxe-uids" class="col-sm-4 normelem">0</dd>
+                                <dt class="col-sm-8 headelem">Started by</dt>
+                                <dd id="proc-boxe-user" class="col-sm-4 normelem">0</dd>
+                            </dl>
                         </div>
-                    </div>
-
-                    <div id="sect-thrm" class="card card-{{ thmcolor }} card-tabs">
-                        <div class="card-header p-0 pt-1">
-                            <ul class="nav nav-tabs" id="custom-tabs-two-tab" role="tablist">
-                                <li class="nav-item">
-                                    <a class="nav-link disabled headelem" data-toggle="pill" role="tab">Thermal</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link active normelem" id="thrm-temp-butn" data-toggle="pill" href="#thrm-temp" role="tab" aria-controls="thrm-temp" aria-selected="true">Temperature</a>
-                                </li>
-                            </ul>
+                        <div class="modal-footer justify-content-between bg-{{ thmcolor }}">
+                            <button type="button" class="btn btn-sm bg-white headelem" data-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-sm bg-white headelem">Save changes</button>
                         </div>
-                        <div class="card-body">
-                            <div class="tab-content" id="custom-tabs-two-tabContent">
-                                <div class="tab-pane fade show active" id="thrm-temp" role="tabpanel" aria-labelledby="thrm-temp">
-                                    {% for indx in senstemp.keys() %}
-                                    <h5 class="hugeelem">{{ indx }}</h5>
-                                    <div class="card-body table-responsive p-0">
-                                        <table id="proclist" class="table table-head-fixed text-nowrap table-sm">
-                                            <thead>
-                                                <tr class="headelem">
-                                                    <th class="w-50">LABL</th>
-                                                    <th class="w-25">CURT</th>
-                                                    <th class="w-25">HIGH</th>
-                                                    <th class="w-25">CRIT</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                {% for jndx in range(senstemp[indx]|length) %}
-                                                <tr class="normelem">
-                                                    <td id="sens-temp-labl-{{ indx }}-{{ jndx }}">{{ senstemp[indx][jndx][0] }}</td>
-                                                    <td id="sens-temp-curt-{{ indx }}-{{ jndx }}">{{ senstemp[indx][jndx][1] }} C</td>
-                                                    <td id="sens-temp-high-{{ indx }}-{{ jndx }}">{{ senstemp[indx][jndx][2] }} C</td>
-                                                    <td id="sens-temp-crit-{{ indx }}-{{ jndx }}">{{ senstemp[indx][jndx][3] }} C</td>
-                                                </tr>
-                                                {% endfor %}
-                                            </tbody>
-                                        </table>
-                                        <br/>
-                                    {% endfor %}
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-			  	</div>
-			</div>
-		</div>
-
-        <div class="modal fade" id="single-process-modal">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header bg-{{ thmcolor }}">
-                        <h4 class="modal-title headelem" id="proc-boxe-name">Process</h4>
-                    </div>
-                    <div class="modal-body">
-                        <dl class="row">
-                            <dt class="col-sm-8 headelem">Process ID</dt>
-                            <dd id="proc-boxe-pide" class="col-sm-4 normelem">0</dd>
-                            <dt class="col-sm-8 headelem">Task started at</dt>
-                            <dd id="proc-boxe-mktm" class="col-sm-4 normelem">0</dd>
-                            <dt class="col-sm-8 headelem">Groups IDs associated</dt>
-                            <dd id="proc-boxe-gids" class="col-sm-4 normelem">0</dd>
-                            <dt class="col-sm-8 headelem">Memory statistics</dt>
-                            <dd id="proc-boxe-minf" class="col-sm-4 normelem">0</dd>
-                            <dt class="col-sm-8 headelem">Memory usage</dt>
-                            <dd id="proc-boxe-mprc" class="col-sm-4 normelem">0</dd>
-                            <dt class="col-sm-8 headelem">Processor affinity</dt>
-                            <dd id="proc-boxe-cpaf" class="col-sm-4 normelem">0</dd>
-                            <dt class="col-sm-8 headelem">Processor usage</dt>
-                            <dd id="proc-boxe-cprc" class="col-sm-4 normelem">0</dd>
-                            <dt class="col-sm-8 headelem">Time state</dt>
-                            <dd id="proc-boxe-cptm" class="col-sm-4 normelem">0</dd>
-                            <dt class="col-sm-8 headelem">Context switches</dt>
-                            <dd id="proc-boxe-ctxs" class="col-sm-4 normelem">0</dd>
-                            <dt class="col-sm-8 headelem">Thread count</dt>
-                            <dd id="proc-boxe-thqn" class="col-sm-4 normelem">0</dd>
-                            <dt class="col-sm-8 headelem">Status</dt>
-                            <dd id="proc-boxe-stat" class="col-sm-4 normelem">0</dd>
-                            <dt class="col-sm-8 headelem">Terminal</dt>
-                            <dd id="proc-boxe-term" class="col-sm-4 normelem">0</dd>
-                            <dt class="col-sm-8 headelem">Threads</dt>
-                            <dd id="proc-boxe-thrd" class="col-sm-4 normelem">0</dd>
-                            <dt class="col-sm-8 headelem">User IDs associated</dt>
-                            <dd id="proc-boxe-uids" class="col-sm-4 normelem">0</dd>
-                            <dt class="col-sm-8 headelem">Started by</dt>
-                            <dd id="proc-boxe-user" class="col-sm-4 normelem">0</dd>
-                        </dl>
-                    </div>
-                    <div class="modal-footer justify-content-between bg-{{ thmcolor }}">
-                        <button type="button" class="btn btn-sm bg-white headelem" data-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-sm bg-white headelem">Save changes</button>
                     </div>
                 </div>
             </div>
-        </div>
         </div>
         </div>
 
 		<footer class="main-footer bg-{{ thmcolor }}">
             <div class="container">
                 <div class="float-right d-none d-sm-inline normelem">
-                    Created with <i class="fas fa-heart"></i> by <a class="headelem" href="https://github.com/t0xic0der/" style="color:yellow;">t0xic0der</a>
+                    Created with <i class="fas fa-heart"></i> by <span class="headelem" onclick="window.location.href = 'https://github.com/t0xic0der/'" style="color:yellow;">t0xic0der</span>
                 </div>
-                <span class="headelem">SYSMON Modern v02072020. </span><a href="https://github.com/t0xic0der/sysmon" class="normelem" style="color: yellow;">Contribute</a> here.
+                <span class="headelem">SYSMON Modern v02072020. </span><span onclick="window.location.href = 'https://github.com/t0xic0der/'" class="normelem" style="color: yellow;">Contribute</span> here.
             </div>
 		</footer>
 		<script src="{{ url_for("static", filename="jscn/bootstrap.bundle.js") }}"></script>
