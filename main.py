@@ -5,26 +5,22 @@ main = Flask(__name__)
 
 
 # rendering the HTML page which has the button
-@main.route("/")
+@main.route("/legacylo/")
 def json():
     retndata = back.GetOSUnameData()
     cpuquant = back.GetCPULogicalCount()
     diskpart = back.GetAllDiskPartitions()
     dionames = list(back.GetDiskIOUsage()[1].keys())
     netnames = list(back.GetNetworkIOUsage()[1].keys())
-    #temnames = list(back.GetSensorsTemperature()[1].keys())
     procinfo = back.GetProcessInfo()
-
     senstemp = back.GetSensorsTemperature()
     fanspeed = back.GetSensorsFanSpeed()
     boottime = back.GetBootTime()
-
     netaddrs = back.GetNetworkIFAddresses()
     netstats = back.GetNetworkStatistics()
-    return render_template("main.html", retndata=retndata, cpuquant=cpuquant,
+    return render_template("main.html", retndata=retndata, cpuquant=cpuquant, procinfo=procinfo,
                            diskpart=diskpart, dionames=dionames, netnames=netnames, netaddrs=netaddrs,
-                           netstats=netstats, senstemp=senstemp, fanspeed=fanspeed, boottime=boottime,
-                           procinfo=procinfo)
+                           netstats=netstats, senstemp=senstemp, fanspeed=fanspeed, boottime=boottime)
 
 
 # background process hmainening without any refreshing
@@ -133,34 +129,13 @@ def procinfo():
     return retnjson
 
 
-@main.route("/modepage/", methods=["GET"])
-def modepage():
-    retndata = back.GetOSUnameData()
-    cpuquant = back.GetCPULogicalCount()
-    diskpart = back.GetAllDiskPartitions()
-    dionames = list(back.GetDiskIOUsage()[1].keys())
-    netnames = list(back.GetNetworkIOUsage()[1].keys())
-    #temnames = list(back.GetSensorsTemperature()[1].keys())
-    procinfo = back.GetProcessInfo()
-    senstemp = back.GetSensorsTemperature()
-    fanspeed = back.GetSensorsFanSpeed()
-    boottime = back.GetBootTime()
-    netaddrs = back.GetNetworkIFAddresses()
-    netstats = back.GetNetworkStatistics()
-    return render_template("mode.html", retndata=retndata, cpuquant=cpuquant,
-                           diskpart=diskpart, dionames=dionames, netnames=netnames,
-                           netaddrs=netaddrs, netstats=netstats, senstemp=senstemp,
-                           fanspeed=fanspeed, boottime=boottime, procinfo=procinfo)
-
-
-@main.route("/custpage/<thmcolor>/", methods=["GET"])
+@main.route("/<thmcolor>/", methods=["GET"])
 def custpage(thmcolor="maroon"):
     retndata = back.GetOSUnameData()
     cpuquant = back.GetCPULogicalCount()
     diskpart = back.GetAllDiskPartitions()
     dionames = list(back.GetDiskIOUsage()[1].keys())
     netnames = list(back.GetNetworkIOUsage()[1].keys())
-    #temnames = list(back.GetSensorsTemperature()[1].keys())
     procinfo = back.GetProcessInfo()
     senstemp = back.GetSensorsTemperature()
     fanspeed = back.GetSensorsFanSpeed()
