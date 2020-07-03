@@ -19,6 +19,32 @@ An intuitive system performance monitoring tool
 9.  When done tinkering, deactivate the virtual environment by executing `deactivate`
 10. Give stars to the repository if it was helpful
 
+## Screenshots
+
+### Cool 21 Theming Options [Teal]
+![](pictures/themopto.png)
+
+### Overview and About Overview [Olive]
+![](pictures/abotinfo.png)
+
+### Process Listing [Maroon]
+![](pictures/procinfo.png)
+
+### Per-process Modal Window [Orange]
+![](pictures/procmode.png)
+
+### Processor and Memory Overview [Indigo]
+![](pictures/cpmminfo.png)
+
+### Disk Usages Overview [Navy]
+![](pictures/diskinfo.png)
+
+### Network Statistics Overview [Danger]
+![](pictures/netwinfo.png)
+
+### Sensors and Thermal Overview [Fuchsia]
+![](pictures/sensinfo.png)
+
 ## To-do
 - [X] Write driver code and endpoint access code for **Processor** page
 - [X] Write client-side Jinja template and AJAX calls for **Processor** information
@@ -32,37 +58,35 @@ An intuitive system performance monitoring tool
 - [X] Write client-side Jinja template and AJAX calls for **Sensors** information
 - [X] Write driver code and endpoint access code for **About** page
 - [X] Write client-side Jinja template and AJAX calls for **About** information
-- [ ] Write driver code and endpoint access code for **Thermal** page
-- [ ] Write client-side Jinja template and AJAX calls for **Thermal** information
-- [ ] Write driver code and endpoint access code for **Miscellaneous** page
-- [ ] Write client-side Jinja template and AJAX calls for **Miscellaneous** information
-- [ ] Write driver code and endpoint access code for **Processes** page
-- [ ] Write client-side Jinja template and AJAX calls for **Processes** information
+- [X] Write driver code and endpoint access code for **Thermal** page
+- [X] Write client-side Jinja template and AJAX calls for **Thermal** information
+- [X] Write driver code and endpoint access code for **Processes** page
+- [X] Write client-side Jinja template and AJAX calls for **Processes** information
+- [ ] Add capacity to KILL/SUSPEND/RESUME etc. tasks from the modal
 - [ ] Highlight useful information in a much less granular manner
 - [ ] Add data visualization with line graph, bar graph and donut charts
 - [ ] Cleanup asynchronous calls and optimize them for speedup
 - [ ] Add element in the frontend to help modify refresh rate from the frontend
 - [ ] Cleanup decorators in backend and optimize them for efficiency
 - [ ] Add a documentation about theming guidelines
-- [ ] Add client-side theming option using Javascript, unretained across sessions
+- [X] Add client-side theming option using Javascript, unretained across sessions
 - [ ] Add JQuery dependencies to be loaded up from local storage
 - [X] Add custom font dependencies to be loaded up from local storage
 - [ ] Add monotype fonts for numeric values
 - [ ] AJAX calls should replace the value of a `<span>` element only
-- [ ] Include functionality of server-side theming using Jinja
+- [X] Include functionality of server-side theming using Jinja
 - [ ] Clean up fetches which require creation and population separately
 - [ ] Limit endpoints to ONE by dispersing all information from single endpoint
 - [ ] Include JSON (or YAML) based customizations for enabling/disabling sections
 - [ ] Add a PRINT document button at the top-right corner of the UI
-- [ ] Prevent text-selection/drag-drop capabilities in the UI
+- [X] Prevent text-selection/drag-drop capabilities in the UI
 - [ ] Make a `document.window.href` for external links and ensure opening in new tab
-- [ ] Add dynamic refeshing functionality to disk partitions and network interfaces sect
+- [X] Add dynamic refreshing functionality to disk partitions and network interfaces sect
 - [ ] Fix responsiveness in cards for disk partition listing
 - [ ] Trim numerical information to have much lesser accuracy
 - [ ] Correct tabinations and code sanity in the client-side code
 - [ ] Add functionality to switch the units for thermal data between celsius and fahrenheit
 - [ ] Add an obligatory dark mode feature (for everybody else has it now)
-
 
 ## Bugs
 - Modern UI
@@ -72,26 +96,7 @@ An intuitive system performance monitoring tool
     - The process modal does not refresh - data shown in the modal is at taken at the time of opening
     - Multiple data elements are expressed in uncannily long, bigger and unnecessary accuracies
     - Minor slow downs are expected as all data elements are fetched and refreshed separately
-
-## Screenshots
-
-### Dashboard / Processor
-![procinfo.png](pictures/procinfo.png)
-
-### Dashboard / Memory
-![memoinfo.png](pictures/memoinfo.png)
-
-### Dashboard / Disks
-![diskinfo.png](pictures/diskinfo.png)
-
-### Dashboard / Network
-![netwinfo.png](pictures/netwinfo.png)
-
-### Dashboard / Sensors
-![sensinfo.png](pictures/sensinfo.png)
-
-### Dashboard / About
-![abotinfo.png](pictures/abotinfo.png)
+    - Section references scroll up and inconveniently hide behind the persistent top bar
 
 ## Helpful
 1. https://stackoverflow.com/questions/15721679/update-and-render-a-value-from-flask-periodically
