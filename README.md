@@ -15,9 +15,10 @@ An intuitive system performance monitoring tool
 5.  Install all dependencies for the project by executing `pip3 install -r requirements.txt`
 6.  Run the project server by executing `python3 main.py`
 7.  Take a note of the computer's IP address and make sure that it is reachable
-8.  Visit `http://<YOUR-IP-ADDRESS>:9696` from the other device (or `http://localhost:9696` on the same PC)
-9.  When done tinkering, deactivate the virtual environment by executing `deactivate`
-10. Give stars to the repository if it was helpful
+8.  Visit `http://<YOUR-IP-ADDRESS>:9696/primary` from the other device (or `http://localhost:9696/primary` on the same PC)
+9.  Take a look at the different themes available, refresh the monitor or print reports when needed.
+10.  When done tinkering, deactivate the virtual environment by executing `deactivate`
+11. Give stars to the repository if it was helpful
 
 ## Screenshots
 
