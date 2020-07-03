@@ -1,5 +1,5 @@
 # sysmon
-An intuitive system performance monitoring tool
+An intuitive remotely-accessible system performance monitoring and task management tool for servers
 
 ## Features
 - Simplistic implementation of asynchronous periodic AJAX calls to fetch information
@@ -92,10 +92,12 @@ An intuitive system performance monitoring tool
 - [ ] Add functionality to switch the units for thermal data between celsius and fahrenheit
 - [ ] Add an obligatory dark mode feature (for everybody else has it now)
 - [ ] Change `onclick` highlighting color on dropdown menus (It is by-default `primary` for all accents)
+- [ ] Package it in a binary file with [`click`](https://click.palletsprojects.com/en/7.x/) to set command-line options
+- [ ] Make the binary (along with command-line options) usable as a `systemd` service
 
 ## Bugs
 - Modern UI
-    - May require hard refreshing (`Ctrl+Shift+R`) followed by a normal refresh (`Ctrl+R`) to get proper data in knob
+    - May require hard refreshing (**`Ctrl+Shift+R`**) followed by a normal refresh (**`Ctrl+R`**) to get proper data in knob
     - Responsiveness is broken in cases where the line follows on to be too long without spaces
     - CSS colors specified by the boilerplate do not match with the one specified in the standard
     - The process modal does not refresh - data shown in the modal is at taken at the time of opening
