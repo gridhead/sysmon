@@ -224,12 +224,12 @@
         </script>
 	</head>
 
-	<body class="hold-transition layout-top-nav layout-navbar-fixed layout-footer-fixed noselect" ondragstart="return false;" ondrop="return false;" onload="UpdateValues()">
+	<body class="hold-transition layout-top-nav layout-navbar-fixed layout-footer-fixed noselect cuntainer" ondragstart="return false;" ondrop="return false;" onload="UpdateValues()">
 
         <div class="wrapper">
 		  	<nav class="main-header navbar navbar-expand-md navbar-dark navbar-{{ thmcolor }}">
 				<div class="container">
-			  		<a href="#" class="navbar-brand">
+			  		<a onclick="document.location.href = '#'" class="navbar-brand">
 						<img src="{{ url_for("static", filename="imgs/datalogo.svg") }}" class="brand-image img-circle" style="opacity: .8; filter: invert(93%) sepia(94%) saturate(0%) hue-rotate(248deg) brightness(106%) contrast(106%);">
 						<span class="brand-text font-weight-bold headelem">&nbsp;System Monitor</span>
 			  		</a>
@@ -397,7 +397,7 @@
                                 </div>
                             </div>
                             <div class="card-body">
-                                <div class="card-body table-responsive p-0" style="height: 600px;">
+                                <div class="table-responsive p-0" style="height: 600px;">
                                     <table id="proclist" class="table table-head-fixed text-nowrap table-sm">
                                         <thead>
                                             <tr class="headelem">
@@ -467,7 +467,7 @@
                                         </div>
                                     </div>
                                     <div class="tab-pane fade" id="proc-time" role="tabpanel" aria-labelledby="proc-time">
-                                        <div class="card-body table-responsive p-0">
+                                        <div class="table-responsive p-0">
                                             <p class="normelem">All values are expressed in seconds</p>
                                             <table id="proclist" class="table table-head-fixed text-nowrap table-sm">
                                                 <thead>
@@ -501,7 +501,7 @@
                                                         <td id="time-gtnc-{{ indx }}" >0</td>
                                                     </tr>
                                                     {% endfor %}
-                                              </tbody>
+                                                </tbody>
                                             </table>
                                         </div>
                                     </div>
@@ -607,7 +607,7 @@
                                 <div class="tab-content" id="custom-tabs-two-tabContent">
                                     <div class="tab-pane fade show active" id="disk-usej" role="tabpanel" aria-labelledby="disk-usej">
                                         <p class="normelem">All values are expressed in bytes</p>
-                                        <div class="card-body table-responsive p-0">
+                                        <div class="table-responsive p-0">
                                             <table id="proclist" class="table table-head-fixed text-nowrap table-sm">
                                                 <thead>
                                                     <tr class="headelem">
@@ -638,7 +638,7 @@
                                                         <td id="disk-bstm-{{ indx }}">0</td>
                                                     </tr>
                                                     {% endfor %}
-                                              </tbody>
+                                                </tbody>
                                             </table>
                                         </div>
                                     </div>
@@ -686,7 +686,7 @@
                                 <div class="tab-content" id="custom-tabs-two-tabContent">
                                     <div class="tab-pane fade show active" id="netw-usej" role="tabpanel" aria-labelledby="netw-usej">
                                         <p class="normelem">All values are expressed in bytes</p>
-                                        <div class="card-body table-responsive p-0">
+                                        <div class="table-responsive p-0">
                                             <table id="proclist" class="table table-head-fixed text-nowrap table-sm">
                                                 <thead>
                                                     <tr class="headelem">
@@ -799,9 +799,9 @@
                                         </div>
                                     </div>
                                     <div class="tab-pane fade" id="sens-fans" role="tabpanel" aria-labelledby="sens-fans">
+                                        <div class="table-responsive p-0">
                                         {% for indx in fanspeed.keys() %}
-                                        <h5 class="hugeelem">{{ indx }}</h5>
-                                        <div class="card-body table-responsive p-0">
+                                            <h5 class="hugeelem">{{ indx }}</h5>
                                             <table id="proclist" class="table table-head-fixed text-nowrap table-sm">
                                                 <thead>
                                                     <tr class="headelem">
@@ -839,9 +839,9 @@
                             <div class="card-body">
                                 <div class="tab-content" id="custom-tabs-two-tabContent">
                                     <div class="tab-pane fade show active" id="thrm-temp" role="tabpanel" aria-labelledby="thrm-temp">
+                                        <div class="table-responsive p-0">
                                         {% for indx in senstemp.keys() %}
-                                        <h5 class="hugeelem">{{ indx }}</h5>
-                                        <div class="card-body table-responsive p-0">
+                                            <h5 class="hugeelem">{{ indx }}</h5>
                                             <table id="proclist" class="table table-head-fixed text-nowrap table-sm">
                                                 <thead>
                                                     <tr class="headelem">
@@ -864,72 +864,74 @@
                                             </table>
                                             <br/>
                                         {% endfor %}
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
+                <footer class="main-footer bg-{{ thmcolor }}">
+                    <div class="container">
+                        <div class="float-right d-none d-sm-inline normelem">
+                            Created with <i class="fas fa-heart"></i> by <span class="headelem" onclick="window.location.href = 'https://github.com/t0xic0der/'" style="color:yellow;">t0xic0der</span>
+                        </div>
+                        <span class="headelem">SYSMON Modern v06072020. </span><span onclick="window.location.href = 'https://github.com/t0xic0der/sysmon/'" class="normelem" style="color: yellow;">Contribute</span> here.
+                    </div>
+                </footer>
             </div>
+        </div>
 
-            <div class="modal fade" id="single-process-modal">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header bg-{{ thmcolor }}">
-                            <h4 class="modal-title headelem" id="proc-boxe-name">Process</h4>
-                        </div>
-                        <div class="modal-body">
-                            <dl class="row">
-                                <dt class="col-sm-8 headelem">Process ID</dt>
-                                <dd id="proc-boxe-pide" class="col-sm-4 normelem">0</dd>
-                                <dt class="col-sm-8 headelem">Task started at</dt>
-                                <dd id="proc-boxe-mktm" class="col-sm-4 normelem">0</dd>
-                                <dt class="col-sm-8 headelem">Groups IDs associated</dt>
-                                <dd id="proc-boxe-gids" class="col-sm-4 normelem">0</dd>
-                                <dt class="col-sm-8 headelem">Memory statistics</dt>
-                                <dd id="proc-boxe-minf" class="col-sm-4 normelem">0</dd>
-                                <dt class="col-sm-8 headelem">Memory usage</dt>
-                                <dd id="proc-boxe-mprc" class="col-sm-4 normelem">0</dd>
-                                <dt class="col-sm-8 headelem">Processor affinity</dt>
-                                <dd id="proc-boxe-cpaf" class="col-sm-4 normelem">0</dd>
-                                <dt class="col-sm-8 headelem">Processor usage</dt>
-                                <dd id="proc-boxe-cprc" class="col-sm-4 normelem">0</dd>
-                                <dt class="col-sm-8 headelem">Time state</dt>
-                                <dd id="proc-boxe-cptm" class="col-sm-4 normelem">0</dd>
-                                <dt class="col-sm-8 headelem">Context switches</dt>
-                                <dd id="proc-boxe-ctxs" class="col-sm-4 normelem">0</dd>
-                                <dt class="col-sm-8 headelem">Thread count</dt>
-                                <dd id="proc-boxe-thqn" class="col-sm-4 normelem">0</dd>
-                                <dt class="col-sm-8 headelem">Status</dt>
-                                <dd id="proc-boxe-stat" class="col-sm-4 normelem">0</dd>
-                                <dt class="col-sm-8 headelem">Terminal</dt>
-                                <dd id="proc-boxe-term" class="col-sm-4 normelem">0</dd>
-                                <dt class="col-sm-8 headelem">Threads</dt>
-                                <dd id="proc-boxe-thrd" class="col-sm-4 normelem">0</dd>
-                                <dt class="col-sm-8 headelem">User IDs associated</dt>
-                                <dd id="proc-boxe-uids" class="col-sm-4 normelem">0</dd>
-                                <dt class="col-sm-8 headelem">Started by</dt>
-                                <dd id="proc-boxe-user" class="col-sm-4 normelem">0</dd>
-                            </dl>
-                        </div>
-                        <div class="modal-footer justify-content-between bg-{{ thmcolor }}">
-                            <button type="button" class="btn btn-sm bg-white headelem" data-dismiss="modal">Close</button>
-                            <button type="button" class="btn btn-sm bg-white headelem">Save changes</button>
-                        </div>
+        <div class="modal fade" id="single-process-modal">
+            <div class="container">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header bg-{{ thmcolor }}">
+                        <h4 class="modal-title headelem" id="proc-boxe-name">Process</h4>
+                    </div>
+                    <div class="modal-body">
+                        <dl class="row">
+                            <dt class="col-sm-8 headelem">Process ID</dt>
+                            <dd id="proc-boxe-pide" class="col-sm-4 normelem">0</dd>
+                            <dt class="col-sm-8 headelem">Task started at</dt>
+                            <dd id="proc-boxe-mktm" class="col-sm-4 normelem">0</dd>
+                            <dt class="col-sm-8 headelem">Groups IDs associated</dt>
+                            <dd id="proc-boxe-gids" class="col-sm-4 normelem">0</dd>
+                            <dt class="col-sm-8 headelem">Memory statistics</dt>
+                            <dd id="proc-boxe-minf" class="col-sm-4 normelem">0</dd>
+                            <dt class="col-sm-8 headelem">Memory usage</dt>
+                            <dd id="proc-boxe-mprc" class="col-sm-4 normelem">0</dd>
+                            <dt class="col-sm-8 headelem">Processor affinity</dt>
+                            <dd id="proc-boxe-cpaf" class="col-sm-4 normelem">0</dd>
+                            <dt class="col-sm-8 headelem">Processor usage</dt>
+                            <dd id="proc-boxe-cprc" class="col-sm-4 normelem">0</dd>
+                            <dt class="col-sm-8 headelem">Time state</dt>
+                            <dd id="proc-boxe-cptm" class="col-sm-4 normelem">0</dd>
+                            <dt class="col-sm-8 headelem">Context switches</dt>
+                            <dd id="proc-boxe-ctxs" class="col-sm-4 normelem">0</dd>
+                            <dt class="col-sm-8 headelem">Thread count</dt>
+                            <dd id="proc-boxe-thqn" class="col-sm-4 normelem">0</dd>
+                            <dt class="col-sm-8 headelem">Status</dt>
+                            <dd id="proc-boxe-stat" class="col-sm-4 normelem">0</dd>
+                            <dt class="col-sm-8 headelem">Terminal</dt>
+                            <dd id="proc-boxe-term" class="col-sm-4 normelem">0</dd>
+                            <dt class="col-sm-8 headelem">Threads</dt>
+                            <dd id="proc-boxe-thrd" class="col-sm-4 normelem">0</dd>
+                            <dt class="col-sm-8 headelem">User IDs associated</dt>
+                            <dd id="proc-boxe-uids" class="col-sm-4 normelem">0</dd>
+                            <dt class="col-sm-8 headelem">Started by</dt>
+                            <dd id="proc-boxe-user" class="col-sm-4 normelem">0</dd>
+                        </dl>
+                    </div>
+                    <div class="modal-footer justify-content-between bg-{{ thmcolor }}">
+                        <button type="button" class="btn btn-sm bg-white headelem" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-sm bg-white headelem">Save changes</button>
                     </div>
                 </div>
             </div>
-        </div>
+            </div>
         </div>
 
-		<footer class="main-footer bg-{{ thmcolor }}">
-            <div class="container">
-                <div class="float-right d-none d-sm-inline normelem">
-                    Created with <i class="fas fa-heart"></i> by <span class="headelem" onclick="window.location.href = 'https://github.com/t0xic0der/'" style="color:yellow;">t0xic0der</span>
-                </div>
-                <span class="headelem">SYSMON Modern v02072020. </span><span onclick="window.location.href = 'https://github.com/t0xic0der/'" class="normelem" style="color: yellow;">Contribute</span> here.
-            </div>
-		</footer>
 		<script src="{{ url_for("static", filename="jscn/bootstrap.bundle.js") }}"></script>
 		<script src="{{ url_for("static", filename="jscn/adminlte.js") }}"></script>
         <script src="{{ url_for("static", filename="jscn/jquery.knob.min.js") }}"></script>

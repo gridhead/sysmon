@@ -49,6 +49,7 @@
     color: #000000;
 }
 
+/* Preventing text-selection and copy-paste */
 .noselect {
     -webkit-touch-callout: none;
     -webkit-user-select: none;
@@ -56,4 +57,14 @@
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
+}
+
+/* Make the scrollbars disappear while retaining the functionality */
+.cuntainer {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+.cuntainer::-webkit-scrollbar {
+    display: none;
 }
