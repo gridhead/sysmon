@@ -9,6 +9,7 @@
         <script src="{{ url_for("static", filename="jscn/jquery.min.js") }}"></script>
 	  	<link rel="stylesheet" href="{{ url_for("static", filename="css3/fontsome.css") }}" />
 	  	<link rel="stylesheet" href="{{ url_for("static", filename="css3/adminlte.css") }}" />
+        <link rel="stylesheet" href="{{ url_for("static", filename="css3/toastr.css") }}" />
 	  	<link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
         <script type="text/javascript">
             async function UpdateValues() {
@@ -220,7 +221,31 @@
                 document.getElementById("proc-boxe-thrd").innerText = pmodthrd;
                 document.getElementById("proc-boxe-uids").innerText = pmoduids;
                 document.getElementById("proc-boxe-user").innerText = pmoduser;
+                document.getElementById("termproc-mode").innerHTML = "<i class='fas fa-trash-alt' onclick='termproc("+pmodpide+")'></i>";
+                document.getElementById("killproc-mode").innerHTML = "<i class='fas fa-ban' onclick='killproc("+pmodpide+")'></i>";
+                document.getElementById("sspdproc-mode").innerHTML = "<i class='fas fa-pause' onclick='sspdproc("+pmodpide+")'></i>";
+                document.getElementById("resmproc-mode").innerHTML = "<i class='fas fa-play' onclick='resmproc("+pmodpide+")'></i>";
             }
+            function termproc(prociden)
+            {
+                $.ajax({url: "/termproc/" + prociden + "/", success: function(result){
+                    console.log(result);
+            }})}
+            function killproc(prociden)
+            {
+                $.ajax({url: "/killproc/" + prociden + "/", success: function(result){
+                    console.log(result);
+            }})}
+            function sspdproc(prociden)
+            {
+                $.ajax({url: "/sspdproc/" + prociden + "/", success: function(result){
+                    console.log(result);
+            }})}
+            function resmproc(prociden)
+            {
+                $.ajax({url: "/resmproc/" + prociden + "/", success: function(result){
+                    console.log(result);
+            }})}
         </script>
 	</head>
 
@@ -921,8 +946,13 @@
                         </dl>
                     </div>
                     <div class="modal-footer justify-content-between bg-{{ thmcolor }}">
-                        <button type="button" class="btn btn-sm bg-white headelem" data-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-sm bg-white headelem">Save changes</button>
+                        <button type="button" class="btn btn-sm bg-white headelem" data-dismiss="modal"><i class="fas fa-times"></i></button>
+                        <div class="float-right">
+                            <button id="termproc-mode" type="button" class="btn btn-sm bg-white headelem termproc-mode" data-dismiss="modal"><i class="fas fa-trash-alt"></i></button>
+                            <button id="killproc-mode" type="button" class="btn btn-sm bg-white headelem killproc-mode" data-dismiss="modal"><i class="fas fa-ban"></i></button>
+                            <button id="sspdproc-mode" type="button" class="btn btn-sm bg-white headelem sspdproc-mode" data-dismiss="modal"><i class="fas fa-pause"></i></button>
+                            <button id="resmproc-mode" type="button" class="btn btn-sm bg-white headelem resmproc-mode" data-dismiss="modal"><i class="fas fa-play"></i></button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -932,6 +962,7 @@
 		<script src="{{ url_for("static", filename="jscn/bootstrap.bundle.js") }}"></script>
 		<script src="{{ url_for("static", filename="jscn/adminlte.js") }}"></script>
         <script src="{{ url_for("static", filename="jscn/jquery.knob.min.js") }}"></script>
+        <script src="{{ url_for("static", filename="jscn/toastr.min.js") }}"></script>
         <script>
             $(function () {
                 $('.knob').knob({
@@ -969,6 +1000,30 @@
                     }
                 }
             )})
+        </script>
+        <script type="text/javascript">
+              $(function() {
+                    $('.termproc-mode').click(function() {
+                        toastr.warning("Process termination was requested", "", {
+                            "progressBar": true
+                        })
+                    })
+                    $('.killproc-mode').click(function() {
+                        toastr.error("Process kill was requested", "", {
+                            "progressBar": true
+                        })
+                    })
+                    $('.sspdproc-mode').click(function() {
+                        toastr.info("Process suspension was requested", "", {
+                            "progressBar": true
+                        })
+                    })
+                    $('.resmproc-mode').click(function() {
+                        toastr.success("Process resume was requested", "", {
+                            "progressBar": true
+                        })
+                    })
+              });
         </script>
 	</body>
 </html>

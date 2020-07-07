@@ -110,6 +110,30 @@ def procinfo():
     return retnjson
 
 
+@main.route("/termproc/<prociden>/", methods=["GET"])
+def termproc(prociden):
+    back.TerminateSingleProcess(prociden)
+    return "Terminated"
+
+
+@main.route("/killproc/<prociden>/", methods=["GET"])
+def killproc(prociden):
+    back.KillSingleProcess(prociden)
+    return "Killed"
+
+
+@main.route("/sspdproc/<prociden>/", methods=["GET"])
+def sspdroc(prociden):
+    back.SuspendSingleProcess(prociden)
+    return "Suspended"
+
+
+@main.route("/resmproc/<prociden>/", methods=["GET"])
+def resmproc(prociden):
+    back.ResumeSingleProcess(prociden)
+    return "Resumed"
+
+
 @main.route("/<thmcolor>/", methods=["GET"])
 def custpage(thmcolor="maroon"):
     retndata = back.GetOSUnameData()

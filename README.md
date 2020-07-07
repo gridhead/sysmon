@@ -5,9 +5,10 @@ An intuitive remotely-accessible system performance monitoring and task manageme
 - Simplistic implementation of asynchronous periodic AJAX calls to fetch information
 - Relatively low overhead from the server during stat (approx. 4MB over runtime usage)
 - Easy and flexible customization of interface by replacing the assets with your own
-- Tweakable refresh times for dynamic information with endpoints powered by `psutil`
+- Tweakable refresh times for dynamic information with endpoints powered by **`psutil`**
 - Report printing and dynamic refreshing buttons available at disposal
 - Hybrid cross-client theming engine built with upto 21 supported theming options
+- Complex process management with per-task **`TERMINATE`**, **`KILL`**, **`SUSPEND`** and **`RESUME`**
 
 ## Usage
 1.  Install and upgrade virtualenv if not already done by executing `pip3 install virtualenv --user`
@@ -24,28 +25,31 @@ An intuitive remotely-accessible system performance monitoring and task manageme
 
 ## Screenshots
 
-### Cool 21 Theming Options [Teal]
+### Section Picker [Primary]
+![](pictures/sectinfo.png)
+
+### Cool 21 Theming Options [Secondary]
 ![](pictures/themopto.png)
 
-### Overview and About Overview [Olive]
+### Overview and About Section [Olive]
 ![](pictures/abotinfo.png)
 
-### Process Listing [Maroon]
+### Process Listing [Success]
 ![](pictures/procinfo.png)
 
-### Per-process Modal Window [Orange]
+### Task Management Modal [Information]
 ![](pictures/procmode.png)
 
-### Processor and Memory Overview [Indigo]
+### Processor and Memory Overview [Warning]
 ![](pictures/cpmminfo.png)
 
 ### Disk Usages Overview [Navy]
 ![](pictures/diskinfo.png)
 
-### Network Statistics Overview [Danger]
+### Network Statistics Overview [Fuchsia]
 ![](pictures/netwinfo.png)
 
-### Sensors and Thermal Overview [Fuchsia]
+### Sensors and Thermal Overview [Maroon]
 ![](pictures/sensinfo.png)
 
 ## To-do
@@ -65,7 +69,8 @@ An intuitive remotely-accessible system performance monitoring and task manageme
 - [X] Write client-side Jinja template and AJAX calls for **Thermal** information
 - [X] Write driver code and endpoint access code for **Processes** page
 - [X] Write client-side Jinja template and AJAX calls for **Processes** information
-- [ ] Add capacity to **KILL/SUSPEND/RESUME** etc. tasks from the modal
+- [ ] Implement process search feature using the search bar (For now, it is just a placeholder)
+- [X] Add capacity to **TERMINATE/KILL/SUSPEND/RESUME** etc. tasks from the modal
 - [ ] Highlight useful information in a much less granular manner
 - [ ] Add data visualization with line graph, bar graph and donut charts
 - [ ] Cleanup asynchronous calls and optimize them for speedup
@@ -84,7 +89,7 @@ An intuitive remotely-accessible system performance monitoring and task manageme
 - [ ] Include JSON (or YAML) based customizations for enabling/disabling sections
 - [X] Add a PRINT document button at the top-right corner of the UI
 - [X] Prevent text-selection/drag-drop capabilities in the UI
-- [ ] Make a `document.window.href` for external links and ensure opening in new tab
+- [ ] Make a `document.location.href` for external links and ensure opening in new tab
 - [X] Add dynamic refreshing functionality to disk partitions and network interfaces sect
 - [ ] Fix responsiveness in cards for disk partition listing
 - [ ] Trim numerical information to have much lesser accuracy
@@ -94,9 +99,16 @@ An intuitive remotely-accessible system performance monitoring and task manageme
 - [ ] Change `onclick` highlighting color on dropdown menus (It is by-default `primary` for all accents)
 - [ ] Package it in a binary file with [`click`](https://click.palletsprojects.com/en/7.x/) to set command-line options
 - [ ] Make the binary (along with command-line options) usable as a `systemd` service
+- [ ] Add user login feature as with complex process management, control cannot be left open
+- [X] `[Would not be implemented as it breaks tab-switching feature]` Replace all card tabs `anchors` with `document.location.href` attributes
+- [ ] Replace all `getElementById` with JQuery methods for speed up
+- [ ] Hide resume button for processes already running and show resume for only `STOPPED` tasks
+- [ ] Add tooltips for the task management buttons
+- [ ] Add documentation about the various attributes and columns in table in another tab (per card)
+- [ ] Make the server be visible across the internet using IPv6 addresses
 
 ## Bugs
-- Modern UI
+- **Modern UI**
     - May require hard refreshing (**`Ctrl+Shift+R`**) followed by a normal refresh (**`Ctrl+R`**) to get proper data in knob
     - Responsiveness is broken in cases where the line follows on to be too long without spaces
     - CSS colors specified by the boilerplate do not match with the one specified in the standard
@@ -104,6 +116,9 @@ An intuitive remotely-accessible system performance monitoring and task manageme
     - Multiple data elements are expressed in uncannily long, bigger and unnecessary accuracies
     - Minor slow downs are expected as all data elements are fetched and refreshed separately
     - Section references scroll up and inconveniently hide behind the persistent top bar
+    - Requires a short wait before the task management modal can be of use for the same process
+    - Some information overflow out of the task management modal - Wrap must be implemented
+    - Multiple calls made per second by the JavaScript engine can cause slow down in some browsers 
 
 ## Helpful
 1. https://stackoverflow.com/questions/15721679/update-and-render-a-value-from-flask-periodically
