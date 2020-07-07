@@ -125,3 +125,30 @@ def GetProcessInfo():
                                      "username"]):
         procinfo.append(indx.info)
     return procinfo
+
+def GetSingleProcess(prociden):
+    try:
+        return psutil.Process(int(prociden))
+    except Exception as e:
+        return str(e)
+
+def KillSingleProcess(prociden):
+    singproc = GetSingleProcess(prociden)
+    if type(singproc) == psutil.Process:
+        singproc.kill()
+
+def TerminateSingleProcess(prociden):
+    singproc = GetSingleProcess(prociden)
+    print(prociden, singproc)
+    if type(singproc) == psutil.Process:
+        singproc.terminate()
+
+def SuspendSingleProcess(prociden):
+    singproc = GetSingleProcess(prociden)
+    if type(singproc) == psutil.Process:
+        singproc.suspend()
+
+def ResumeSingleProcess(prociden):
+    singproc = GetSingleProcess(prociden)
+    if type(singproc) == psutil.Process:
+        singproc.resume()
