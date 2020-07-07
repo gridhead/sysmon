@@ -1,34 +1,13 @@
-from flask import Flask, render_template, request, redirect, url_for, session, jsonify
-import psutil, back
+from flask import Flask, render_template, jsonify
+import back, click
+
 
 main = Flask(__name__)
-
-
-# background process hmainening without any refreshing
-@main.route('/background_process_test')
-def background_process_test():
-    print("Hello")
-    return "nothing"
-
-
-@main.route('/_stuff', methods= ['GET'])
-def stuff():
-    cpu=str(psutil.cpu_freq(True))
-    return jsonify(cpu=cpu)
 
 
 @main.route("/virtdata/", methods=["GET"])
 def virtdata():
     retndata = back.GetVirtualMemoryData()
-    retnjson = jsonify(virttomr=retndata["Total"],
-                       virtavbl=retndata["Available"],
-                       virtperc=retndata["Percent"],
-                       virtused=retndata["Used"],
-                       virtactv=retndata["Active"],
-                       virtbufr=retndata["Buffers"],
-                       virtcach=retndata["Cached"],
-                       virtshrd=retndata["Shared"],
-                       virtslab=retndata["Slab"])
     retnjson = jsonify(virtdata=retndata)
     return retnjson
 
@@ -154,5 +133,22 @@ def custpage(thmcolor="maroon"):
                            thmcolor=thmcolor)
 
 
+@click.command()
+@click.option("-p", "--portdata", "portdata", help="Set the port value [0-65536]", default="9696")
+@click.option("-6", "--ipprotv6", "netprotc", flag_value="ipprotv6", help="Start the server on an IPv6 address")
+@click.option("-4", "--ipprotv4", "netprotc", flag_value="ipprotv4", help="Start the server on an IPv4 address")
+@click.version_option(version="0.1.0", prog_name="WebStation SYSMON by t0xic0der")
+def mainfunc(portdata, netprotc):
+    print(" * Starting WebStation SYSMON by t0xic0der...")
+    print(" * Port number : " + str(portdata))
+    netpdata = ""
+    if netprotc == "ipprotv6":
+        print(" * IP version  : 6")
+        netpdata = "::"
+    elif netprotc == "ipprotv4":
+        print(" * IP version  : 4")
+        netpdata = "0.0.0.0"
+    main.run(port=portdata, host=netpdata)
+
 if __name__ == "__main__":
-    main.run(port=9696, host="0.0.0.0")
+    mainfunc()

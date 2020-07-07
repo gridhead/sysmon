@@ -3,25 +3,64 @@ An intuitive remotely-accessible system performance monitoring and task manageme
 
 ## Features
 - Simplistic implementation of asynchronous periodic AJAX calls to fetch information
-- Relatively low overhead from the server during stat (approx. 4MB over runtime usage)
+- Relatively low overhead from the server during stat (approx. 4MB over Python 3 runtime usage)
 - Easy and flexible customization of interface by replacing the assets with your own
 - Tweakable refresh times for dynamic information with endpoints powered by **`psutil`**
 - Report printing and dynamic refreshing buttons available at disposal
 - Hybrid cross-client theming engine built with upto 21 supported theming options
-- Complex process management with per-task **`TERMINATE`**, **`KILL`**, **`SUSPEND`** and **`RESUME`**
+- Complex process management with per-task **`TERMINATE`**, **`KILL`**, **`SUSPEND`** and **`RESUME`** operations
 
-## Usage
-1.  Install and upgrade virtualenv if not already done by executing `pip3 install virtualenv --user`
-2.  Clone the repository on your local drive and make it your current working directory
-3.  Create a virtual environment by executing `virtualenv venv`
-4.  Activate the virtual environment by executing `source venv/bin/activate`
-5.  Install all dependencies for the project by executing `pip3 install -r requirements.txt`
-6.  Run the project server by executing `python3 main.py`
-7.  Take a note of the computer's IP address and make sure that it is reachable
-8.  Visit `http://<YOUR-IP-ADDRESS>:9696/primary` from the other device (or `http://localhost:9696/primary` on the same PC)
-9.  Take a look at the different themes available, refresh the monitor or print reports when needed.
-10. When done tinkering, deactivate the virtual environment by executing `deactivate`
-11. Give stars to the repository if it was helpful
+## Using the **`sysmon`** binary
+- Download the latest binary from the [**releases**](https://github.com/t0xic0der/sysmon/releases) page.
+- Make the binary **executable** by running `sudo chmod +x WebStationSYSMON`.
+- **Execute** the binary with `./WebStationSYSMON -p 6969 -6`. This runs the webserver at port 6969 and is accessible via all IPv4 and IPv6 addresses.
+- **Tweak** the binary to run it with the options of your liking.
+```shell script
+Options:
+  -p, --portdata TEXT  Set the port value [0-65536]
+  -6, --ipprotv6       Start the server on an IPv6 address
+  -4, --ipprotv4       Start the server on an IPv4 address
+  --version            Show the version and exit.
+  --help               Show this message and exit.
+```
+- Open up a browser in a device reachable to your PC and visit `http://<IP-ADDRESS>:<PORT-NUMBER>/primary` to get started.
+- When done tinkering, **shut down** the SYSMON server by pressing `[Ctrl+C]`.
+- Give stars to the repository if it was helpful.
+
+## Enabling **`sysmon`** as a `systemd` service
+- Download the latest binary from the [**releases**](https://github.com/t0xic0der/sysmon/releases) page.
+- Execute `sudo nano /etc/systemd/system/WebStationSYSMON.service` and add the following lines.
+```shell script
+[Unit]
+After=network.target
+
+[Service]
+ExecStart=/usr/local/bin/WebStationSYSMON -p 6969 -6
+
+[Install]
+WantedBy=default.target
+```
+The above example is a `systemd` service for the binary which would execute it on boot on port number **6969** and would be accessible to both IPv4 and IPv6 addresses.
+- The following options are available for **tweaking** as per your choice.
+```shell script
+Options:
+  -p, --portdata TEXT  Set the port value [0-65536]
+  -6, --ipprotv6       Start the server on an IPv6 address
+  -4, --ipprotv4       Start the server on an IPv4 address
+  --version            Show the version and exit.
+  --help               Show this message and exit.
+```
+- Copy the downloaded `WebStationSYSMON` file to `/usr/local/bin/` directory.
+- Make the binary **executable** by running `sudo chmod 744 /usr/local/bin/disk-space-check.sh`.
+- Make the `systemd` service file **executable** by running `sudo chmod 664 /etc/systemd/system/WebStationSYSMON.service`.
+- **Reload** new `systemd` service configuration files by running `sudo systemctl daemon-reload`.
+- **Enable** the newly created service by running `sudo systemctl enable WebStationSYSMON.service`.
+- To **test** the script before a reboot, execute `sudo systemctl start WebStationSYSMON.service`.
+- Check the service **status** by running `sudo systemctl status WebStationSYSMON.service`.
+- Open up a browser in a device reachable to your PC and visit `http://<IP-ADDRESS>:<PORT-NUMBER>/primary` to get started.
+- To **stop** the service, execute `sudo systemctl stop WebStationSYSMON.service` - It will start again on boot.
+- To **disable** the service, execute `sudo systemctl disable WebStationSYSMON.service` - It will need **enabling** to work.
+- Give stars to the repository if it was helpful.
 
 ## Screenshots
 
@@ -51,6 +90,20 @@ An intuitive remotely-accessible system performance monitoring and task manageme
 
 ### Sensors and Thermal Overview [Maroon]
 ![](pictures/sensinfo.png)
+
+## Using the script
+1.  Install and upgrade virtualenv if not already done by executing `pip3 install virtualenv --user`.
+2.  Clone the repository on your local drive and make it your current working directory.
+3.  Create a virtual environment by executing `virtualenv venv`.
+4.  Activate the virtual environment by executing `source venv/bin/activate`.
+5.  Install all dependencies for the project by executing `pip3 install -r requirements.txt`.
+6.  Run the project server by executing `python3 main.py`.
+7.  Take a note of the computer's IP address and make sure that it is reachable.
+8.  Visit `http://<YOUR-IP-ADDRESS>:9696/primary` from the other device (or `http://localhost:9696/primary` on the same PC).
+9.  Take a look at the different themes available, refresh the monitor or print reports when needed.
+10. Select processes to open up modals - `TERMINATE`, `KILL`, `SUSPEND` and `RESUME` processes at will.
+11. When done tinkering, deactivate the virtual environment by executing `deactivate`.
+12. Give stars to the repository if it was helpful.
 
 ## To-do
 - [X] Write driver code and endpoint access code for **Processor** page
@@ -97,8 +150,8 @@ An intuitive remotely-accessible system performance monitoring and task manageme
 - [ ] Add functionality to switch the units for thermal data between celsius and fahrenheit
 - [ ] Add an obligatory dark mode feature (for everybody else has it now)
 - [ ] Change `onclick` highlighting color on dropdown menus (It is by-default `primary` for all accents)
-- [ ] Package it in a binary file with [`click`](https://click.palletsprojects.com/en/7.x/) to set command-line options
-- [ ] Make the binary (along with command-line options) usable as a `systemd` service
+- [X] Package it in a binary file with [`click`](https://click.palletsprojects.com/en/7.x/) to set command-line options
+- [X] Make the binary (along with command-line options) usable as a `systemd` service
 - [ ] Add user login feature as with complex process management, control cannot be left open
 - [X] `[Would not be implemented as it breaks tab-switching feature]` Replace all card tabs `anchors` with `document.location.href` attributes
 - [ ] Replace all `getElementById` with JQuery methods for speed up
