@@ -51,7 +51,7 @@ Options:
   --help               Show this message and exit.
 ```
 - Copy the downloaded `WebStationSYSMON` file to `/usr/local/bin/` directory.
-- Make the binary **executable** by running `sudo chmod 744 /usr/local/bin/disk-space-check.sh`.
+- Make the binary **executable** by running `sudo chmod 744 /usr/local/bin/WebStationSYSMON`.
 - Make the `systemd` service file **executable** by running `sudo chmod 664 /etc/systemd/system/WebStationSYSMON.service`.
 - **Reload** new `systemd` service configuration files by running `sudo systemctl daemon-reload`.
 - **Enable** the newly created service by running `sudo systemctl enable WebStationSYSMON.service`.
