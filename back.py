@@ -79,17 +79,11 @@ def GetCPUClockSpeed():
 
 def GetDiskIOUsage():
     diousage = psutil.disk_io_counters(perdisk=True)
-    dioulist = []
-    for indx in diousage.keys():
-        dioulist.append(diousage[indx])
-    return dioulist, diousage
+    return diousage
 
 def GetNetworkIOUsage():
     netusage = psutil.net_io_counters(pernic=True)
-    netulist = []
-    for indx in netusage.keys():
-        netulist.append(netusage[indx])
-    return netulist, netusage
+    return netusage
 
 def GetNetworkStatistics():
     netstats = psutil.net_if_stats()
@@ -139,7 +133,6 @@ def KillSingleProcess(prociden):
 
 def TerminateSingleProcess(prociden):
     singproc = GetSingleProcess(prociden)
-    print(prociden, singproc)
     if type(singproc) == psutil.Process:
         singproc.terminate()
 
