@@ -5,90 +5,6 @@ import back, click
 main = Flask(__name__)
 
 
-@main.route("/virtdata/", methods=["GET"])
-def virtdata():
-    retndata = back.GetVirtualMemoryData()
-    retnjson = jsonify(virtdata=retndata)
-    return retnjson
-
-
-@main.route("/cputimes/", methods=["GET"])
-def cputimes():
-    retndata = back.GetCPUStateTimes()
-    retnjson = jsonify(cputimes=retndata)
-    return retnjson
-
-
-@main.route("/cpuprcnt/", methods=["GET"])
-def cpuprcnt():
-    retndata = back.GetCPUUsagePercent()
-    retndata = jsonify(cpuprcnt=retndata)
-    return retndata
-
-
-@main.route("/cpustats/", methods=["GET"])
-def cpustats():
-    retndata = back.GetCPUStatistics()
-    retnjson = jsonify(cpustats=retndata)
-    return retnjson
-
-
-@main.route("/swapinfo/", methods=["GET"])
-def swapinfo():
-    retndata = back.GetSwapMemoryInfo()
-    retnjson = jsonify(swapinfo=retndata)
-    return retnjson
-
-
-@main.route("/cpuclock/", methods=["GET"])
-def cpuclock():
-    retndata = back.GetCPUClockSpeed()
-    retnjson = jsonify(cpuclock=retndata)
-    return retnjson
-
-
-@main.route("/diousage/", methods=["GET"])
-def diousage():
-    retndata = back.GetDiskIOUsage()[0]
-    retnjson = jsonify(diousage=retndata)
-    return retnjson
-
-
-@main.route("/senstemp/", methods=["GET"])
-def senstemp():
-    retndata = back.GetSensorsTemperature()
-    retnjson = jsonify(senstemp=retndata)
-    return retnjson
-
-
-@main.route("/netusage/", methods=["GET"])
-def netusage():
-    retndata = back.GetNetworkIOUsage()[0]
-    retnjson = jsonify(netusage=retndata)
-    return retnjson
-
-
-@main.route("/fanspeed/", methods=["GET"])
-def fanspeed():
-    retndata = back.GetSensorsFanSpeed()
-    retnjson = jsonify(fanspeed=retndata)
-    return retnjson
-
-
-@main.route("/battstat/", methods=["GET"])
-def battstat():
-    retndata = back.GetSensorsBatteryStatus()
-    retnjson = jsonify(battstat=retndata)
-    return retnjson
-
-
-@main.route("/procinfo/", methods=["GET"])
-def procinfo():
-    retndata = back.GetProcessInfo()
-    retnjson = jsonify(procinfo=retndata)
-    return retnjson
-
-
 @main.route("/termproc/<prociden>/", methods=["GET"])
 def termproc(prociden):
     back.TerminateSingleProcess(prociden)
@@ -113,13 +29,34 @@ def resmproc(prociden):
     return "Resumed"
 
 
+@main.route("/fetcinfo/", methods=["GET"])
+def fetcinfo():
+    virtdata = back.GetVirtualMemoryData()
+    swapinfo = back.GetSwapMemoryInfo()
+    cputimes = back.GetCPUStateTimes()
+    cpuprcnt = back.GetCPUUsagePercent()
+    cpustats = back.GetCPUStatistics()
+    cpuclock = back.GetCPUClockSpeed()
+    diousage = back.GetDiskIOUsage()
+    netusage = back.GetNetworkIOUsage()
+    procinfo = back.GetProcessInfo()
+    senstemp = back.GetSensorsTemperature()
+    fanspeed = back.GetSensorsFanSpeed()
+    battstat = back.GetSensorsBatteryStatus()
+    retnjson = jsonify(virtdata=virtdata, swapinfo=swapinfo, cputimes=cputimes,
+                       cpuprcnt=cpuprcnt, cpustats=cpustats, cpuclock=cpuclock,
+                       diousage=diousage, netusage=netusage, procinfo=procinfo,
+                       senstemp=senstemp, fanspeed=fanspeed, battstat=battstat)
+    return retnjson
+
+
 @main.route("/<thmcolor>/", methods=["GET"])
 def custpage(thmcolor="maroon"):
     retndata = back.GetOSUnameData()
     cpuquant = back.GetCPULogicalCount()
     diskpart = back.GetAllDiskPartitions()
-    dionames = list(back.GetDiskIOUsage()[1].keys())
-    netnames = list(back.GetNetworkIOUsage()[1].keys())
+    diousage = back.GetDiskIOUsage()
+    netusage = back.GetNetworkIOUsage()
     procinfo = back.GetProcessInfo()
     senstemp = back.GetSensorsTemperature()
     fanspeed = back.GetSensorsFanSpeed()
@@ -127,7 +64,7 @@ def custpage(thmcolor="maroon"):
     netaddrs = back.GetNetworkIFAddresses()
     netstats = back.GetNetworkStatistics()
     return render_template("custpage.html", retndata=retndata, cpuquant=cpuquant,
-                           diskpart=diskpart, dionames=dionames, netnames=netnames,
+                           diskpart=diskpart, diousage=diousage, netusage=netusage,
                            netaddrs=netaddrs, netstats=netstats, senstemp=senstemp,
                            fanspeed=fanspeed, boottime=boottime, procinfo=procinfo,
                            thmcolor=thmcolor)

@@ -126,9 +126,9 @@ Options:
 - [X] Add capacity to **TERMINATE/KILL/SUSPEND/RESUME** etc. tasks from the modal
 - [ ] Highlight useful information in a much less granular manner
 - [ ] Add data visualization with line graph, bar graph and donut charts
-- [ ] Cleanup asynchronous calls and optimize them for speedup
+- [X] Cleanup asynchronous calls and optimize them for speedup
 - [ ] Add element in the frontend to help modify refresh rate from the frontend
-- [ ] Cleanup decorators in backend and optimize them for efficiency
+- [X] Cleanup decorators in backend and optimize them for efficiency
 - [ ] Add a documentation about theming guidelines
 - [X] Add client-side theming option using Javascript, unretained across sessions
 - [X] Add JQuery dependencies to be loaded up from local storage
@@ -137,8 +137,8 @@ Options:
 - [ ] Add monotype fonts for numeric values
 - [ ] AJAX calls should replace the value of a `<span>` element only
 - [X] Include functionality of server-side theming using Jinja
-- [ ] Clean up fetches which require creation and population separately
-- [ ] Limit endpoints to ONE by dispersing all information from single endpoint
+- [X] Clean up fetches which require creation and population separately
+- [X] Limit endpoints to ONE by dispersing all information from single endpoint
 - [ ] Include JSON (or YAML) based customizations for enabling/disabling sections
 - [X] Add a PRINT document button at the top-right corner of the UI
 - [X] Prevent text-selection/drag-drop capabilities in the UI
@@ -158,7 +158,8 @@ Options:
 - [ ] Hide resume button for processes already running and show resume for only `STOPPED` tasks
 - [ ] Add tooltips for the task management buttons
 - [ ] Add documentation about the various attributes and columns in table in another tab (per card)
-- [ ] Make the server be visible across the internet using IPv6 addresses
+- [X] Make the server be visible across the internet using IPv6 addresses
+- [ ] Add driver function in a class format per section of details/actions
 
 ## Bugs
 - **Modern UI**
@@ -171,10 +172,14 @@ Options:
     - Section references scroll up and inconveniently hide behind the persistent top bar
     - Requires a short wait before the task management modal can be of use for the same process
     - Some information overflow out of the task management modal - Wrap must be implemented
-    - Multiple calls made per second by the JavaScript engine can cause slow down in some browsers 
+    - Multiple calls made per second by the JavaScript engine can cause slow down in some browsers
+    - Network statistics and addresses are not actively refreshed. What if someone disconnects or reconnects?
+    - Disk partition details are not actively refreshed. What if someone pulls out or pushes in a drive?
+    - Scrollbar disappears in Chrome (intended behaviour) while not so on Firefox (unintended behaviour)
 
 ## Helpful
 1. https://stackoverflow.com/questions/15721679/update-and-render-a-value-from-flask-periodically
+2. https://stackoverflow.com/questions/32149892/flask-application-built-using-pyinstaller-not-rendering-index-html
 
 ## Contribute
 The project is currently in diverse development process. The codebase needs cleanup, optimization and documentation so one may find it hard to get their hands into it. Feel free to contact me at akashdeep.dhar@gmail.com if you wish to contribute.

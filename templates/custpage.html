@@ -17,8 +17,10 @@
             {
                 await new Promise(r => setTimeout(r, 1000));
                 $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
-                $.getJSON($SCRIPT_ROOT+"/virtdata/",
+                //EXPERIMENTAL CODE HERE
+                $.getJSON($SCRIPT_ROOT+"/fetcinfo/",
                     function(data) {
+                        //virtdata
                         $("#memo-phys-tomr").text(data.virtdata["Total"]+" bytes")
                         $("#memo-phys-avbl").text(data.virtdata["Available"]+" bytes")
                         $("#memo-phys-used").text(data.virtdata["Used"]+" bytes")
@@ -34,9 +36,7 @@
                         physfill.style = percentg;
                         var tronphys = document.getElementById("tron-phys-perc");
                         tronphys.value = data.virtdata["Percent"];
-                    });
-                $.getJSON($SCRIPT_ROOT+"/cputimes/",
-                    function(data) {
+                        //cputimes
                         for (let indx = 0; indx < {{ cpuquant }}; indx ++)
                         {
                             $("#time-user-"+indx).text(data.cputimes[indx][0])
@@ -50,9 +50,7 @@
                             $("#time-gest-"+indx).text(data.cputimes[indx][8])
                             $("#time-gtnc-"+indx).text(data.cputimes[indx][9])
                         }
-                    });
-                $.getJSON($SCRIPT_ROOT+"/cpuprcnt/",
-                    function(data) {
+                        //cpuprcnt
                         for (let indx = 0; indx < {{ cpuquant }}; indx ++)
                         {
                             $("#cpuu-perc-"+indx).text(data.cpuprcnt[indx]+"%")
@@ -63,28 +61,22 @@
                             troncpuu.value = data.cpuprcnt[indx];
 
                         }
-                    });
-                $.getJSON($SCRIPT_ROOT+"/cpuclock/",
-                    function(data) {
+                        //cpuclock
                         for (let indx = 0; indx < {{ cpuquant }}; indx ++)
                         {
                             $("#cpuu-text-"+indx).text(data.cpuclock[indx][0] + "MHz of Min " + data.cpuclock[indx][1] + "MHz and Max " + data.cpuclock[indx][2] + "MHz")
                         }
-                    });
-                $.getJSON($SCRIPT_ROOT+"/cpustats/",
-                    function(data) {
+                        //cpustats
                         $("#cpus-stat-ctxs").text(data.cpustats["ctxs"])
                         $("#cpus-stat-intr").text(data.cpustats["intr"])
                         $("#cpus-stat-soft").text(data.cpustats["soft"])
                         $("#cpus-stat-sysc").text(data.cpustats["sysc"])
-                    });
-                $.getJSON($SCRIPT_ROOT+"/swapinfo/",
-                    function(data) {
-                        $("#memo-swap-tomr").text(data.swapinfo[0])
-                        $("#memo-swap-avbl").text(data.swapinfo[2])
-                        $("#memo-swap-used").text(data.swapinfo[1])
-                        $("#memo-swap-sine").text(data.swapinfo[4])
-                        $("#memo-swap-sout").text(data.swapinfo[5])
+                        //swapinfo
+                        $("#memo-swap-tomr").text(data.swapinfo[0]+" bytes")
+                        $("#memo-swap-avbl").text(data.swapinfo[2]+" bytes")
+                        $("#memo-swap-used").text(data.swapinfo[1]+" bytes")
+                        $("#memo-swap-sine").text(data.swapinfo[4]+" bytes")
+                        $("#memo-swap-sout").text(data.swapinfo[5]+" bytes")
                         $("#memo-swap-over").text("Using "+data.swapinfo[1]+" bytes of "+data.swapinfo[0]+" bytes")
                         $("#memo-swap-perc").text(data.swapinfo[3]+"%")
                         var swapfill = document.getElementById("memo-swap-prog");
@@ -92,10 +84,8 @@
                         swapfill.style = percentg;
                         var tronswap = document.getElementById("tron-swap-perc");
                         tronswap.value = data.swapinfo[3];
-                    });
-                $.getJSON($SCRIPT_ROOT+"/diousage/",
-                    function(data) {
-                        for (let indx = 0; indx < {{ dionames|length }}; indx ++)
+                        //diousage
+                        for (indx in data.diousage)
                         {
                             $("#disk-rdct-"+indx).text(data.diousage[indx][0])
                             $("#disk-wrct-"+indx).text(data.diousage[indx][1])
@@ -107,10 +97,8 @@
                             $("#disk-rdmc-"+indx).text(data.diousage[indx][7])
                             $("#disk-bstm-"+indx).text(data.diousage[indx][8])
                         }
-                    });
-                $.getJSON($SCRIPT_ROOT+"/netusage/",
-                    function(data) {
-                        for (let indx = 0; indx < {{ netnames|length }}; indx ++)
+                        //netusage
+                        for (indx in data.netusage)
                         {
                             $("#netu-bsnt-"+indx).text(data.netusage[indx][0])
                             $("#netu-brcv-"+indx).text(data.netusage[indx][1])
@@ -121,9 +109,7 @@
                             $("#netu-dpin-"+indx).text(data.netusage[indx][6])
                             $("#netu-dout-"+indx).text(data.netusage[indx][7])
                         }
-                    });
-                $.getJSON($SCRIPT_ROOT+"/senstemp/",
-                    function(data) {
+                        //senstemp
                         for (indx in data.senstemp)
                         {
                             for (let jndx = 0; jndx < data.senstemp[indx].length; jndx++)
@@ -134,9 +120,7 @@
                                 $("#sens-temp-temp-"+indx+"-"+jndx).text(data.senstemp[indx][jndx][3]+" C")
                             }
                         }
-                    });
-                $.getJSON($SCRIPT_ROOT+"/battstat/",
-                    function(data) {
+                        //battstat
                         for (indx in data.battstat)
                         {
                             $("#batt-stat-perc").text(data.battstat[0] + "%")
@@ -148,9 +132,7 @@
                             var tronbatt = document.getElementById("tron-batt-perc");
                             tronbatt.value = data.battstat[0];
                         }
-                    });
-                $.getJSON($SCRIPT_ROOT+"/procinfo/",
-                    function(data) {
+                        //procinfo
                         var proclist = document.getElementById("proclist");
                         var procqant = proclist.rows.length
                         for (let indx = 0; indx < procqant; indx++)
@@ -199,6 +181,15 @@
                             row5cell.innerHTML = "<span class='normelem'>"+data.procinfo[indx]["num_threads"]+"</span>";
                             row6cell.innerHTML = "<span class='normelem'>"+data.procinfo[indx]["terminal"]+"</span>";
                             row7cell.innerHTML = "<span class='normelem'>"+data.procinfo[indx]["status"]+"</span>";
+                        }
+                        //fanspeed
+                        for (indx in data.fanspeed)
+                        {
+                            for (let jndx = 0; jndx < data.fanspeed[indx]; jndx++)
+                            {
+                                document.getElementById("fans-peed-labl-"+indx+"-"+jndx).innerText = data.fanspeed[indx][jndx][0];
+                                document.getElementById("fans-peed-curt-"+indx+"-"+jndx).innerText = data.fanspeed[indx][jndx][1];
+                            }
                         }
                     });
                 }
@@ -646,9 +637,9 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    {% for indx in range(dionames|length) %}
+                                                    {% for indx in diousage.keys() %}
                                                     <tr class="normelem">
-                                                        <td id="disk-part-{{ indx }}">{{ dionames[indx] }}</td>
+                                                        <td id="disk-part-{{ indx }}">{{ indx }}</td>
                                                         <td id="disk-rdct-{{ indx }}">0</td>
                                                         <td id="disk-wrct-{{ indx }}">0</td>
                                                         <td id="disk-rdbt-{{ indx }}">0</td>
@@ -724,9 +715,9 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    {% for indx in range(netnames|length) %}
+                                                    {% for indx in netusage.keys() %}
                                                     <tr class="normelem">
-                                                        <td id="netu-snic-{{ indx }}">{{ netnames[indx] }}</td>
+                                                        <td id="netu-snic-{{ indx }}">{{ indx }}</td>
                                                         <td id="netu-bsnt-{{ indx }}">0</td>
                                                         <td id="netu-brcv-{{ indx }}">0</td>
                                                         <td id="netu-psnt-{{ indx }}">0</td>
@@ -1004,22 +995,22 @@
         <script type="text/javascript">
               $(function() {
                     $('.termproc-mode').click(function() {
-                        toastr.warning("Process termination was requested", "", {
+                        toastr.warning("<span class='normelem'>Process termination was requested</span>", "", {
                             "progressBar": true
                         })
                     })
                     $('.killproc-mode').click(function() {
-                        toastr.error("Process kill was requested", "", {
+                        toastr.error("<span class='normelem'>Process kill was requested</span>", "", {
                             "progressBar": true
                         })
                     })
                     $('.sspdproc-mode').click(function() {
-                        toastr.info("Process suspension was requested", "", {
+                        toastr.info("<span class='normelem'>Process suspension was requested</span>", "", {
                             "progressBar": true
                         })
                     })
                     $('.resmproc-mode').click(function() {
-                        toastr.success("Process resume was requested", "", {
+                        toastr.success("<span class='normelem'>Process resume was requested</span>", "", {
                             "progressBar": true
                         })
                     })
