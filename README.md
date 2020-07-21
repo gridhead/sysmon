@@ -1,5 +1,8 @@
 # sysmon
-An intuitive remotely-accessible system performance monitoring and task management tool for servers
+An intuitive remotely-accessible system performance monitoring and task management tool for servers and headless Raspberry Pi setups.
+
+## Good news!
+WebStation SYSMON was featured in to author's [Reddit article](https://www.reddit.com/r/raspberry_pi/comments/htwe0o/i_have_created_an_intuitive_remotelyaccessible/) - followed by a [news article](https://www.tomshardware.com/news/manage-your-headless-raspberry-pi-remotely-from-a-web-browser) at Tom's Hardware. It is soon going to be featured in the [Awesome RPi]() list too.
 
 ## Use-cases
 - For people having home or enterprise servers with lower system specifications and complexity
