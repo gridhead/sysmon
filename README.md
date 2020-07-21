@@ -10,6 +10,30 @@ An intuitive remotely-accessible system performance monitoring and task manageme
 - Hybrid cross-client theming engine built with upto 21 supported theming options
 - Complex process management with per-task **`TERMINATE`**, **`KILL`**, **`SUSPEND`** and **`RESUME`** operations
 
+## Note
+
+1. The binary packages are architecture-bound. Pick the binary which is compatible with your system.
+    1. **`armv6`** - Raspberry Pi Zero W and other such devices. The binaries for this architecture is currently unavailable but you can simply install the daemon by following the steps provided in the "Using the script" section.
+    2. **`armhf`** - Raspberry Pi 2, Raspberry Pi 3B, Raspberry Pi 4B and other such devices. The binaries for this architecture is currently unavailable but you can simply install the daemon by following the steps provided in the "Using the script" section.
+    3. **`aarch64`** - Raspberry Pi 3B, Raspberry Pi 4B and other such devices. The binaries for this architecture is currently unavailable but you can simply install the daemon by following the steps provided in the "Using the script" section.
+    4. **`x86_64`** - Generic PCs an laptops. The binaries for this architecture are available for use and the also support "Using the script" way of installation.
+2. The script from the upstream consist of all the leading-edge changes so advanced users are actually recommended to use that over prepackaged binaries which are packaged periodically.
+3. I would be uploading the executable binaries very soon for the `armv6`, `armhf` and `aarch64` architectures. (Make it happen sooner by forking the project and contributing)
+
+## Using the script
+1.  Install and upgrade virtualenv if not already done by executing `pip3 install virtualenv --user`.
+2.  Clone the repository on your local drive and make it your current working directory.
+3.  Create a virtual environment by executing `virtualenv venv`.
+4.  Activate the virtual environment by executing `source venv/bin/activate`.
+5.  Install all dependencies for the project by executing `pip3 install -r requirements.txt`.
+6.  Run the project server by executing `python3 main.py`.
+7.  Take a note of the computer's IP address and make sure that it is reachable.
+8.  Visit `http://<YOUR-IP-ADDRESS>:9696/primary` from the other device (or `http://localhost:9696/primary` on the same PC).
+9.  Take a look at the different themes available, refresh the monitor or print reports when needed.
+10. Select processes to open up modals - `TERMINATE`, `KILL`, `SUSPEND` and `RESUME` processes at will.
+11. When done tinkering, deactivate the virtual environment by executing `deactivate`.
+12. Give stars to the repository if it was helpful.
+
 ## Using the **`sysmon`** binary
 - Download the latest binary from the [**releases**](https://github.com/t0xic0der/sysmon/releases) page.
 - Make the binary **executable** by running `sudo chmod +x WebStationSYSMON`.
@@ -90,20 +114,6 @@ Options:
 
 ### Sensors and Thermal Overview [Maroon]
 ![](pictures/sensinfo.png)
-
-## Using the script
-1.  Install and upgrade virtualenv if not already done by executing `pip3 install virtualenv --user`.
-2.  Clone the repository on your local drive and make it your current working directory.
-3.  Create a virtual environment by executing `virtualenv venv`.
-4.  Activate the virtual environment by executing `source venv/bin/activate`.
-5.  Install all dependencies for the project by executing `pip3 install -r requirements.txt`.
-6.  Run the project server by executing `python3 main.py`.
-7.  Take a note of the computer's IP address and make sure that it is reachable.
-8.  Visit `http://<YOUR-IP-ADDRESS>:9696/primary` from the other device (or `http://localhost:9696/primary` on the same PC).
-9.  Take a look at the different themes available, refresh the monitor or print reports when needed.
-10. Select processes to open up modals - `TERMINATE`, `KILL`, `SUSPEND` and `RESUME` processes at will.
-11. When done tinkering, deactivate the virtual environment by executing `deactivate`.
-12. Give stars to the repository if it was helpful.
 
 ## To-do
 - [X] Write driver code and endpoint access code for **Processor** page
