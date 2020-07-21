@@ -21,18 +21,27 @@ An intuitive remotely-accessible system performance monitoring and task manageme
 3. I would be uploading the executable binaries very soon for the `armv6`, `armhf` and `aarch64` architectures. (Make it happen sooner by forking the project and contributing)
 
 ## Using the script
-1.  Install and upgrade virtualenv if not already done by executing `pip3 install virtualenv --user`.
-2.  Clone the repository on your local drive and make it your current working directory.
-3.  Create a virtual environment by executing `virtualenv venv`.
-4.  Activate the virtual environment by executing `source venv/bin/activate`.
-5.  Install all dependencies for the project by executing `pip3 install -r requirements.txt`.
-6.  Run the project server by executing `python3 main.py`.
-7.  Take a note of the computer's IP address and make sure that it is reachable.
-8.  Visit `http://<YOUR-IP-ADDRESS>:9696/primary` from the other device (or `http://localhost:9696/primary` on the same PC).
-9.  Take a look at the different themes available, refresh the monitor or print reports when needed.
-10. Select processes to open up modals - `TERMINATE`, `KILL`, `SUSPEND` and `RESUME` processes at will.
-11. When done tinkering, deactivate the virtual environment by executing `deactivate`.
-12. Give stars to the repository if it was helpful.
+- Install and upgrade virtualenv if not already done by executing `pip3 install virtualenv --user`.
+- Clone the repository on your local drive and make it your current working directory.
+- Create a virtual environment by executing `virtualenv venv`.
+- Activate the virtual environment by executing `source venv/bin/activate`.
+- Install all dependencies for the project by executing `pip3 install -r requirements.txt`.
+- Run the project server by executing `python3 main.py -p 6969 -6`. This runs the webserver at port 6969 and is accessible via all IPv4 and IPv6 addresses.
+- **Tweak** the service with the help of command line arguments to run it with the options of your liking.
+```shell script
+Options:
+  -p, --portdata TEXT  Set the port value [0-65536]
+  -6, --ipprotv6       Start the server on an IPv6 address
+  -4, --ipprotv4       Start the server on an IPv4 address
+  --version            Show the version and exit.
+  --help               Show this message and exit.
+```
+- Take a note of the computer's IP address and make sure that it is reachable.
+- Visit `http://<YOUR-IP-ADDRESS>:9696/primary` from the other device (or `http://localhost:9696/primary` on the same PC).
+- Take a look at the different themes available, refresh the monitor or print reports when needed.
+- Select processes to open up modals - `TERMINATE`, `KILL`, `SUSPEND` and `RESUME` processes at will.
+- When done tinkering, deactivate the virtual environment by executing `deactivate`.
+- Give stars to the repository if it was helpful.
 
 ## Using the **`sysmon`** binary
 - Download the latest binary from the [**releases**](https://github.com/t0xic0der/sysmon/releases) page.
