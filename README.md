@@ -1,8 +1,18 @@
+<h1 align="center">sysmon</h1>
+<p align="center">An intuitive remotely-accessible system performance monitoring and task management tool for servers and headless Raspberry Pi setups</p>
+
+<p align="center">
+    <img src="https://img.shields.io/github/issues/t0xic0der/sysmon?style=flat-square&logo=appveyor&color=teal">
+    <img src="https://img.shields.io/github/forks/t0xic0der/sysmon?style=flat-square&logo=appveyor&color=teal">
+    <img src="https://img.shields.io/github/stars/t0xic0der/sysmon?style=flat-square&logo=appveyor&color=teal">
+    <img src="https://img.shields.io/github/license/t0xic0der/sysmon?style=flat-square&logo=appveyor&color=teal">
+</p>
+
 # sysmon
 An intuitive remotely-accessible system performance monitoring and task management tool for servers and headless Raspberry Pi setups.
 
 ## Good news!
-WebStation SYSMON was featured in to author's [Reddit article](https://www.reddit.com/r/raspberry_pi/comments/htwe0o/i_have_created_an_intuitive_remotelyaccessible/) - followed by a [news article](https://www.tomshardware.com/news/manage-your-headless-raspberry-pi-remotely-from-a-web-browser) at Tom's Hardware. It is soon going to be featured in the [Awesome RPi]() list too.
+WebStation SYSMON was featured in to author's [Reddit article](https://www.reddit.com/r/raspberry_pi/comments/htwe0o/i_have_created_an_intuitive_remotelyaccessible/) - followed by a [news article](https://www.tomshardware.com/news/manage-your-headless-raspberry-pi-remotely-from-a-web-browser) at Tom's Hardware. It is now featured in the [Awesome RPi](https://github.com/thibmaek/awesome-raspberry-pi) list too.
 
 ## Use-cases
 - For people having home or enterprise servers with lower system specifications and complexity
