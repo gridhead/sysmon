@@ -8,9 +8,6 @@
     <img src="https://img.shields.io/github/license/t0xic0der/sysmon?style=flat-square&logo=appveyor&color=teal">
 </p>
 
-# sysmon
-An intuitive remotely-accessible system performance monitoring and task management tool for servers and headless Raspberry Pi setups.
-
 ## Good news!
 WebStation SYSMON was featured in to author's [Reddit article](https://www.reddit.com/r/raspberry_pi/comments/htwe0o/i_have_created_an_intuitive_remotelyaccessible/) - followed by a [news article](https://www.tomshardware.com/news/manage-your-headless-raspberry-pi-remotely-from-a-web-browser) at Tom's Hardware. It is now featured in the [Awesome RPi](https://github.com/thibmaek/awesome-raspberry-pi) list too.
 
@@ -30,13 +27,13 @@ WebStation SYSMON was featured in to author's [Reddit article](https://www.reddi
 - Complex process management with per-task **`TERMINATE`**, **`KILL`**, **`SUSPEND`** and **`RESUME`** operations
 
 ## Table of contents
-0. [Home](https://github.com/t0xic0der/sysmon/wiki)
-1. [Notice](https://github.com/t0xic0der/sysmon/wiki/Notice)
-2. [Installing on Raspberry Pi](https://github.com/t0xic0der/sysmon/wiki/Installing-on-Raspberry-Pi)
-3. [Installing on a Generic PC](https://github.com/t0xic0der/sysmon/wiki/Installing-on-a-Generic-PC)
-4. [Screenshots](https://github.com/t0xic0der/sysmon/wiki/Screenshots)
-5. [Things to do next](https://github.com/t0xic0der/sysmon/wiki/Things-to-do-next)
-6. [Bugs](https://github.com/t0xic0der/sysmon/wiki/Bugs)
+1. [Home](https://github.com/t0xic0der/sysmon/wiki)
+2. [Notice](https://github.com/t0xic0der/sysmon/wiki/Notice)
+3. [Installing on Raspberry Pi](https://github.com/t0xic0der/sysmon/wiki/Installing-on-Raspberry-Pi)
+4. [Installing on a Generic PC](https://github.com/t0xic0der/sysmon/wiki/Installing-on-a-Generic-PC)
+5. [Screenshots](https://github.com/t0xic0der/sysmon/wiki/Screenshots)
+6. [Things to do next](https://github.com/t0xic0der/sysmon/wiki/Things-to-do-next)
+7. [Bugs](https://github.com/t0xic0der/sysmon/wiki/Bugs)
 
 ## Helpful
 1. https://stackoverflow.com/questions/15721679/update-and-render-a-value-from-flask-periodically
