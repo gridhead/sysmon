@@ -6,6 +6,7 @@
     <img src="https://img.shields.io/github/forks/t0xic0der/sysmon?style=flat-square&logo=appveyor&color=teal">
     <img src="https://img.shields.io/github/stars/t0xic0der/sysmon?style=flat-square&logo=appveyor&color=teal">
     <img src="https://img.shields.io/github/license/t0xic0der/sysmon?style=flat-square&logo=appveyor&color=teal">
+    <img src="https://img.shields.io/github/watchers/t0xic0der/sysmon?style=flat-square&color=teal&logo=appveyor">
 </p>
 
 ## Good news!
