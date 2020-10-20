@@ -11,7 +11,7 @@ We want to make contributing to this project as easy and as transparent as possi
 However as Human beings :neckbeard: and Not :monkey: we should Follow some guidelines and set of rules called Code Of Conduct 
 
 
-<h2 align="left"><b>Rules and Guidelines :point_down:</b></h2>
+<h2 align="left"><b>Rules and Guidelines  :point_down:</b></h2>
 
  <p align="center"><img src="https://tenor.com/view/idiot-lafuddyduddy-rules-follow-the-rules-penguin-gif-16685859.gif" width=400></p>
 
