@@ -129,7 +129,7 @@ def GetBootTime():
 
 def GetProcessInfo():
     procinfo = []
-    for indx in psutil.process_iter(["pid", "cpu_percent",
+    for indx in psutil.process_iter(["pid", "cpu_affinity", "cpu_percent",
                                      "cpu_times", "create_time", "gids",
                                      "memory_info", "memory_percent", "name",
                                      "num_ctx_switches", "num_threads", "status",
