@@ -1,5 +1,6 @@
 import os, psutil, time, getpass
 
+
 def GetOSUnameData():
     unamdata = os.uname()
     retndata = {
@@ -10,9 +11,11 @@ def GetOSUnameData():
     }
     return retndata
 
+
 def GetCPULogicalCount():
     cpuquant = psutil.cpu_count(logical=True)
     return cpuquant
+
 
 def GetVirtualMemoryData():
     bruhdata = psutil.virtual_memory()
@@ -29,6 +32,7 @@ def GetVirtualMemoryData():
     }
     return retndata
 
+
 def GetCPUStateTimes():
     timedata = psutil.cpu_times(percpu=True)
     timelist = []
@@ -39,9 +43,11 @@ def GetCPUStateTimes():
         timelist.append(singlist)
     return timelist
 
+
 def GetCPUUsagePercent():
     cpuprcnt = psutil.cpu_percent(percpu=True)
     return cpuprcnt
+
 
 def GetCPUStatistics():
     cpustats = psutil.cpu_stats()
@@ -53,9 +59,11 @@ def GetCPUStatistics():
     }
     return retndata
 
+
 def GetSwapMemoryInfo():
     swapinfo = psutil.swap_memory()
     return swapinfo
+
 
 def GetAllDiskPartitions():
     diskpart = psutil.disk_partitions(all=True)
@@ -67,6 +75,7 @@ def GetAllDiskPartitions():
         disklist.append(singlist)
     return disklist
 
+
 def GetCPUClockSpeed():
     cpuclock = psutil.cpu_freq(percpu=True)
     cloklist = []
@@ -77,37 +86,46 @@ def GetCPUClockSpeed():
         cloklist.append(singlist)
     return cloklist
 
+
 def GetDiskIOUsage():
     diousage = psutil.disk_io_counters(perdisk=True)
     return diousage
+
 
 def GetNetworkIOUsage():
     netusage = psutil.net_io_counters(pernic=True)
     return netusage
 
+
 def GetNetworkStatistics():
     netstats = psutil.net_if_stats()
     return netstats
+
 
 def GetNetworkIFAddresses():
     netaddrs = psutil.net_if_addrs()
     return netaddrs
 
+
 def GetSensorsTemperature():
     senstemp = psutil.sensors_temperatures(fahrenheit=False)
     return senstemp
+
 
 def GetSensorsFanSpeed():
     fanspeed = psutil.sensors_fans()
     return fanspeed
 
+
 def GetSensorsBatteryStatus():
     battstat = psutil.sensors_battery()
     return battstat
 
+
 def GetBootTime():
     boottime = time.ctime(psutil.boot_time())
     return boottime
+
 
 def GetProcessInfo():
     procinfo = []
@@ -120,26 +138,31 @@ def GetProcessInfo():
         procinfo.append(indx.info)
     return procinfo
 
+
 def GetSingleProcess(prociden):
     try:
         return psutil.Process(int(prociden))
     except Exception as e:
         return str(e)
 
+
 def KillSingleProcess(prociden):
     singproc = GetSingleProcess(prociden)
     if type(singproc) == psutil.Process:
         singproc.kill()
+
 
 def TerminateSingleProcess(prociden):
     singproc = GetSingleProcess(prociden)
     if type(singproc) == psutil.Process:
         singproc.terminate()
 
+
 def SuspendSingleProcess(prociden):
     singproc = GetSingleProcess(prociden)
     if type(singproc) == psutil.Process:
         singproc.suspend()
+
 
 def ResumeSingleProcess(prociden):
     singproc = GetSingleProcess(prociden)
