@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
+        <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/fomantic-ui@2.8.7/dist/semantic.min.css">
+        <script src="https://cdn.jsdelivr.net/npm/fomantic-ui@2.8.7/dist/semantic.min.js"></script>
+        <link rel="preconnect" href="https://fonts.gstatic.com">
+        <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;700&display=swap" rel="stylesheet">
+        <script src="{{ url_for('static', filename='jscn/smoothie.js') }}"></script>
+        <script src="{{ url_for('static', filename='jscn/supervisor.js') }}"></script>
+        <meta charset="UTF-8">
+        <title>SuperVisor</title>
+        <style type="text/css">
+            .bodyfont {
+                font-family: 'IBM Plex Sans', sans-serif !important;
+            }
+        </style>
+        <script>
+            $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
+            console.log($SCRIPT_ROOT);
+            let GSM = {{ request.script_root|tojson|safe }};
+            var ws = new WebSocket("ws://0.0.0.0:6969/")
+            function StartUpdating() {
+                UpdateValues(GSM);
+                console.log(GSM);
+            }
+        </script>
+    </head>
+    <body onload="StartUpdating();">
+        <div class="ui secondary pointing menu inverted" style="background-color: #00c080;">
+            <div class="ui simple dropdown item">
+                <span style="font-weight: bold;" class="bodyfont">SuperVisor</span>
+                <i class="dropdown icon"></i>
+                <div class="menu bodyfont">
+                    <a class="item" onclick=""><i class="chart line circle icon"></i>Overview</a>
+                    <a class="item" onclick=""><i class="server icon"></i>Processes</a>
+                    <a class="item" onclick=""><i class="microchip icon"></i>CPU</a>
+                    <a class="item" onclick=""><i class="memory icon"></i>Memory</a>
+                    <a class="item" onclick=""><i class="upload icon"></i>Storage</a>
+                    <a class="item" onclick=""><i class="wifi icon"></i>Network</a>
+                    <a class="item" onclick=""><i class="eye icon"></i>Sensors</a>
+                    <a class="item" onclick=""><i class="fire icon"></i>Thermal</a>
+                </div>
+            </div>
+            <a class="item bodyfont">Overview</a>
+            <div class="right menu"><a class="ui item" href="#four"><i class="power off icon"></i></a></div>
+        </div>
+        <div class="ui padded container segment bodyfont">
+            <h3 class="ui header bodyfont" style="color: #00c080;">CPU usage</h3>
+            <canvas id="cpusover" style="width:100%; height:12.5vh;"></canvas>
+            <p class="bodyfont"><span id="cpusvalu">0</span>% used</p>
+        </div>
+        <div class="ui padded container segment bodyfont">
+            <h3 class="ui header bodyfont" style="color: #00c080;">Physical memory</h3>
+            <canvas id="physover" style="width:100%; height:12.5vh;"></canvas>
+            <p class="bodyfont"><span id="physvalu">0</span>% used</p>
+        </div>
+        <div class="ui padded container segment bodyfont">
+            <h3 class="ui header bodyfont" style="color: #00c080;">Virtual memory</h3>
+            <canvas id="swapover" style="width:100%; height:12.5vh;"></canvas>
+            <p class="bodyfont"><span id="swapvalu">0</span>% used</p>
+        </div>
+        <div class="ui padded container segment bodyfont">
+            <h3 class="ui header bodyfont" style="color: #00c080;">Battery level</h3>
+            <canvas id="battover" style="width:100%; height:12.5vh;"></canvas>
+            <p class="bodyfont"><span id="battvalu">0</span>% remaining</p>
+        </div>
+    </body>
+</html>
