@@ -1,12 +1,25 @@
 import asyncio
+import click
 import getpass
 import json
 import os
 import psutil
+from secrets import choice
+import sys
 import time
+import websockets
+
+
+class ConnectionManager():
+    def PassphraseGenerator(self, lent=16):
+        retndata = "".join(choice("ABCDEF0123456789") for i in range(lent))
+        return retndata
 
 
 class LiveUpdatingElements():
+    def __init__(self, passcode):
+        self.passcode = passcode
+
     def GetVirtualMemoryData(self):
         bruhdata = psutil.virtual_memory()
         retndata = {
@@ -205,6 +218,7 @@ class LiveUpdatingElements():
 
     def ReturnLiveData(self):
         jsonobjc = {
+            "passcode": self.passcode,
             "virtdata": self.GetVirtualMemoryData(),
             "swapinfo": self.GetSwapMemoryInfo(),
             "cputimes": self.GetCPUStateTimes(),
@@ -223,6 +237,9 @@ class LiveUpdatingElements():
 
 
 class DeadUpdatingElements(LiveUpdatingElements):
+    def __init__(self, passcode):
+        self.passcode = passcode
+
     def GetOSUnameData(self):
         unamdata = os.uname()
         retndata = {
@@ -284,6 +301,7 @@ class DeadUpdatingElements(LiveUpdatingElements):
 
     def ReturnDeadData(self):
         jsonobjc = {
+            "passcode": self.passcode,
             "osnmdata": self.GetOSUnameData(),
             "cpuquant": self.GetCPULogicalCount(),
             "diskpart": self.GetAllDiskPartitions(),
@@ -297,3 +315,53 @@ class DeadUpdatingElements(LiveUpdatingElements):
             "procinfo": self.GetProcessInfo(),
         }
         return json.dumps(jsonobjc)
+
+
+async def AsynchronousTransferLive(sockobjc, path):
+    print(" * LiveSync activated on " + time.ctime())
+    while True:
+        liveobjc = LiveUpdatingElements(passcode).ReturnLiveData()
+        await sockobjc.send(liveobjc)
+        await asyncio.sleep(1)
+
+
+async def AsynchronousTransferDead(sockobjc, path):
+    print(" * DeadSync activated on " + time.ctime())
+    deadobjc = DeadUpdatingElements(passcode).ReturnDeadData()
+    await sockobjc.send(deadobjc)
+
+
+@click.command()
+@click.option("-l", "--liveport", "liveport", help="Set the port value for LiveSync [0-65536]", default="1969")
+@click.option("-d", "--deadport", "deadport", help="Set the port value for DeadSync [0-65536]", default="2020")
+@click.option("-6", "--ipprotv6", "netprotc", flag_value="ipprotv6", help="Start the server on an IPv6 address")
+@click.option("-4", "--ipprotv4", "netprotc", flag_value="ipprotv4", help="Start the server on an IPv4 address")
+@click.version_option(version="0.1.0", prog_name="WebStation SYSMON by t0xic0der")
+def mainfunc(liveport, deadport, netprotc):
+    try:
+        print(" * Starting WebStation SYSMON driver")
+        netpdata = ""
+        global passcode
+        passcode = ConnectionManager().PassphraseGenerator()
+        if netprotc == "ipprotv6":
+            print(" * IP version   : 6")
+            netpdata = "::"
+        elif netprotc == "ipprotv4":
+            print(" * IP version   : 4")
+            netpdata = "0.0.0.0"
+        print(" * Passcode     : " + passcode)
+        print(" * LiveSync URI : ws://" + netpdata + ":" + str(liveport) + "/")
+        print(" * DeadSync URI : ws://" + netpdata + ":" + str(deadport) + "/")
+        livesock = websockets.serve(AsynchronousTransferLive, netpdata, liveport)
+        deadsock = websockets.serve(AsynchronousTransferDead, netpdata, deadport)
+        asyncio.get_event_loop().run_until_complete(livesock)
+        asyncio.get_event_loop().run_until_complete(deadsock)
+        asyncio.get_event_loop().run_forever()
+    except KeyboardInterrupt:
+        print()
+        print(" * Leaving WebStation SYSMON driver")
+        sys.exit()
+
+
+if __name__ == "__main__":
+    mainfunc()
