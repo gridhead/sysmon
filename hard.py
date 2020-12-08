@@ -1,13 +1,15 @@
-import asyncio
 import click
 import getpass
 import json
+from flask import Flask, render_template, jsonify
 import os
 import psutil
 from secrets import choice
 import sys
 import time
-import websockets
+
+
+main = Flask(__name__)
 
 
 class ConnectionManager():
@@ -317,27 +319,28 @@ class DeadUpdatingElements(LiveUpdatingElements):
         return json.dumps(jsonobjc)
 
 
-async def AsynchronousTransferLive(sockobjc, path):
+@main.route("/livesync/", methods=["GET"])
+def AsynchronousTransferLive():
     print(" * LiveSync activated on " + time.ctime())
-    while True:
-        liveobjc = LiveUpdatingElements(passcode).ReturnLiveData()
-        await sockobjc.send(liveobjc)
-        await asyncio.sleep(1)
+    retnjson = jsonify(liveobjc=LiveUpdatingElements(passcode).ReturnLiveData())
+    retnjson.headers.add("Access-Control-Allow-Origin", "*")
+    return retnjson
 
 
-async def AsynchronousTransferDead(sockobjc, path):
+@main.route("/deadsync/", methods=["GET"])
+def AsynchronousTransferDead():
     print(" * DeadSync activated on " + time.ctime())
-    deadobjc = DeadUpdatingElements(passcode).ReturnDeadData()
-    await sockobjc.send(deadobjc)
+    retnjson = jsonify(deadobjc=DeadUpdatingElements(passcode).ReturnDeadData())
+    retnjson.headers.add("Access-Control-Allow-Origin", "*")
+    return retnjson
 
 
 @click.command()
-@click.option("-l", "--liveport", "liveport", help="Set the port value for LiveSync [0-65536]", default="1969")
-@click.option("-d", "--deadport", "deadport", help="Set the port value for DeadSync [0-65536]", default="2020")
+@click.option("-p", "--portdata", "portdata", help="Set the port value [0-65536]", default="6969")
 @click.option("-6", "--ipprotv6", "netprotc", flag_value="ipprotv6", help="Start the server on an IPv6 address")
 @click.option("-4", "--ipprotv4", "netprotc", flag_value="ipprotv4", help="Start the server on an IPv4 address")
 @click.version_option(version="0.1.0", prog_name="WebStation SYSMON by t0xic0der")
-def mainfunc(liveport, deadport, netprotc):
+def mainfunc(portdata, netprotc):
     try:
         print(" * Starting WebStation SYSMON driver")
         netpdata = ""
@@ -350,13 +353,9 @@ def mainfunc(liveport, deadport, netprotc):
             print(" * IP version   : 4")
             netpdata = "0.0.0.0"
         print(" * Passcode     : " + passcode)
-        print(" * LiveSync URI : ws://" + netpdata + ":" + str(liveport) + "/")
-        print(" * DeadSync URI : ws://" + netpdata + ":" + str(deadport) + "/")
-        livesock = websockets.serve(AsynchronousTransferLive, netpdata, liveport)
-        deadsock = websockets.serve(AsynchronousTransferDead, netpdata, deadport)
-        asyncio.get_event_loop().run_until_complete(livesock)
-        asyncio.get_event_loop().run_until_complete(deadsock)
-        asyncio.get_event_loop().run_forever()
+        print(" * LiveSync URI : http://" + netpdata + ":" + str(portdata) + "/livesync/")
+        print(" * DeadSync URI : http://" + netpdata + ":" + str(portdata) + "/deadsync/")
+        main.run(port=portdata, host=netpdata)
     except KeyboardInterrupt:
         print()
         print(" * Leaving WebStation SYSMON driver")
