@@ -3,7 +3,7 @@
     <head>
         <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
         <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/fomantic-ui@2.8.7/dist/semantic.min.css">
-        <script src="https://cdn.jsdelivr.net/npm/fomantic-ui@2.8.7/dist/semantic.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/fomantic-ui@2.8.7/dist/semantic.js"></script>
         <link rel="preconnect" href="https://fonts.gstatic.com">
         <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;700&display=swap" rel="stylesheet">
         <script src="{{ url_for('static', filename='jscn/smoothie.js') }}"></script>
@@ -16,17 +16,10 @@
             }
         </style>
         <script>
-            $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
-            console.log($SCRIPT_ROOT);
-            let GSM = {{ request.script_root|tojson|safe }};
-            var ws = new WebSocket("ws://0.0.0.0:6969/")
-            function StartUpdating() {
-                UpdateValues(GSM);
-                console.log(GSM);
-            }
+            //var ws = new WebSocket("ws://0.0.0.0:6969/")
         </script>
     </head>
-    <body onload="StartUpdating();">
+    <body onload="AskForWebSocketEndpoint();">
         <div class="ui secondary pointing menu inverted" style="background-color: #00c080;">
             <div class="ui simple dropdown item">
                 <span style="font-weight: bold;" class="bodyfont">SuperVisor</span>
@@ -43,27 +36,159 @@
                 </div>
             </div>
             <a class="item bodyfont">Overview</a>
-            <div class="right menu"><a class="ui item" href="#four"><i class="power off icon"></i></a></div>
+            <div class="right menu">
+                <a class="ui item" href="#four"><i class="power off icon"></i></a>
+            </div>
         </div>
-        <div class="ui padded container segment bodyfont">
-            <h3 class="ui header bodyfont" style="color: #00c080;">CPU usage</h3>
-            <canvas id="cpusover" style="width:100%; height:12.5vh;"></canvas>
-            <p class="bodyfont"><span id="cpusvalu">0</span>% used</p>
+        <h2 class="ui container center aligned icon header bodyfont" style="color: #00c080;">
+            <i class="circular eye icon"></i>SuperVisor
+            <div class="sub header">
+                An intuitive remotely-accessible system performance monitoring and task management tool for servers and headless Raspberry Pi setups.
+            </div>
+        </h2>
+        <div class="ui container"><hr style="background-color: #cccccc; height: 2px; border: none; margin-bottom: 2.5%; margin-top: 2.5%"/></div>
+        <div class="ui container one cards">
+            <div class="ui container padded card bodyfont">
+                <div class="content">
+                    <div class="description">
+                        <table class="ui very basic compact fixed table">
+                            <tbody><tr><td style="font-weight: bold;">Username</td><td id="userover">Unavailable</td></tr></tbody>
+                            <tbody><tr><td style="font-weight: bold;">System name</td><td id="systover">Unavailable</td></tr></tbody>
+                            <tbody><tr><td style="font-weight: bold;">Host name</td><td id="hostover">Unavailable</td></tr></tbody>
+                            <tbody><tr><td style="font-weight: bold;">Version</td><td id="versover">Unavailable</td></tr></tbody>
+                            <tbody><tr><td style="font-weight: bold;">Boot time</td><td id="bootover">Unavailable</td></tr></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="ui padded container segment bodyfont">
-            <h3 class="ui header bodyfont" style="color: #00c080;">Physical memory</h3>
-            <canvas id="physover" style="width:100%; height:12.5vh;"></canvas>
-            <p class="bodyfont"><span id="physvalu">0</span>% used</p>
+        <div class="ui container two cards">
+            <div class="padded card bodyfont">
+                <div class="content">
+                    <div class="header bodyfont" style="color: #00c080;">CPU Usage</div>
+                    <div class="meta"><span id="cpusvalu">0</span>% in use</div>
+                    <div class="description">
+                        <canvas id="cpusover" style="width:100%; height:12.5vh;"></canvas>
+                    </div>
+                </div>
+            </div>
+            <div class="padded card bodyfont">
+                <div class="content">
+                    <div class="header bodyfont" style="color: #00c080;">Physical memory</div>
+                    <div class="meta"><span id="physvalu">0</span>% in use</div>
+                    <div class="description">
+                        <canvas id="physover" style="width:100%; height:12.5vh;"></canvas>
+                    </div>
+                </div>
+            </div>
+            <div class="padded card bodyfont">
+                <div class="content">
+                    <div class="header bodyfont" style="color: #00c080;">Virtual memory</div>
+                    <div class="meta"><span id="swapvalu">0</span>% in use</div>
+                    <div class="description">
+                        <canvas id="swapover" style="width:100%; height:12.5vh;"></canvas>
+                    </div>
+                </div>
+            </div>
+            <div class="padded card bodyfont">
+                <div class="content">
+                    <div class="header bodyfont" style="color: #00c080;">Battery</div>
+                    <div class="meta"><span id="battvalu">0</span>% remaining</div>
+                    <div class="description">
+                        <canvas id="battover" style="width:100%; height:12.5vh;"></canvas>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="ui padded container segment bodyfont">
-            <h3 class="ui header bodyfont" style="color: #00c080;">Virtual memory</h3>
-            <canvas id="swapover" style="width:100%; height:12.5vh;"></canvas>
-            <p class="bodyfont"><span id="swapvalu">0</span>% used</p>
+        <div class="ui container"><hr style="background-color: #cccccc; height: 2px; border: none; margin-bottom: 1.25%; margin-top: 2.5%"/></div>
+        <!--
+        <h2 class="ui container center aligned header"><div class="content bodyfont" style="color: #00c080;">CPU usage</div></h2>
+        -->
+        <div class="ui container">
+            <div class="ui top attached tabular menu" id="tabstool">
+                <a class="item" id="cpuu-head-ttle">CPU usage</a>
+                <a class="active item" id="cpuu-usej-ttle" onclick="SwitchTab('cpuu-usej-ttle', 'cpuu-usej-body');">Usage</a>
+                <a class="item" id="cpuu-time-ttle" onclick="SwitchTab('cpuu-time-ttle', 'cpuu-time-body');">Times</a>
+                <a class="item" id="cpuu-stat-ttle" onclick="SwitchTab('cpuu-stat-ttle', 'cpuu-stat-body');">Statistics</a>
+            </div>
+            <div class="ui bottom attached active tab segment" id="cpuu-usej-body">
+                <div class="ui two cards" id="prcpgraf"></div>
+            </div>
+            <div class="ui bottom attached tab segment" id="cpuu-time-body">
+                <div class="ui styled fluid accordion">
+                    <div class="title">
+                        <i class="dropdown icon"></i>
+                        What is a dog?
+                    </div>
+                    <div class="active content">
+                        <p>A dog is a type of domesticated animal. Known for its loyalty and faithfulness, it can be found as a welcome guest in many households across the world.</p>
+                    </div>
+                    <div class="title">
+                        <i class="dropdown icon"></i>
+                        What kinds of dogs are there?
+                    </div>
+                    <div class="content">
+                        <p>There are many breeds of dogs. Each breed varies in size and temperament. Owners often select a breed of dog that they find to be compatible with their own lifestyle and desires from a companion.</p>
+                    </div>
+                    <div class="title">
+                        <i class="dropdown icon"></i>
+                        How do you acquire a dog?
+                    </div>
+                    <div class="content">
+                        <p>Three common ways for a prospective owner to acquire a dog is from pet shops, private owners, or shelters.</p>
+                        <p>A pet shop may be the most convenient way to buy a dog. Buying a dog from a private owner allows you to assess the pedigree and upbringing of your dog before choosing to take it home. Lastly, finding your dog from a shelter, helps give a good home to a dog who may not find one so readily.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="ui bottom attached tab segment" id="cpuu-stat-body">
+                <h1>Hello</h1>
+            </div>
         </div>
-        <div class="ui padded container segment bodyfont">
-            <h3 class="ui header bodyfont" style="color: #00c080;">Battery level</h3>
-            <canvas id="battover" style="width:100%; height:12.5vh;"></canvas>
-            <p class="bodyfont"><span id="battvalu">0</span>% remaining</p>
+        <div class="ui container"><hr style="background-color: #cccccc; height: 2px; border: none; margin-bottom: 2.5%; margin-top: 2.5%"/></div>
+
+
+
+
+
+
+        <div class="ui tiny modal" id="restwarn">
+            <div class="header bodyfont cardinal" style="padding: 1.5%; background-color: #00c080; color: #ffffff;">Connect</div>
+            <div class="content" style="padding: 1.5%;">
+                <p class="bodyfont" style="line-height: 1.25; text-align: justify; font-size: 15px;">
+                    Enable the SuperVisor driver service on your remote device first. Once the driver has been set up,
+                    take a note of the uniform resource identifier and the connector passphrase enter it here to begin
+                    monitoring its performance.
+                    <div class="ui form">
+                        <div class="two fields bodyfont">
+                            <div class="field">
+                                <input class="bodyfont" id="vsonsuri" placeholder="LiveSync URI" type="text">
+                            </div>
+                            <div class="field">
+                                <input class="bodyfont" id="passcode" placeholder="Connector passphrase" type="text">
+                            </div>
+                        </div>
+                    </div>
+                </p>
+            </div>
+            <div class="actions cardinal" style="padding: 1.5%; background-color: #00c080;">
+                <div class="ui mini button bodyfont" onclick="FetchWebSocketEndpoint(); $('#restwarn').modal('hide');">
+                    <span><i style="color: #008080;" class="check icon"></i></span>
+                </div>
+            </div>
+        </div>
+        <div class="ui tiny modal" id="wrngiden">
+            <div class="header bodyfont cardinal" style="padding: 1.5%; background-color: #00c080; color: #ffffff;">Access denied</div>
+            <div class="content" style="padding: 1.5%;">
+                <p class="bodyfont" style="line-height: 1.25; text-align: justify; font-size: 15px;">
+                    The connector passphrase provided does not match with that of the driver service.
+                    Please reload the page and try entering the passphrase correctly.
+                </p>
+            </div>
+            <div class="actions cardinal" style="padding: 1.5%; background-color: #00c080;">
+                <div class="ui mini button bodyfont" onclick="location.reload();">
+                    <span><i style="color: #008080;" class="redo icon"></i></span>
+                </div>
+            </div>
         </div>
     </body>
 </html>
