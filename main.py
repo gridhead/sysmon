@@ -50,6 +50,16 @@ def fetcinfo():
     return retnjson
 
 
+@main.route("/vid/")
+def vidstream():
+    return render_template("vidstream.html")
+
+
+@main.route("/gay/")
+def graphing():
+    return render_template("graphing.html")
+
+
 @main.route("/<thmcolor>/", methods=["GET"])
 def custpage(thmcolor="maroon"):
     retndata = back.GetOSUnameData()
@@ -85,6 +95,7 @@ def mainfunc(portdata, netprotc):
     elif netprotc == "ipprotv4":
         print(" * IP version  : 4")
         netpdata = "0.0.0.0"
+    main.config["TEMPLATES_AUTO_RELOAD"] = True
     main.run(port=portdata, host=netpdata)
 
 
