@@ -23,23 +23,11 @@ let linestyl = {
 function SwitchTab(head, body) {
     $(".item").removeClass("active");
     $(".bottom.attached").removeClass("active");
-    $("#"+head).addClass("active");
-    $("#"+body).addClass("active");
+    $("#" + head).addClass("active");
+    $("#" + body).addClass("active");
 }
 
 function AskForWebSocketEndpoint() {
-    /*
-    $(".tabular.menu.item").tab({history:false});
-    console.log("Hello");
-    $(function() {
-       $("a.item").click(
-           function() {
-               $(".item").removeClass("active");
-               $(this).addClass("active");
-           }
-       )
-    });
-    */
     $("#restwarn").modal("setting", "closable", false).modal("show");
 }
 
@@ -99,6 +87,24 @@ async function OverviewGraphAJAX() {
         }
     );
     console.log(cpuquant, prcpgraf, prcpline);
+    for (let indx = 0; indx < cpuquant; indx ++) {
+        $("#cpuu-time-tabl-cont").append(
+            "<tr>" +
+            "<td id='cpuu-time-name-" + indx + "'>CPU #" + indx + "</td>" +
+            "<td id='cpuu-time-user-" + indx + "'>Unavailable</td>" +
+            "<td id='cpuu-time-nice-" + indx + "'>Unavailable</td>" +
+            "<td id='cpuu-time-syst-" + indx + "'>Unavailable</td>" +
+            "<td id='cpuu-time-idle-" + indx + "'>Unavailable</td>" +
+            "<td id='cpuu-time-iowt-" + indx + "'>Unavailable</td>" +
+            "<td id='cpuu-time-ireq-" + indx + "'>Unavailable</td>" +
+            "<td id='cpuu-time-soft-" + indx + "'>Unavailable</td>" +
+            "<td id='cpuu-time-stel-" + indx + "'>Unavailable</td>" +
+            "<td id='cpuu-time-gest-" + indx + "'>Unavailable</td>" +
+            "<td id='cpuu-time-gtnc-" + indx + "'>Unavailable</td>" + 
+            "</tr>"
+        );
+        console.log("Hello, " + indx);
+    }
     while (1) {
         await new Promise(r => setTimeout(r, 1000));
         $.getJSON(JSON.parse(sessionStorage.getItem("vsoniden"))["vsonsuri"] + "livesync/",
@@ -126,6 +132,19 @@ async function OverviewGraphAJAX() {
                     for (let indx = 0; indx < cpuquant; indx ++) {
                         //console.log("cpuu-graf-"+indx);
                         prcpgraf[indx].streamTo(document.getElementById("cpuu-graf-"+indx), 1000);
+                    }
+                    for (let indx = 0; indx < cpuquant; indx ++) {
+                        document.getElementById("cpuu-time-user-"+indx).innerText = liveobjc.cputimes[indx]["user"];
+                        document.getElementById("cpuu-time-nice-"+indx).innerText = liveobjc.cputimes[indx]["nice"];
+                        document.getElementById("cpuu-time-syst-"+indx).innerText = liveobjc.cputimes[indx]["system"];
+                        document.getElementById("cpuu-time-idle-"+indx).innerText = liveobjc.cputimes[indx]["idle"];
+                        document.getElementById("cpuu-time-iowt-"+indx).innerText = liveobjc.cputimes[indx]["iowait"];
+                        document.getElementById("cpuu-time-ireq-"+indx).innerText = liveobjc.cputimes[indx]["irq"];
+                        document.getElementById("cpuu-time-soft-"+indx).innerText = liveobjc.cputimes[indx]["softirq"];
+                        document.getElementById("cpuu-time-stel-"+indx).innerText = liveobjc.cputimes[indx]["steal"];
+                        document.getElementById("cpuu-time-gest-"+indx).innerText = liveobjc.cputimes[indx]["guest"];
+                        document.getElementById("cpuu-time-gtnc-"+indx).innerText = liveobjc.cputimes[indx]["guest_nice"];
+                        
                     }
                 } else {
                     $("#wrngiden").modal("setting", "closable", false).modal("show");

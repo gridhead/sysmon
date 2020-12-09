@@ -104,9 +104,9 @@
         <!--
         <h2 class="ui container center aligned header"><div class="content bodyfont" style="color: #00c080;">CPU usage</div></h2>
         -->
-        <div class="ui container">
-            <div class="ui top attached tabular menu" id="tabstool">
-                <a class="item" id="cpuu-head-ttle">CPU usage</a>
+        <div class="ui container bodyfont">
+            <div class="ui top attached tabular menu bodyfont teal">
+                <a class="item" id="cpuu-head-ttle" style="font-weight: bold; color: #008080;">CPU usage</a>
                 <a class="active item" id="cpuu-usej-ttle" onclick="SwitchTab('cpuu-usej-ttle', 'cpuu-usej-body');">Usage</a>
                 <a class="item" id="cpuu-time-ttle" onclick="SwitchTab('cpuu-time-ttle', 'cpuu-time-body');">Times</a>
                 <a class="item" id="cpuu-stat-ttle" onclick="SwitchTab('cpuu-stat-ttle', 'cpuu-stat-body');">Statistics</a>
@@ -115,42 +115,23 @@
                 <div class="ui two cards" id="prcpgraf"></div>
             </div>
             <div class="ui bottom attached tab segment" id="cpuu-time-body">
-                <div class="ui styled fluid accordion">
-                    <div class="title">
-                        <i class="dropdown icon"></i>
-                        What is a dog?
-                    </div>
-                    <div class="active content">
-                        <p>A dog is a type of domesticated animal. Known for its loyalty and faithfulness, it can be found as a welcome guest in many households across the world.</p>
-                    </div>
-                    <div class="title">
-                        <i class="dropdown icon"></i>
-                        What kinds of dogs are there?
-                    </div>
-                    <div class="content">
-                        <p>There are many breeds of dogs. Each breed varies in size and temperament. Owners often select a breed of dog that they find to be compatible with their own lifestyle and desires from a companion.</p>
-                    </div>
-                    <div class="title">
-                        <i class="dropdown icon"></i>
-                        How do you acquire a dog?
-                    </div>
-                    <div class="content">
-                        <p>Three common ways for a prospective owner to acquire a dog is from pet shops, private owners, or shelters.</p>
-                        <p>A pet shop may be the most convenient way to buy a dog. Buying a dog from a private owner allows you to assess the pedigree and upbringing of your dog before choosing to take it home. Lastly, finding your dog from a shelter, helps give a good home to a dog who may not find one so readily.</p>
-                    </div>
-                </div>
+                <table class="ui teal fixed compact definition table bodyfont">
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th>USER</th><th>NICE</th><th>SYST</th><th>IDLE</th><th>IOWT</th>
+                            <th>IREQ</th><th>SOFT</th><th>STEL</th><th>GEST</th><th>GTNC</th>
+                        </tr>
+                    </thead>
+                    <tbody id="cpuu-time-tabl-cont">
+                  </tbody>
+                </table>
             </div>
             <div class="ui bottom attached tab segment" id="cpuu-stat-body">
                 <h1>Hello</h1>
             </div>
         </div>
         <div class="ui container"><hr style="background-color: #cccccc; height: 2px; border: none; margin-bottom: 2.5%; margin-top: 2.5%"/></div>
-
-
-
-
-
-
         <div class="ui tiny modal" id="restwarn">
             <div class="header bodyfont cardinal" style="padding: 1.5%; background-color: #00c080; color: #ffffff;">Connect</div>
             <div class="content" style="padding: 1.5%;">
