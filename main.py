@@ -19,11 +19,16 @@
 ##########################################################################
 '''
 
-import back, click
 from flask import Flask, render_template, jsonify
+
+import back
+import click
+import logging
 
 
 main = Flask(__name__)
+loge = logging.getLogger("werkzeug")
+loge.setLevel(logging.ERROR)
 
 
 @main.route("/termproc/<prociden>/", methods=["GET"])
@@ -71,14 +76,9 @@ def fetcinfo():
     return retnjson
 
 
-@main.route("/vid/")
-def vidstream():
-    return render_template("vidstream.html")
-
-
-@main.route("/gay/")
+@main.route("/")
 def graphing():
-    return render_template("graphing.html")
+    return render_template("mainpytm.html")
 
 
 @main.route("/<thmcolor>/", methods=["GET"])
@@ -108,14 +108,15 @@ def custpage(thmcolor="maroon"):
 @click.version_option(version="0.1.0", prog_name="WebStation SYSMON by t0xic0der")
 def mainfunc(portdata, netprotc):
     print(" * Starting WebStation SYSMON by t0xic0der...")
-    print(" * Port number : " + str(portdata))
+    print(" * Port number  : " + str(portdata))
     netpdata = ""
     if netprotc == "ipprotv6":
-        print(" * IP version  : 6")
+        print(" * IP version   : 6")
         netpdata = "::"
     elif netprotc == "ipprotv4":
-        print(" * IP version  : 4")
+        print(" * IP version   : 4")
         netpdata = "0.0.0.0"
+    print(" * Logs state   : Errors only")
     main.config["TEMPLATES_AUTO_RELOAD"] = True
     main.run(port=portdata, host=netpdata)
 
