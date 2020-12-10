@@ -23,18 +23,15 @@
 <meta charset="UTF-8">
 <html lang="en">
     <head>
-        <script type="text/javascript" src="/static/jscn/jquery.min.js"></script>
-        <script type="text/javascript" src="/static/jscn/semantic.js"></script>
-        <link type="text/css" rel="stylesheet" type="text/css" href="/static/css3/semantic.css">
-        <link type="text/css" rel="stylesheet" type="text/css" href="/static/css3/custfrmt.css">
-        <script type="text/javascript" src="/static/jscn/smoothie.js"></script>
-        <script type="text/javascript" src="/static/jscn/supervisor.js"></script>
-        <style type="text/css">
-
-        </style>
+        <script type="text/javascript" src="{{ url_for('static', filename='jscn/jquery.min.js') }}"></script>
+        <script type="text/javascript" src="{{ url_for('static', filename='jscn/semantic.js') }}"></script>
+        <link type="text/css" rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css3/semantic.css') }}">
+        <link type="text/css" rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css3/custfrmt.css') }}">
+        <script type="text/javascript" src="{{ url_for('static', filename='jscn/smoothie.js') }}"></script>
+        <script type="text/javascript" src="{{ url_for('static', filename='jscn/supervisor.js') }}"></script>
         <title>SuperVisor</title>
     </head>
-    <body onload="AskForWebSocketEndpoint();" class="bodyfont">
+    <body onload="AskForWebSocketEndpoint();">
         <div class="ui secondary pointing menu inverted" style="background-color: #00c080;">
             <div class="ui simple dropdown item">
                 <span style="font-weight: bold;" class="bodyfont">SuperVisor</span>
