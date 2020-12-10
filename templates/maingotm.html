@@ -1,25 +1,37 @@
+<!--
+##########################################################################
+*
+*   Copyright © 2019-2020 Akashdeep Dhar <t0xic0der@fedoraproject.org>
+*
+*   This program is free software: you can redistribute it and/or modify
+*   it under the terms of the GNU General Public License as published by
+*   the Free Software Foundation, either version 3 of the License, or
+*   (at your option) any later version.
+*
+*   This program is distributed in the hope that it will be useful,
+*   but WITHOUT ANY WARRANTY; without even the implied warranty of
+*   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+*   GNU General Public License for more details.
+*
+*   You should have received a copy of the GNU General Public License
+*   along with this program.  If not, see <https://www.gnu.org/licenses/>.
+*
+##########################################################################
+-->
+
 <!DOCTYPE html>
+<meta charset="UTF-8">
 <html lang="en">
     <head>
-        <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
-        <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/fomantic-ui@2.8.7/dist/semantic.min.css">
-        <script src="https://cdn.jsdelivr.net/npm/fomantic-ui@2.8.7/dist/semantic.js"></script>
-        <link rel="preconnect" href="https://fonts.gstatic.com">
-        <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;700&display=swap" rel="stylesheet">
-        <script src="{{ url_for('static', filename='jscn/smoothie.js') }}"></script>
-        <script src="{{ url_for('static', filename='jscn/supervisor.js') }}"></script>
-        <meta charset="UTF-8">
+        <script type="text/javascript" src="/static/jscn/jquery.min.js"></script>
+        <script type="text/javascript" src="/static/jscn/semantic.js"></script>
+        <link type="text/css" rel="stylesheet" type="text/css" href="/static/css3/semantic.css">
+        <link type="text/css" rel="stylesheet" type="text/css" href="/static/css3/custfrmt.css">
+        <script type="text/javascript" src="/static/jscn/smoothie.js"></script>
+        <script type="text/javascript" src="/static/jscn/supervisor.js"></script>
         <title>SuperVisor</title>
-        <style type="text/css">
-            .bodyfont {
-                font-family: 'IBM Plex Sans', sans-serif !important;
-            }
-        </style>
-        <script>
-            //var ws = new WebSocket("ws://0.0.0.0:6969/")
-        </script>
     </head>
-    <body onload="AskForWebSocketEndpoint();">
+    <body onload="AskForWebSocketEndpoint();" class="bodyfont">
         <div class="ui secondary pointing menu inverted" style="background-color: #00c080;">
             <div class="ui simple dropdown item">
                 <span style="font-weight: bold;" class="bodyfont">SuperVisor</span>
