@@ -60,7 +60,7 @@
         </h2>
         <div class="ui container"><hr style="background-color: #cccccc; height: 2px; border: none; margin-bottom: 2.5%; margin-top: 2.5%"/></div>
         <div class="ui container one cards">
-            <div class="ui container padded card bodyfont">
+            <div class="ui padded card bodyfont">
                 <div class="content">
                     <div class="description">
                         <table class="ui very basic compact fixed table">
@@ -113,16 +113,13 @@
             </div>
         </div>
         <div class="ui container"><hr style="background-color: #cccccc; height: 2px; border: none; margin-bottom: 1.25%; margin-top: 2.5%"/></div>
-        <!--
-        <h2 class="ui container center aligned header"><div class="content bodyfont" style="color: #00c080;">CPU usage</div></h2>
-        -->
         <div class="ui container bodyfont">
             <div class="ui top attached tabular menu bodyfont teal">
                 <a class="item" id="cpuu-head-ttle" style="font-weight: bold; color: #008080;">CPU usage</a>
-                <a class="active item" id="cpuu-usej-ttle" onclick="SwitchTab('cpuu-usej-ttle', 'cpuu-usej-body');">Usage</a>
-                <a class="item" id="cpuu-cycl-ttle" onclick="SwitchTab('cpuu-cycl-ttle', 'cpuu-cycl-body');">Cycles</a>
-                <a class="item" id="cpuu-time-ttle" onclick="SwitchTab('cpuu-time-ttle', 'cpuu-time-body');">Times</a>
-                <a class="item" id="cpuu-stat-ttle" onclick="SwitchTab('cpuu-stat-ttle', 'cpuu-stat-body');">Statistics</a>
+                <a class="active item" id="cpuu-usej-ttle" onclick="SwitchTab('cpuu-usej-ttle', 'cpuu');">Usage</a>
+                <a class="item" id="cpuu-cycl-ttle" onclick="SwitchTab('cpuu-cycl-ttle', 'cpuu');">Cycles</a>
+                <a class="item" id="cpuu-time-ttle" onclick="SwitchTab('cpuu-time-ttle', 'cpuu');">Times</a>
+                <a class="item" id="cpuu-stat-ttle" onclick="SwitchTab('cpuu-stat-ttle', 'cpuu');">Statistics</a>
             </div>
             <div class="ui bottom attached active tab segment" id="cpuu-usej-body">
                 <div class="ui two cards" id="prcpgraf"></div>
@@ -155,7 +152,61 @@
                 </table>
             </div>
         </div>
-        <div class="ui container"><hr style="background-color: #cccccc; height: 2px; border: none; margin-bottom: 2.5%; margin-top: 2.5%"/></div>
+        <div class="ui container"><hr style="background-color: #cccccc; height: 2px; border: none; margin-bottom: 1.25%; margin-top: 2.5%"/></div>
+        <div class="ui container bodyfont">
+            <div class="ui top attached tabular menu bodyfont teal">
+                <a class="item" id="memo-head-ttle" style="font-weight: bold; color: #008080;">Memory</a>
+                <a class="active item" id="memo-over-ttle" onclick="SwitchTab('memo-over-ttle', 'memo');">Overview</a>
+                <a class="item" id="memo-phys-ttle" onclick="SwitchTab('memo-phys-ttle', 'memo');">Physical</a>
+                <a class="item" id="memo-virt-ttle" onclick="SwitchTab('memo-virt-ttle', 'memo');">Virtual</a>
+            </div>
+            <div class="ui bottom attached active tab segment" id="memo-over-body">
+                <div class="ui two cards">
+                    <div class="teal padded card bodyfont">
+                        <div class="content">
+                            <div class="header bodyfont" style="color: #00c080;">Physical memory</div>
+                            <div class="meta"><span id="phys-dedi-byte">0</span> bytes in use</div>
+                            <div class="description">
+                                <h1 class="bodyfont" style="font-style: italic;"><span id="phys-dedi-perc">0</span>%</h1>
+                                <canvas id="phys-dedi-graf" style="width:100%; height:12.5vh;"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="teal padded card bodyfont">
+                        <div class="content">
+                            <div class="header bodyfont" style="color: #00c080;">Virtual memory</div>
+                            <div class="meta"><span id="virt-dedi-byte">0</span> bytes in use</div>
+                            <div class="description">
+                                <h1 class="bodyfont" style="font-style: italic;"><span id="virt-dedi-perc">0</span>%</h1>
+                                <canvas id="virt-dedi-graf" style="width:100%; height:12.5vh;"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="ui bottom attached tab segment" id="memo-phys-body">
+                <table class="ui very basic compact fixed table">
+                    <tbody><tr><td style="font-weight: bold;">Total</td><td id><span id="memo-phys-totl">0</span> bytes</td></tr></tbody>
+                    <tbody><tr><td style="font-weight: bold;">Free</td><td><span id="memo-phys-free">0</span> bytes</td></tr></tbody>
+                    <tbody><tr><td style="font-weight: bold;">Used</td><td><span id="memo-phys-used">0</span> bytes</td></tr></tbody>
+                    <tbody><tr><td style="font-weight: bold;">Active</td><td><span id="memo-phys-actv">0</span> bytes</td></tr></tbody>
+                    <tbody><tr><td style="font-weight: bold;">Inactive</td><td><span id="memo-phys-inac">0</span> bytes</td></tr></tbody>
+                    <tbody><tr><td style="font-weight: bold;">Buffers</td><td><span id="memo-phys-buff">0</span> bytes</td></tr></tbody>
+                    <tbody><tr><td style="font-weight: bold;">Cached</td><td><span id="memo-phys-cach">0</span> bytes</td></tr></tbody>
+                    <tbody><tr><td style="font-weight: bold;">Shared</td><td><span id="memo-phys-shar">0</span> bytes</td></tr></tbody>
+                    <tbody><tr><td style="font-weight: bold;">Slab</td><td><span id="memo-phys-slab">0</span> bytes</td></tr></tbody>
+                </table>
+            </div>
+            <div class="ui bottom attached tab segment" id="memo-virt-body">
+                <table class="ui very basic compact fixed table">
+                    <tbody><tr><td style="font-weight: bold;">Total</td><td id><span id="memo-virt-totl">0</span> bytes</td></tr></tbody>
+                    <tbody><tr><td style="font-weight: bold;">Free</td><td><span id="memo-virt-free">0</span> bytes</td></tr></tbody>
+                    <tbody><tr><td style="font-weight: bold;">Used</td><td><span id="memo-virt-used">0</span> bytes</td></tr></tbody>
+                    <tbody><tr><td style="font-weight: bold;">Swapped in</td><td><span id="memo-virt-sine">0</span> bytes</td></tr></tbody>
+                    <tbody><tr><td style="font-weight: bold;">Swapped out</td><td><span id="memo-virt-sout">0</span> bytes</td></tr></tbody>
+                </table>
+            </div>
+        </div>
         <div class="ui tiny modal" id="restwarn">
             <div class="header bodyfont cardinal" style="padding: 1.5%; background-color: #00c080; color: #ffffff;">Connect</div>
             <div class="content" style="padding: 1.5%;">
