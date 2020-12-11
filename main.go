@@ -49,7 +49,7 @@ func GN_TEXT(textobjc string) string {
 
 func MainTemplateLoads (wrt http.ResponseWriter, req *http.Request) {
     wrt.Header().Set("Content-Type", "text/html")
-    http.ServeFile(wrt, req, "templates/graphing.html")
+    http.ServeFile(wrt, req, "templates/maingotm.html")
 }
 
 func ServeWebInterface (portdata string) {

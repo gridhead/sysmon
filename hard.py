@@ -234,12 +234,20 @@ class LiveUpdatingElements():
         return retndata
 
     def GetSensorsBatteryStatus(self):
-        battstat = psutil.sensors_battery()
-        retndata = {
-            "percent": battstat.percent,
-            "secsleft": battstat.secsleft,
-            "power_plugged": battstat.power_plugged,
-        }
+        retndata = {}
+        try:
+            battstat = psutil.sensors_battery()
+            retndata = {
+                "percent": battstat.percent,
+                "secsleft": battstat.secsleft,
+                "power_plugged": battstat.power_plugged,
+            }
+        except:
+            retndata = {
+                "percent": 0,
+                "secsleft": 0,
+                "power_plugged": True,
+            }
         return retndata
 
     def ReturnLiveData(self):
@@ -247,6 +255,7 @@ class LiveUpdatingElements():
             "passcode": self.passcode,
             "virtdata": self.GetVirtualMemoryData(),
             "swapinfo": self.GetSwapMemoryInfo(),
+            "cpustats": self.GetCPUStatistics(),
             "cputimes": self.GetCPUStateTimes(),
             "cpuprcnt": self.GetCPUUsagePercent(),
             "cpuclock": self.GetCPUClockSpeed(),
@@ -330,6 +339,7 @@ class DeadUpdatingElements(LiveUpdatingElements):
             "passcode": self.passcode,
             "osnmdata": self.GetOSUnameData(),
             "cpuquant": self.GetCPULogicalCount(),
+            "cpuclock": self.GetCPUClockSpeed(),
             "diskpart": self.GetAllDiskPartitions(),
             "diousage": self.GetDiskIOUsage(),
             "netusage": self.GetNetworkIOUsage(),

@@ -75,7 +75,7 @@
             </div>
         </div>
         <div class="ui container two cards">
-            <div class="padded card bodyfont">
+            <div class="teal padded card bodyfont">
                 <div class="content">
                     <div class="header bodyfont" style="color: #00c080;">CPU Usage</div>
                     <div class="meta"><span id="cpusvalu">0</span>% in use</div>
@@ -84,7 +84,7 @@
                     </div>
                 </div>
             </div>
-            <div class="padded card bodyfont">
+            <div class="teal padded card bodyfont">
                 <div class="content">
                     <div class="header bodyfont" style="color: #00c080;">Physical memory</div>
                     <div class="meta"><span id="physvalu">0</span>% in use</div>
@@ -93,7 +93,7 @@
                     </div>
                 </div>
             </div>
-            <div class="padded card bodyfont">
+            <div class="teal padded card bodyfont">
                 <div class="content">
                     <div class="header bodyfont" style="color: #00c080;">Virtual memory</div>
                     <div class="meta"><span id="swapvalu">0</span>% in use</div>
@@ -102,7 +102,7 @@
                     </div>
                 </div>
             </div>
-            <div class="padded card bodyfont">
+            <div class="teal padded card bodyfont">
                 <div class="content">
                     <div class="header bodyfont" style="color: #00c080;">Battery</div>
                     <div class="meta"><span id="battvalu">0</span>% remaining</div>
@@ -120,11 +120,15 @@
             <div class="ui top attached tabular menu bodyfont teal">
                 <a class="item" id="cpuu-head-ttle" style="font-weight: bold; color: #008080;">CPU usage</a>
                 <a class="active item" id="cpuu-usej-ttle" onclick="SwitchTab('cpuu-usej-ttle', 'cpuu-usej-body');">Usage</a>
+                <a class="item" id="cpuu-cycl-ttle" onclick="SwitchTab('cpuu-cycl-ttle', 'cpuu-cycl-body');">Cycles</a>
                 <a class="item" id="cpuu-time-ttle" onclick="SwitchTab('cpuu-time-ttle', 'cpuu-time-body');">Times</a>
                 <a class="item" id="cpuu-stat-ttle" onclick="SwitchTab('cpuu-stat-ttle', 'cpuu-stat-body');">Statistics</a>
             </div>
             <div class="ui bottom attached active tab segment" id="cpuu-usej-body">
                 <div class="ui two cards" id="prcpgraf"></div>
+            </div>
+            <div class="ui bottom attached tab segment" id="cpuu-cycl-body">
+                <div class="ui two cards" id="cyclgraf"></div>
             </div>
             <div class="ui bottom attached tab segment" id="cpuu-time-body">
                 <table class="ui teal fixed compact definition table bodyfont">
@@ -135,12 +139,20 @@
                             <th>IREQ</th><th>SOFT</th><th>STEL</th><th>GEST</th><th>GTNC</th>
                         </tr>
                     </thead>
-                    <tbody id="cpuu-time-tabl-cont">
-                  </tbody>
+                    <tbody id="cpuu-time-tabl-cont"></tbody>
                 </table>
             </div>
             <div class="ui bottom attached tab segment" id="cpuu-stat-body">
-                <h1>Hello</h1>
+                <table class="ui fixed very basic table">
+                    <thead>
+                        <tr>
+                            <td><div class="ui small horizontal statistic"><div class="value bodyfont" id="cpuu-stat-ctxs">0</div><div class="label bodyfont">CTXS</div></div></td>
+                            <td><div class="ui small horizontal statistic"><div class="value bodyfont" id="cpuu-stat-intr">0</div><div class="label bodyfont">INTR</div></div></td>
+                            <td><div class="ui small horizontal statistic"><div class="value bodyfont" id="cpuu-stat-soft">0</div><div class="label bodyfont">SOFT</div></div></td>
+                            <td><div class="ui small horizontal statistic"><div class="value bodyfont" id="cpuu-stat-syst">0</div><div class="label bodyfont">SYST</div></div></td>
+                        </tr>
+                    </thead>
+                </table>
             </div>
         </div>
         <div class="ui container"><hr style="background-color: #cccccc; height: 2px; border: none; margin-bottom: 2.5%; margin-top: 2.5%"/></div>

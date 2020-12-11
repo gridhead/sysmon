@@ -55,38 +55,64 @@ async function OverviewGraphAJAX() {
     battgraf.addTimeSeries(battline, linestyl);
     let prcpgraf = [];
     let prcpline = [];
-    var cpuquant = 0;
+    let cyclgraf = [];
+    let cyclline = [];
+    let cpuquant = 0;
     await $.getJSON(JSON.parse(sessionStorage.getItem("vsoniden"))["vsonsuri"] + "deadsync/",
         function(data) {
             let deadobjc = JSON.parse(data.deadobjc);
             cpuquant = parseInt(deadobjc["cpuquant"]);
-            console.log(cpuquant);
             for (let indx = 0; indx < cpuquant; indx++) {
                 $("#prcpgraf").append(
-                    "<div class='padded card bodyfont'>" +
+                    "<div class='teal padded card bodyfont'>" +
                     "<div class='content'>" + "<div class='header bodyfont' style='color: #00c080;'>CPU #" + indx + "</div>" +
                     "<div class='meta'><span id='cpuu-perc-" + indx + "'>0</span>% in use</div>" + "<div class='description'>" +
                     "<canvas id='cpuu-graf-" + indx + "' style='width:100%; height:12.5vh;'></canvas>" +
                     "</div>" + "</div>" + "</div>"
                 );
+                $("#cyclgraf").append(
+                    "<div class='teal padded card bodyfont'>" +
+                    "<div class='content'>" + "<div class='header bodyfont' style='color: #00c080;'>CPU #" + indx + "</div>" +
+                    "<div class='meta'><span id='cpuu-cycl-curt-" + indx + "'>0</span>MHz (<span id='cpuu-cycl-mine-" + indx + "'>0</span>/<span id='cpuu-cycl-maxe-" + indx + "'>0</span>)</div>" +
+                    "<div class='description'>" + "<canvas id='cpuu-cygf-" + indx + "' style='width:100%; height:12.5vh;'></canvas>" +
+                    "</div>" + "</div>" + "</div>"
+                );
                 let sncpgraf = new SmoothieChart(grafstyl);
                 let sncpline = new TimeSeries();
+                let scycgraf = new SmoothieChart({
+                    responsive: true,
+                    minValue: deadobjc.cpuclock[indx]["min"],
+                    maxValue: deadobjc.cpuclock[indx]["max"],
+                    grid: {
+                        strokeStyle: '#c0c0c0',
+                        fillStyle: '#ffffff',
+                        lineWidth: 1,
+                        millisPerLine: 250,
+                        verticalSections: 10,
+                    },
+                    labels: {
+                        fillStyle: '#008080'
+                    }
+                });
+                let scycline = new TimeSeries();
                 sncpgraf.addTimeSeries(sncpline, linestyl);
+                scycgraf.addTimeSeries(scycline, linestyl);
                 prcpgraf[prcpgraf.length] = sncpgraf;
                 prcpline[prcpline.length] = sncpline;
+                cyclgraf[cyclgraf.length] = scycgraf;
+                cyclline[cyclline.length] = scycline;
             }
             if (deadobjc.passcode === JSON.parse(sessionStorage.getItem("vsoniden"))["passcode"]) {
                 document.getElementById("systover").innerText = deadobjc.osnmdata["System name"];
                 document.getElementById("hostover").innerText = deadobjc.osnmdata["Host name"];
                 document.getElementById("versover").innerText = deadobjc.osnmdata["Version"];
-                document.getElementById("userover").innerText = deadobjc.osnmdata["Username"]
+                document.getElementById("userover").innerText = deadobjc.osnmdata["Username"];
                 document.getElementById("bootover").innerText = deadobjc.boottime;
             } else {
                 $("#wrngiden").modal("setting", "closable", false).modal("show");
             }
         }
     );
-    console.log(cpuquant, prcpgraf, prcpline);
     for (let indx = 0; indx < cpuquant; indx ++) {
         $("#cpuu-time-tabl-cont").append(
             "<tr>" +
@@ -103,7 +129,6 @@ async function OverviewGraphAJAX() {
             "<td id='cpuu-time-gtnc-" + indx + "'>Unavailable</td>" + 
             "</tr>"
         );
-        console.log("Hello, " + indx);
     }
     while (1) {
         await new Promise(r => setTimeout(r, 1000));
@@ -124,14 +149,22 @@ async function OverviewGraphAJAX() {
                     for (let indx = 0; indx < cpuquant; indx ++) {
                         prcpline[indx].append(new Date().getTime(), parseFloat(liveobjc.cpuprcnt[indx]).toPrecision(3));
                         document.getElementById("cpuu-perc-"+indx).innerText = parseFloat(liveobjc.cpuprcnt[indx]).toPrecision(3);
+                        cyclline[indx].append(new Date().getTime(), parseFloat(liveobjc.cpuclock[indx]["current"]).toPrecision(5));
+                        document.getElementById("cpuu-cycl-curt-" + indx).innerText = parseFloat(liveobjc.cpuclock[indx]["current"]).toPrecision(5);
+                        document.getElementById("cpuu-cycl-mine-" + indx).innerText = parseFloat(liveobjc.cpuclock[indx]["min"]).toPrecision(5);
+                        document.getElementById("cpuu-cycl-maxe-" + indx).innerText = parseFloat(liveobjc.cpuclock[indx]["max"]).toPrecision(5);
                     }
+                    document.getElementById("cpuu-stat-ctxs").innerText = liveobjc.cpustats["ctx_switches"];
+                    document.getElementById("cpuu-stat-intr").innerText = liveobjc.cpustats["interrupts"];
+                    document.getElementById("cpuu-stat-soft").innerText = liveobjc.cpustats["soft_interrupts"];
+                    document.getElementById("cpuu-stat-syst").innerText = liveobjc.cpustats["syscalls"];
                     cpusgraf.streamTo(document.getElementById("cpusover"), 1000);
                     physgraf.streamTo(document.getElementById("physover"), 1000);
                     swapgraf.streamTo(document.getElementById("swapover"), 1000);
                     battgraf.streamTo(document.getElementById("battover"), 1000);
                     for (let indx = 0; indx < cpuquant; indx ++) {
-                        //console.log("cpuu-graf-"+indx);
-                        prcpgraf[indx].streamTo(document.getElementById("cpuu-graf-"+indx), 1000);
+                        cyclgraf[indx].streamTo(document.getElementById("cpuu-cygf-" + indx), 1000);
+                        prcpgraf[indx].streamTo(document.getElementById("cpuu-graf-" + indx), 1000);
                     }
                     for (let indx = 0; indx < cpuquant; indx ++) {
                         document.getElementById("cpuu-time-user-"+indx).innerText = liveobjc.cputimes[indx]["user"];
@@ -151,6 +184,5 @@ async function OverviewGraphAJAX() {
                 }
             }
         );
-        //console.log(cpuquant, prcpgraf[0], prcpline[0]);
     }
 }
