@@ -32,6 +32,10 @@ function SwitchTab(head, sect) {
             "memo-over-ttle": "memo-over-body",
             "memo-phys-ttle": "memo-phys-body",
             "memo-virt-ttle": "memo-virt-body",
+        },
+        "disk": {
+            "disk-usej-ttle": "disk-usej-body",
+            "disk-part-ttle": "disk-part-body",
         }
     };
     for (indx in sectlist[sect]) {
@@ -85,6 +89,37 @@ async function OverviewGraphAJAX() {
         function(data) {
             let deadobjc = JSON.parse(data.deadobjc);
             cpuquant = parseInt(deadobjc["cpuquant"]);
+            // Rendered DOM for every disk partition and setting stage for live updating
+            for (let indx in deadobjc["diousage"]) {
+                $("#disk-usej-body").append(
+                    "<table class='ui fixed compact table' id='disk-usej-tabl-" + indx + "'>" + "<thead>" + "<tr>" +
+                    "<th colspan='3'><h2 class='bodyfont' id='disk-usej-name-" + indx + "' style='color: #008080;'>" + indx + "</h2></th>" +
+                    "<th><div class='ui small horizontal statistic'><div class='value bodyfont' id='disk-usej-bstm-" + indx + "'>0</div><div class='label bodyfont'>BSTM</div></div></th>" +
+                    "</tr>" + "</thead>" + "<tbody>" + "<tr>" +
+                    "<td><div class='ui small horizontal statistic'><div class='value bodyfont' id='disk-usej-rdct-" + indx + "'>0</div><div class='label bodyfont'>RDCT</div></div></td>" +
+                    "<td><div class='ui small horizontal statistic'><div class='value bodyfont' id='disk-usej-wrct-" + indx + "'>0</div><div class='label bodyfont'>WRCT</div></div></td>" +
+                    "<td><div class='ui small horizontal statistic'><div class='value bodyfont' id='disk-usej-rdbt-" + indx + "'>0</div><div class='label bodyfont'>RDBT</div></div></td>" +
+                    "<td><div class='ui small horizontal statistic'><div class='value bodyfont' id='disk-usej-wrbt-" + indx + "'>0</div><div class='label bodyfont'>WRBT</div></div></td>" +
+                    "</tr>" + "<tr>" +
+                    "<td><div class='ui small horizontal statistic'><div class='value bodyfont' id='disk-usej-rdtm-" + indx + "'>0</div><div class='label bodyfont'>RDTM</div></div></td>" +
+                    "<td><div class='ui small horizontal statistic'><div class='value bodyfont' id='disk-usej-wrtm-" + indx + "'>0</div><div class='label bodyfont'>WRTM</div></div></td>" +
+                    "<td><div class='ui small horizontal statistic'><div class='value bodyfont' id='disk-usej-rdmc-" + indx + "'>0</div><div class='label bodyfont'>RDMC</div></div></td>" +
+                    "<td><div class='ui small horizontal statistic'><div class='value bodyfont' id='disk-usej-wrmc-" + indx + "'>0</div><div class='label bodyfont'>WRMC</div></div></td>" +
+                    "</tr>" + "</tbody>" + "</table>"
+                );
+            }
+            // One-time rendering of disk partitions
+            for (let indx = 0; indx < deadobjc.diskpart.length; indx ++) {
+                $("#disk-part-body").append(
+                    "<table class='ui definition fixed compact table'>" + "<tbody>" + "<tr>" + "<td rowspan='2' class='four wide'>" +
+                    "<h1 class='bodyfont' style='margin: 0px; color: #008080;' id='disk-part-name-" + indx + "'>" + deadobjc.diskpart[indx]["device"] + "</h1>" +
+                    "<pre style='margin: 0px;' id='disk-part-fsys-" + indx + "'>" + deadobjc.diskpart[indx]["fstype"] + "</pre>" + "</td>" +
+                    "<td class='twelve wide'><div class='ui teal horizontal label'><code>MLOC</code></div><code id='disk-part-mloc-" + indx + "'>" + deadobjc.diskpart[indx]["mountpoint"] + "</code></td>" +
+                    "</tr>" + "<tr>" + "<td class='rowspanned'></td>" +
+                    "<td><div class='ui teal horizontal label'><code>OPTS</code></div><code id='disk-part-opts-" + indx + "'>" + deadobjc.diskpart[indx]["opts"] + "</code></td>" +
+                    "</tr>" + "</tbody>" + "</table>"
+                )
+            }
             for (let indx = 0; indx < cpuquant; indx++) {
                 $("#prcpgraf").append(
                     "<div class='teal padded card bodyfont'>" +
@@ -203,6 +238,20 @@ async function OverviewGraphAJAX() {
                     document.getElementById("memo-virt-used").innerText = liveobjc.swapinfo["used"];
                     document.getElementById("memo-virt-sine").innerText = liveobjc.swapinfo["sin"];
                     document.getElementById("memo-virt-sout").innerText = liveobjc.swapinfo["sout"];
+                    // Disk usage body updater
+                    for (let indx in liveobjc["diousage"]) {
+                        //console.log("disk-usej-name-" + indx);
+                        document.getElementById("disk-usej-name-" + indx).innerText = indx;
+                        document.getElementById("disk-usej-bstm-" + indx).innerText = liveobjc["diousage"][indx]["busy_time"];
+                        document.getElementById("disk-usej-rdct-" + indx).innerText = liveobjc["diousage"][indx]["read_count"];
+                        document.getElementById("disk-usej-wrct-" + indx).innerText = liveobjc["diousage"][indx]["write_count"];
+                        document.getElementById("disk-usej-rdbt-" + indx).innerText = liveobjc["diousage"][indx]["read_bytes"];
+                        document.getElementById("disk-usej-wrbt-" + indx).innerText = liveobjc["diousage"][indx]["write_bytes"];
+                        document.getElementById("disk-usej-rdtm-" + indx).innerText = liveobjc["diousage"][indx]["read_time"];
+                        document.getElementById("disk-usej-wrtm-" + indx).innerText = liveobjc["diousage"][indx]["write_time"];
+                        document.getElementById("disk-usej-rdmc-" + indx).innerText = liveobjc["diousage"][indx]["read_merged_count"];
+                        document.getElementById("disk-usej-wrmc-" + indx).innerText = liveobjc["diousage"][indx]["write_merged_count"];
+                    }
                     // Stream graphs to DOM Canvas elements
                     cpusgraf.streamTo(document.getElementById("cpusover"), 1000);
                     physgraf.streamTo(document.getElementById("physover"), 1000);
