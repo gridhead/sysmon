@@ -152,7 +152,7 @@
                 </table>
             </div>
         </div>
-        <div class="ui container"><hr style="background-color: #cccccc; height: 2px; border: none; margin-bottom: 1.25%; margin-top: 2.5%"/></div>
+        <div class="ui container"><hr style="background-color: #cccccc; height: 2px; border: none; margin-bottom: 2.5%; margin-top: 2.5%"/></div>
         <div class="ui container bodyfont">
             <div class="ui top attached tabular menu bodyfont teal">
                 <a class="item" id="memo-head-ttle" style="font-weight: bold; color: #008080;">Memory</a>
@@ -167,7 +167,7 @@
                             <div class="header bodyfont" style="color: #00c080;">Physical memory</div>
                             <div class="meta"><span id="phys-dedi-byte">0</span> bytes in use</div>
                             <div class="description">
-                                <h1 class="bodyfont" style="font-style: italic;"><span id="phys-dedi-perc">0</span>%</h1>
+                                <h1 class="bodyfont"><span id="phys-dedi-perc">0</span>%</h1>
                                 <canvas id="phys-dedi-graf" style="width:100%; height:12.5vh;"></canvas>
                             </div>
                         </div>
@@ -177,7 +177,7 @@
                             <div class="header bodyfont" style="color: #00c080;">Virtual memory</div>
                             <div class="meta"><span id="virt-dedi-byte">0</span> bytes in use</div>
                             <div class="description">
-                                <h1 class="bodyfont" style="font-style: italic;"><span id="virt-dedi-perc">0</span>%</h1>
+                                <h1 class="bodyfont"><span id="virt-dedi-perc">0</span>%</h1>
                                 <canvas id="virt-dedi-graf" style="width:100%; height:12.5vh;"></canvas>
                             </div>
                         </div>
@@ -206,6 +206,16 @@
                     <tbody><tr><td style="font-weight: bold;">Swapped out</td><td><span id="memo-virt-sout">0</span> bytes</td></tr></tbody>
                 </table>
             </div>
+        </div>
+        <div class="ui container"><hr style="background-color: #cccccc; height: 2px; border: none; margin-bottom: 2.5%; margin-top: 2.5%"/></div>
+        <div class="ui container bodyfont">
+            <div class="ui top attached tabular menu bodyfont teal">
+                <a class="item" id="memo-head-ttle" style="font-weight: bold; color: #008080;">Disks</a>
+                <a class="active item" id="disk-usej-ttle" onclick="SwitchTab('disk-usej-ttle', 'disk');">Usage</a>
+                <a class="item" id="disk-part-ttle" onclick="SwitchTab('disk-part-ttle', 'disk');">Partitions</a>
+            </div>
+            <div class="ui bottom attached active tab segment" id="disk-usej-body"></div>
+            <div class="ui bottom attached tab segment" id="disk-part-body"></div>
         </div>
         <div class="ui tiny modal" id="restwarn">
             <div class="header bodyfont cardinal" style="padding: 1.5%; background-color: #00c080; color: #ffffff;">Connect</div>
