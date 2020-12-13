@@ -36,6 +36,11 @@ function SwitchTab(head, sect) {
         "disk": {
             "disk-usej-ttle": "disk-usej-body",
             "disk-part-ttle": "disk-part-body",
+        },
+        "netw": {
+            "netw-usej-ttle": "netw-usej-body",
+            "netw-stat-ttle": "netw-stat-body",
+            "netw-addr-ttle": "netw-addr-body",
         }
     };
     for (indx in sectlist[sect]) {
@@ -108,6 +113,58 @@ async function OverviewGraphAJAX() {
                     "</tr>" + "</tbody>" + "</table>"
                 );
             }
+            // Rendered DOM for every network interface card and setting stage for live updating
+            for (let indx in deadobjc["netusage"]) {
+                $("#netw-usej-body").append(
+                    "<table class='ui definition fixed compact table'>" + "<tbody>" + "<tr>" +
+                    "<td rowspan='2' class='four wide'>" + "<h1 class='bodyfont' id='netw-usej-name-" + indx + "' style='color: #008080; margin: 0px;'>" + indx + "</h1>" +
+                    "<pre style='margin: 0px;' id='disk-part-fsys-0'>SNIC</pre>" + "</td>" +
+                    "<td class='six wide'><div class='ui teal horizontal label'><code>BSNT</code></div><code id='netw-usej-bsnt-" + indx + "'>0</code><code> bytes</code></td>" +
+                    "<td class='six wide'><div class='ui teal horizontal label'><code>PSNT</code></div><code id='netw-usej-psnt-" + indx + "'>0</code><code> packets</code></td>" +
+                    "</tr>" + "<tr>" + "<td class='rowspanned'></td>" +
+                    "<td><div class='ui teal horizontal label'><code>BRCV</code></div><code id='netw-usej-brcv-" + indx + "'>0</code><code> bytes</code></td>" +
+                    "<td><div class='ui teal horizontal label'><code>PRCV</code></div><code id='netw-usej-prcv-" + indx + "'>0</code><code> packets</code></td>" +
+                    "</tr>" + "</tbody>" + "</table>"
+                );
+            }
+            // One-time rendering of network interface addresses
+            for (let indx in deadobjc["netaddrs"]) {
+                $("#netw-addr-body").append(
+                    "<table class='ui fixed compact table'>" +
+                    "<thead><tr><th colspan='4'><h1 style='color: #008080;' class='bodyfont'>" + indx + "</h1></th></tr></thead>" +
+                    "<tbody id='netw-addr-tabl-" + indx + "'>" + "</tbody>" + "</table>"
+                );
+                for (let jndx in deadobjc["netaddrs"][indx]) {
+                    $("#netw-addr-tabl-" + indx).append(
+                        "<tr>" +
+                        "<td class='four wide'><i class='marker icon'></i>&nbsp;<span>" + deadobjc["netaddrs"][indx][jndx]["address"] + "</span></td>" +
+                        "<td class='four wide'><i class='compass icon'></i>&nbsp;<span>" + deadobjc["netaddrs"][indx][jndx]["netmask"] + "</span></td>" +
+                        "<td class='four wide'><i class='wifi icon'></i>&nbsp;<span>" + deadobjc["netaddrs"][indx][jndx]["broadcast"] + "</span></td>" +
+                        "<td class='four wide'><i class='linkify icon'></i>&nbsp;<span>" + deadobjc["netaddrs"][indx][jndx]["ptp"] + "</span></td>" +
+                        "</tr>"
+                    );
+                }
+            }
+            // One-time rendering of network statistics
+            for (let indx in deadobjc["netstats"]) {
+                $("#netw-stat-body").append(
+                    "<table class='ui fixed definition compact table'>" +
+                    "<tbody>" +
+                    "<tr>" +
+                    "<td rowspan='2' class='eight wide'>" +
+                    "<h1 class='bodyfont' style='color: #008080; margin: 0px;'>" + indx + "</h1>" +
+                    "<pre style='margin: 0px'>" + deadobjc["netstats"][indx]["isup"] + "</pre>" +
+                    "</td>" +
+                    "<td class='eight wide'><div class='ui teal horizontal label'><code>NSPD</code></div><code>" + deadobjc["netstats"][indx]["speed"] + "</code></td>" +
+                    "<tr>" +
+                    "<td class='eight wide rowspanned'></td>" +
+                    "<td class='eight wide'><div class='ui teal horizontal label'><code>NMTU</code></div><code>" + deadobjc["netstats"][indx]["mtu"] + "</code></td>" +
+                    "</tr>" +
+                    "</tr>" +
+                    "</tbody>" +
+                    "</table>"
+                );
+            }
             // One-time rendering of disk partitions
             for (let indx = 0; indx < deadobjc.diskpart.length; indx ++) {
                 $("#disk-part-body").append(
@@ -118,7 +175,7 @@ async function OverviewGraphAJAX() {
                     "</tr>" + "<tr>" + "<td class='rowspanned'></td>" +
                     "<td><div class='ui teal horizontal label'><code>OPTS</code></div><code id='disk-part-opts-" + indx + "'>" + deadobjc.diskpart[indx]["opts"] + "</code></td>" +
                     "</tr>" + "</tbody>" + "</table>"
-                )
+                );
             }
             for (let indx = 0; indx < cpuquant; indx++) {
                 $("#prcpgraf").append(
@@ -222,6 +279,14 @@ async function OverviewGraphAJAX() {
                     document.getElementById("cpuu-stat-intr").innerText = liveobjc.cpustats["interrupts"];
                     document.getElementById("cpuu-stat-soft").innerText = liveobjc.cpustats["soft_interrupts"];
                     document.getElementById("cpuu-stat-syst").innerText = liveobjc.cpustats["syscalls"];
+                    // Network usage secion updater
+                    for (let indx in liveobjc["netusage"]) {
+                        document.getElementById("netw-usej-bsnt-" + indx).innerText = liveobjc["netusage"][indx]["bytes_sent"];
+                        document.getElementById("netw-usej-psnt-" + indx).innerText = liveobjc["netusage"][indx]["packets_sent"];
+                        document.getElementById("netw-usej-brcv-" + indx).innerText = liveobjc["netusage"][indx]["bytes_recv"];
+                        document.getElementById("netw-usej-prcv-" + indx).innerText = liveobjc["netusage"][indx]["packets_recv"];
+
+                    }
                     // Physical memory dedicated statistics table updater
                     document.getElementById("memo-phys-totl").innerText = liveobjc.virtdata["total"];
                     document.getElementById("memo-phys-free").innerText = liveobjc.virtdata["available"];
