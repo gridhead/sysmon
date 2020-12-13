@@ -21508,7 +21508,7 @@ i.flag:not(.icon) {
 i.flag:not(.icon):before {
   display: inline-block;
   content: '';
-  background: url("./themes/default/assets/images/flags.png") no-repeat -108px -1976px;
+  background: url("themes/default/assets/images/flags.png") no-repeat -108px -1976px;
   width: 16px;
   height: 11px;
 }
@@ -23721,8 +23721,8 @@ a.ui.inverted.black.header.header.header:hover {
 
 @font-face {
   font-family: 'Icons';
-  src: url("./themes/default/assets/fonts/icons.eot");
-  src: url("./themes/default/assets/fonts/icons.eot?#iefix") format('embedded-opentype'), url("./themes/default/assets/fonts/icons.woff2") format('woff2'), url("./themes/default/assets/fonts/icons.woff") format('woff'), url("./themes/default/assets/fonts/icons.ttf") format('truetype'), url("./themes/default/assets/fonts/icons.svg#icons") format('svg');
+  src: url("themes/default/assets/fonts/icons.eot");
+  src: url("themes/default/assets/fonts/icons.eot?#iefix") format('embedded-opentype'), url("themes/default/assets/fonts/icons.woff2") format('woff2'), url("themes/default/assets/fonts/icons.woff") format('woff'), url("themes/default/assets/fonts/icons.ttf") format('truetype'), url("themes/default/assets/fonts/icons.svg#icons") format('svg');
   font-style: normal;
   font-weight: normal;
   font-variant: normal;
@@ -29514,8 +29514,8 @@ i.icon.zoom.out:before {
 
 @font-face {
   font-family: 'outline-icons';
-  src: url("./themes/default/assets/fonts/outline-icons.eot");
-  src: url("./themes/default/assets/fonts/outline-icons.eot?#iefix") format('embedded-opentype'), url("./themes/default/assets/fonts/outline-icons.woff2") format('woff2'), url("./themes/default/assets/fonts/outline-icons.woff") format('woff'), url("./themes/default/assets/fonts/outline-icons.ttf") format('truetype'), url("./themes/default/assets/fonts/outline-icons.svg#icons") format('svg');
+  src: url("themes/default/assets/fonts/outline-icons.eot");
+  src: url("themes/default/assets/fonts/outline-icons.eot?#iefix") format('embedded-opentype'), url("themes/default/assets/fonts/outline-icons.woff2") format('woff2'), url("themes/default/assets/fonts/outline-icons.woff") format('woff'), url("themes/default/assets/fonts/outline-icons.ttf") format('truetype'), url("themes/default/assets/fonts/outline-icons.svg#icons") format('svg');
   font-style: normal;
   font-weight: normal;
   font-variant: normal;
@@ -30141,8 +30141,8 @@ i.icon.window.restore.outline:before {
 
 @font-face {
   font-family: 'brand-icons';
-  src: url("./themes/default/assets/fonts/brand-icons.eot");
-  src: url("./themes/default/assets/fonts/brand-icons.eot?#iefix") format('embedded-opentype'), url("./themes/default/assets/fonts/brand-icons.woff2") format('woff2'), url("./themes/default/assets/fonts/brand-icons.woff") format('woff'), url("./themes/default/assets/fonts/brand-icons.ttf") format('truetype'), url("./themes/default/assets/fonts/brand-icons.svg#icons") format('svg');
+  src: url("themes/default/assets/fonts/brand-icons.eot");
+  src: url("themes/default/assets/fonts/brand-icons.eot?#iefix") format('embedded-opentype'), url("themes/default/assets/fonts/brand-icons.woff2") format('woff2'), url("themes/default/assets/fonts/brand-icons.woff") format('woff'), url("themes/default/assets/fonts/brand-icons.ttf") format('truetype'), url("themes/default/assets/fonts/brand-icons.svg#icons") format('svg');
   font-style: normal;
   font-weight: normal;
   font-variant: normal;
