@@ -90,9 +90,9 @@ async function OverviewGraphAJAX() {
     let cyclgraf = [];
     let cyclline = [];
     let cpuquant = 0;
-    await $.getJSON(JSON.parse(sessionStorage.getItem("vsoniden"))["vsonsuri"] + "deadsync/",
+    await $.getJSON(JSON.parse(sessionStorage.getItem("vsoniden"))["vsonsuri"] + "deadsync",
         function(data) {
-            let deadobjc = JSON.parse(data.deadobjc);
+            let deadobjc = data;
             cpuquant = parseInt(deadobjc["cpuquant"]);
             // Rendered DOM for every disk partition and setting stage for live updating
             for (let indx in deadobjc["diousage"]) {
@@ -247,9 +247,9 @@ async function OverviewGraphAJAX() {
     }
     while (1) {
         await new Promise(r => setTimeout(r, 1000));
-        $.getJSON(JSON.parse(sessionStorage.getItem("vsoniden"))["vsonsuri"] + "livesync/",
+        $.getJSON(JSON.parse(sessionStorage.getItem("vsoniden"))["vsonsuri"] + "livesync",
             function (data) {
-                let liveobjc = JSON.parse(data.liveobjc);
+                let liveobjc = data;
                 if (liveobjc.passcode === JSON.parse(sessionStorage.getItem("vsoniden"))["passcode"]) {
                     for (let indx in liveobjc.cpuprcnt) {
                         cpusline.append(new Date().getTime(), parseFloat(liveobjc.cpuprcnt[indx]).toPrecision(3));

@@ -268,7 +268,7 @@ class LiveUpdatingElements():
                 "battstat": self.GetSensorsBatteryStatus(),
             }
         }
-        return json.dumps(jsonobjc)
+        return jsonobjc
 
 
 class DeadUpdatingElements(LiveUpdatingElements):
@@ -350,50 +350,4 @@ class DeadUpdatingElements(LiveUpdatingElements):
             "boottime": self.GetBootTime(),
             "procinfo": self.GetProcessInfo(),
         }
-        return json.dumps(jsonobjc)
-
-
-@main.route("/livesync/", methods=["GET"])
-def AsynchronousTransferLive():
-    retnjson = jsonify(liveobjc=LiveUpdatingElements(passcode).ReturnLiveData())
-    retnjson.headers.add("Access-Control-Allow-Origin", "*")
-    return retnjson
-
-
-@main.route("/deadsync/", methods=["GET"])
-def AsynchronousTransferDead():
-    retnjson = jsonify(deadobjc=DeadUpdatingElements(passcode).ReturnDeadData())
-    retnjson.headers.add("Access-Control-Allow-Origin", "*")
-    return retnjson
-
-
-@click.command()
-@click.option("-p", "--portdata", "portdata", help="Set the port value [0-65536]", default="6969")
-@click.option("-6", "--ipprotv6", "netprotc", flag_value="ipprotv6", help="Start the server on an IPv6 address")
-@click.option("-4", "--ipprotv4", "netprotc", flag_value="ipprotv4", help="Start the server on an IPv4 address")
-@click.version_option(version="0.1.0", prog_name="WebStation SYSMON by t0xic0der")
-def mainfunc(portdata, netprotc):
-    try:
-        print(" * Starting WebStation SYSMON driver")
-        netpdata = ""
-        global passcode
-        passcode = ConnectionManager().PassphraseGenerator()
-        if netprotc == "ipprotv6":
-            print(" * IP version   : 6")
-            netpdata = "::"
-        elif netprotc == "ipprotv4":
-            print(" * IP version   : 4")
-            netpdata = "0.0.0.0"
-        print(" * Logs state   : Errors only")
-        print(" * Passcode     : " + passcode)
-        print(" * LiveSync URI : http://" + netpdata + ":" + str(portdata) + "/livesync/")
-        print(" * DeadSync URI : http://" + netpdata + ":" + str(portdata) + "/deadsync/")
-        main.run(port=portdata, host=netpdata)
-    except KeyboardInterrupt:
-        print()
-        print(" * Leaving WebStation SYSMON driver")
-        sys.exit()
-
-
-if __name__ == "__main__":
-    mainfunc()
+        return jsonobjc
