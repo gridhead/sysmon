@@ -41,6 +41,11 @@ function SwitchTab(head, sect) {
             "netw-usej-ttle": "netw-usej-body",
             "netw-stat-ttle": "netw-stat-body",
             "netw-addr-ttle": "netw-addr-body",
+        },
+        "sens": {
+            "sens-batt-ttle": "sens-batt-body",
+            "sens-fans-ttle": "sens-fans-body",
+            "sens-thrm-ttle": "sens-thrm-body",
         }
     };
     for (indx in sectlist[sect]) {
@@ -71,18 +76,21 @@ async function OverviewGraphAJAX() {
     let physgraf = new SmoothieChart(grafstyl);
     let swapgraf = new SmoothieChart(grafstyl);
     let battgraf = new SmoothieChart(grafstyl);
+    let snbtgraf = new SmoothieChart(grafstyl);
     let dediphys = new SmoothieChart(grafstyl);
     let dedivirt = new SmoothieChart(grafstyl);
     let cpusline = new TimeSeries();
     let physline = new TimeSeries();
     let swapline = new TimeSeries();
     let battline = new TimeSeries();
+    let snbtline = new TimeSeries();
     let depyline = new TimeSeries();
     let devtline = new TimeSeries();
     cpusgraf.addTimeSeries(cpusline, linestyl);
     physgraf.addTimeSeries(physline, linestyl);
     swapgraf.addTimeSeries(swapline, linestyl);
     battgraf.addTimeSeries(battline, linestyl);
+    snbtgraf.addTimeSeries(snbtline, linestyl);
     dediphys.addTimeSeries(depyline, linestyl);
     dedivirt.addTimeSeries(devtline, linestyl);
     let prcpgraf = [];
@@ -279,6 +287,14 @@ async function OverviewGraphAJAX() {
                     document.getElementById("cpuu-stat-intr").innerText = liveobjc.cpustats["interrupts"];
                     document.getElementById("cpuu-stat-soft").innerText = liveobjc.cpustats["soft_interrupts"];
                     document.getElementById("cpuu-stat-syst").innerText = liveobjc.cpustats["syscalls"];
+                    // Sensor battery section updater
+                    document.getElementById("sens-batt-plug").innerText = liveobjc.sensread.battstat["power_plugged"].toString().toUpperCase();
+                    document.getElementById("sens-batt-perc").innerText = parseFloat(liveobjc.sensread.battstat["percent"]).toPrecision(3);
+                    document.getElementById("sens-batt-time").innerText = liveobjc.sensread.battstat["secsleft"];
+                    snbtline.append(new Date().getTime(), parseFloat(liveobjc.sensread.battstat["percent"]).toPrecision(3));
+                    $("#sens-batt-prog").progress({
+                        percent: parseFloat(liveobjc.sensread.battstat["percent"]).toPrecision(3)
+                    });
                     // Network usage secion updater
                     for (let indx in liveobjc["netusage"]) {
                         document.getElementById("netw-usej-bsnt-" + indx).innerText = liveobjc["netusage"][indx]["bytes_sent"];
@@ -324,6 +340,7 @@ async function OverviewGraphAJAX() {
                     battgraf.streamTo(document.getElementById("battover"), 1000);
                     dediphys.streamTo(document.getElementById("phys-dedi-graf"), 1000);
                     dedivirt.streamTo(document.getElementById("virt-dedi-graf"), 1000);
+                    snbtgraf.streamTo(document.getElementById("sens-batt-graf"), 1000);
                     for (let indx = 0; indx < cpuquant; indx ++) {
                         cyclgraf[indx].streamTo(document.getElementById("cpuu-cygf-" + indx), 1000);
                         prcpgraf[indx].streamTo(document.getElementById("cpuu-graf-" + indx), 1000);
