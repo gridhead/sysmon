@@ -230,6 +230,30 @@
             <div class="ui bottom attached tab segment" id="netw-addr-body"></div>
         </div>
         <div class="ui container"><hr style="background-color: #cccccc; height: 2px; border: none; margin-bottom: 2.5%; margin-top: 2.5%"/></div>
+        <div class="ui container bodyfont">
+            <div class="ui top attached tabular menu bodyfont teal">
+                <a class="item" id="memo-head-ttle" style="font-weight: bold; color: #008080;">Sensors</a>
+                <a class="active item" id="sens-batt-ttle" onclick="SwitchTab('sens-batt-ttle', 'sens');">Battery</a>
+                <a class="item" id="sens-fans-ttle" onclick="SwitchTab('sens-fans-ttle', 'sens');">Fans</a>
+                <a class="item" id="sens-thrm-ttle" onclick="SwitchTab('sens-thrm-ttle', 'sens');">Thermal</a>
+            </div>
+            <div class="ui bottom attached active tab segment" id="sens-batt-body">
+                <div class="ui teal padded card bodyfont" style="width: 100%;">
+                    <div class="content">
+                        <div class="header bodyfont" style="color: #00c080;">Battery</div>
+                        <div class="meta">Plugged&nbsp;<span id="sens-batt-plug">0</span>&nbsp;|&nbsp;Standby&nbsp;<span id="sens-batt-time">0</span>&nbsp;secs</div>
+                        <div class="description">
+                            <div class="ui tiny indicating progress" data-value="0" data-total="100" id="sens-batt-prog" style="margin-bottom: 0px;"><div class="bar"><div class="progress"></div></div></div>
+                            <h1 class="bodyfont" style="margin-top: 0.5%; margin-bottom: 0.5%;"><span id="sens-batt-perc">0</span>%</h1>
+                            <canvas id="sens-batt-graf" style="width:100%; height:12.5vh;"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="ui bottom attached tab segment" id="sens-fans-body"></div>
+            <div class="ui bottom attached tab segment" id="sens-thrm-body"></div>
+        </div>
+        <div class="ui container"><hr style="background-color: #cccccc; height: 2px; border: none; margin-bottom: 2.5%; margin-top: 2.5%"/></div>
         <div class="ui tiny modal" id="restwarn">
             <div class="header bodyfont cardinal" style="padding: 1.5%; background-color: #00c080; color: #ffffff;">Connect</div>
             <div class="content" style="padding: 1.5%;">

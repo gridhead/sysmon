@@ -19,21 +19,11 @@
 ##########################################################################
 '''
 
-import click
 import getpass
-import json
-import logging
-from flask import Flask, jsonify
 import os
 import psutil
 from secrets import choice
-import sys
 import time
-
-
-main = Flask(__name__)
-loge = logging.getLogger("werkzeug")
-loge.setLevel(logging.ERROR)
 
 
 class ConnectionManager():
@@ -214,23 +204,28 @@ class LiveUpdatingElements():
         senstemp = psutil.sensors_temperatures(fahrenheit=False)
         retndata = {}
         for indx in senstemp.keys():
-            retndata[indx] = {}
+            retndata[indx] = []
             for jndx in senstemp[indx]:
-                singlist = {
-                    "current": jndx.current,
-                    "high": jndx.high,
-                    "critical": jndx.critical,
+                singdict = {
+                    "label": jndx.label,
+                    "current": str(jndx.current),
+                    "high": str(jndx.high),
+                    "critical": str(jndx.critical),
                 }
-                retndata[indx][jndx.label] = singlist
+                retndata[indx].append(singdict)
         return retndata
 
     def GetSensorsFanSpeed(self):
         senstemp = psutil.sensors_fans()
         retndata = {}
         for indx in senstemp.keys():
-            retndata[indx] = {}
+            retndata[indx] = []
             for jndx in senstemp[indx]:
-                retndata[indx][jndx.label] = jndx.current
+                singdict = {
+                    "label": jndx.label,
+                    "current": jndx.current
+                }
+                retndata[indx].append(singdict)
         return retndata
 
     def GetSensorsBatteryStatus(self):
@@ -345,9 +340,12 @@ class DeadUpdatingElements(LiveUpdatingElements):
             "netusage": self.GetNetworkIOUsage(),
             "netaddrs": self.GetNetworkIFAddresses(),
             "netstats": self.GetNetworkStatistics(),
-            "senstemp": self.GetSensorsTemperature(),
-            "fanspeed": self.GetSensorsFanSpeed(),
             "boottime": self.GetBootTime(),
             "procinfo": self.GetProcessInfo(),
+            "sensread": {
+                "senstemp": self.GetSensorsTemperature(),
+                "fanspeed": self.GetSensorsFanSpeed(),
+                "battstat": self.GetSensorsBatteryStatus()
+            }
         }
         return jsonobjc

@@ -55,28 +55,27 @@ main = falcon.API()
 
 
 @click.command()
-@click.option("-p", "--portdata", "portdata", help="Set the port value [0-65536]", default="6969")
-@click.option("-6", "--ipprotv6", "netprotc", flag_value="ipprotv6", help="Start the server on an IPv6 address")
-@click.option("-4", "--ipprotv4", "netprotc", flag_value="ipprotv4", help="Start the server on an IPv4 address")
-@click.version_option(version="1.0.0", prog_name="SuperVisor Driver Service by t0xic0der")
+@click.option("-p", "--portdata", "portdata", help="Set the port value [0-65536].", default="6969")
+@click.option("-6", "--ipprotv6", "netprotc", flag_value="ipprotv6", help="Start the server on an IPv6 address.")
+@click.option("-4", "--ipprotv4", "netprotc", flag_value="ipprotv4", help="Start the server on an IPv4 address.")
+@click.version_option(version="1.0.1", prog_name=click.style("SuperVisor Driver Service", fg="magenta"))
 def mainfunc(portdata, netprotc):
-    click.echo("[ ✓ ] " + click.style("SuperVisor Driver Service v1.0.0", fg="cyan"))
+    click.echo(" * " + click.style("SuperVisor Driver Service v1.0.0", fg="green"))
     netpdata = ""
     passcode = ConnectionManager().PassphraseGenerator()
     if netprotc == "ipprotv6":
-        click.echo("      " + click.style("IP version    ", fg="magenta") + ": " + "6")
+        click.echo(" * " + click.style("IP version    ", fg="magenta") + ": " + "6")
         netpdata = "::"
     elif netprotc == "ipprotv4":
-        click.echo("      " + click.style("IP version    ", fg="magenta") + ": " + "4")
+        click.echo(" * " + click.style("IP version    ", fg="magenta") + ": " + "4")
         netpdata = "0.0.0.0"
-    click.echo("      " + click.style("Logs state    ", fg="magenta") + ": " + "Errors only" + "\n" + \
-               "      " + click.style("Passcode      ", fg="magenta") + ": " + passcode + "\n" \
-               "      " + click.style("Reference URI ", fg="magenta") + ": " + "http://" + netpdata + ":" + portdata + "/" + "\n" + \
-               "      " + click.style("LiveSync URI  ", fg="magenta") + ": " + "http://" + netpdata + ":" + portdata + "/livesync" + "\n" + \
-               "      " + click.style("DeadSync URI  ", fg="magenta") + ": " + "http://" + netpdata + ":" + portdata + "/deadsync" + "\n" + \
-               "      " + click.style("Driver server ", fg="magenta") + ": " + "Falcon v" + flcnvers + "\n" + \
-               "      " + click.style("HTTP server   ", fg="magenta") + ": " + "Werkzeug v" + wkzgvers + "\n" + \
-               "[ ! ] " + click.style("Press Ctrl + C to exit", fg="red"))
+    click.echo(" * " + click.style("Logs state    ", fg="magenta") + ": " + "Errors only" + "\n" + \
+               " * " + click.style("Passcode      ", fg="magenta") + ": " + passcode + "\n" \
+               " * " + click.style("Reference URI ", fg="magenta") + ": " + "http://" + netpdata + ":" + portdata + "/" + "\n" + \
+               " * " + click.style("LiveSync URI  ", fg="magenta") + ": " + "http://" + netpdata + ":" + portdata + "/livesync" + "\n" + \
+               " * " + click.style("DeadSync URI  ", fg="magenta") + ": " + "http://" + netpdata + ":" + portdata + "/deadsync" + "\n" + \
+               " * " + click.style("Driver server ", fg="magenta") + ": " + "Falcon v" + flcnvers + "\n" + \
+               " * " + click.style("HTTP server   ", fg="magenta") + ": " + "Werkzeug v" + wkzgvers)
     livesync = LiveUpdatingEndpoint(passcode)
     deadsync = DeadUpdatingEndpoint(passcode)
     main.add_route("/livesync", livesync)
