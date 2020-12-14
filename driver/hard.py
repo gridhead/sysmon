@@ -204,14 +204,15 @@ class LiveUpdatingElements():
         senstemp = psutil.sensors_temperatures(fahrenheit=False)
         retndata = {}
         for indx in senstemp.keys():
-            retndata[indx] = {}
+            retndata[indx] = []
             for jndx in senstemp[indx]:
-                singlist = {
-                    "current": jndx.current,
-                    "high": jndx.high,
-                    "critical": jndx.critical,
+                singdict = {
+                    "label": jndx.label,
+                    "current": str(jndx.current),
+                    "high": str(jndx.high),
+                    "critical": str(jndx.critical),
                 }
-                retndata[indx][jndx.label] = singlist
+                retndata[indx].append(singdict)
         return retndata
 
     def GetSensorsFanSpeed(self):

@@ -102,6 +102,23 @@ async function OverviewGraphAJAX() {
         function(data) {
             let deadobjc = data;
             cpuquant = parseInt(deadobjc["cpuquant"]);
+            // Rendered DOM for every temperature sensor and setting stage for live updating
+            for (let indx in deadobjc["sensread"]["senstemp"]) {
+                $("#sens-thrm-body").append(
+                    "<table class='ui compact fixed table'>" +
+                    "<thead><tr><th colspan='4'><h1 class='bodyfont' style='color: #008080;'>" + indx + "</h1></th></tr></thead>" +
+                    "<tbody id='sens-thrm-devc-" + indx + "'>" + "</tbody>" + "</table>"
+                );
+                for (let jndx in deadobjc["sensread"]["senstemp"][indx]) {
+                    $("#sens-thrm-devc-" + indx).append(
+                        "<tr>" + "<td class='four wide'>" + deadobjc["sensread"]["senstemp"][indx][jndx]["label"] + "</td>" +
+                        "<td class='four wide'><div class='ui teal horizontal label'><code>TNOW</code></div>&nbsp;<code><span id='sens-thrm-devc-tnow-" + indx + "-" + jndx + "'>" + deadobjc["sensread"]["senstemp"][indx][jndx]["current"] + "</span>&nbsp;C</code></td>" +
+                        "<td class='four wide'><div class='ui teal horizontal label'><code>HIGH</code></div>&nbsp;<code><span id='sens-thrm-devc-high-" + indx + "-" + jndx + "'>" + deadobjc["sensread"]["senstemp"][indx][jndx]["high"] + "</span>&nbsp;C</code></td>" +
+                        "<td class='four wide'><div class='ui teal horizontal label'><code>CRIT</code></div>&nbsp;<code><span id='sens-thrm-devc-crit-" + indx + "-" + jndx + "'>" + deadobjc["sensread"]["senstemp"][indx][jndx]["critical"] + "</span>&nbsp;C</code></td>" +
+                        "</tr>"
+                    );
+                }
+            }
             // Rendered DOM for every fan and setting stage for live updating
             for (let indx in deadobjc["sensread"]["fanspeed"]) {
                 $("#sens-fans-body").append(
@@ -339,6 +356,14 @@ async function OverviewGraphAJAX() {
                     for (let indx in liveobjc["sensread"]["fanspeed"]) {
                         for (let jndx in liveobjc["sensread"]["fanspeed"][indx]) {
                             document.getElementById("sens-fans-devc-curt-" + indx + "-" + jndx).innerText = liveobjc["sensread"]["fanspeed"][indx][jndx]["current"];
+                        }
+                    }
+                    // Thermal sensor section updater
+                    for (let indx in liveobjc["sensread"]["senstemp"]) {
+                        for (let jndx in liveobjc["sensread"]["senstemp"][indx]) {
+                            document.getElementById("sens-thrm-devc-tnow-" + indx + "-" + jndx).innerText = liveobjc["sensread"]["senstemp"][indx][jndx]["current"];
+                            document.getElementById("sens-thrm-devc-high-" + indx + "-" + jndx).innerText = liveobjc["sensread"]["senstemp"][indx][jndx]["high"];
+                            document.getElementById("sens-thrm-devc-crit-" + indx + "-" + jndx).innerText = liveobjc["sensread"]["senstemp"][indx][jndx]["critical"];
                         }
                     }
                     // Disk usage body updater
