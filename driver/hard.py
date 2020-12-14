@@ -218,9 +218,13 @@ class LiveUpdatingElements():
         senstemp = psutil.sensors_fans()
         retndata = {}
         for indx in senstemp.keys():
-            retndata[indx] = {}
+            retndata[indx] = []
             for jndx in senstemp[indx]:
-                retndata[indx][jndx.label] = jndx.current
+                singdict = {
+                    "label": jndx.label,
+                    "current": jndx.current
+                }
+                retndata[indx].append(singdict)
         return retndata
 
     def GetSensorsBatteryStatus(self):

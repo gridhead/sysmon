@@ -102,10 +102,26 @@ async function OverviewGraphAJAX() {
         function(data) {
             let deadobjc = data;
             cpuquant = parseInt(deadobjc["cpuquant"]);
+            // Rendered DOM for every fan and setting stage for live updating
+            for (let indx in deadobjc["sensread"]["fanspeed"]) {
+                $("#sens-fans-body").append(
+                    "<table class='ui fixed compact table'>" +
+                    "<thead><tr><th colspan='2'><h1 class='bodyfont' style='color: #008080;'>" + indx + "</h1></th></tr></thead>" +
+                    "<tbody id='sens-fans-devc-" + indx + "'></tbody>" + "</table>"
+                );
+                for (let jndx in deadobjc["sensread"]["fanspeed"][indx]) {
+                    $("#sens-fans-devc-" + indx).append(
+                        "<tr>" +
+                        "<td class='twelve wide' id='sens-fans-devc-labl-" + indx + "-" + jndx + "'>" + deadobjc["sensread"]["fanspeed"][indx][jndx]["label"] + "</td>" +
+                        "<td class='four wide'><span id='sens-fans-devc-curt-" + indx + "-" + jndx + "'>" + deadobjc["sensread"]["fanspeed"][indx][jndx]["current"] + "</span> RPM</td>" +
+                        "</tr>"
+                    );
+                }
+            }
             // Rendered DOM for every disk partition and setting stage for live updating
             for (let indx in deadobjc["diousage"]) {
                 $("#disk-usej-body").append(
-                    "<table class='ui fixed compact table' id='disk-usej-tabl-" + indx + "'>" + "<thead>" + "<tr>" +
+                    "<table class='ui fixed compact tablet stackable table' id='disk-usej-tabl-" + indx + "'>" + "<thead>" + "<tr>" +
                     "<th colspan='3'><h2 class='bodyfont' id='disk-usej-name-" + indx + "' style='color: #008080;'>" + indx + "</h2></th>" +
                     "<th><div class='ui small horizontal statistic'><div class='value bodyfont' id='disk-usej-bstm-" + indx + "'>0</div><div class='label bodyfont'>BSTM</div></div></th>" +
                     "</tr>" + "</thead>" + "<tbody>" + "<tr>" +
@@ -138,7 +154,7 @@ async function OverviewGraphAJAX() {
             // One-time rendering of network interface addresses
             for (let indx in deadobjc["netaddrs"]) {
                 $("#netw-addr-body").append(
-                    "<table class='ui fixed compact table'>" +
+                    "<table class='ui fixed compact tablet stackable table'>" +
                     "<thead><tr><th colspan='4'><h1 style='color: #008080;' class='bodyfont'>" + indx + "</h1></th></tr></thead>" +
                     "<tbody id='netw-addr-tabl-" + indx + "'>" + "</tbody>" + "</table>"
                 );
@@ -319,6 +335,12 @@ async function OverviewGraphAJAX() {
                     document.getElementById("memo-virt-used").innerText = liveobjc.swapinfo["used"];
                     document.getElementById("memo-virt-sine").innerText = liveobjc.swapinfo["sin"];
                     document.getElementById("memo-virt-sout").innerText = liveobjc.swapinfo["sout"];
+                    // Fan speed sensor section updater
+                    for (let indx in liveobjc["sensread"]["fanspeed"]) {
+                        for (let jndx in liveobjc["sensread"]["fanspeed"][indx]) {
+                            document.getElementById("sens-fans-devc-curt-" + indx + "-" + jndx).innerText = liveobjc["sensread"]["fanspeed"][indx][jndx]["current"];
+                        }
+                    }
                     // Disk usage body updater
                     for (let indx in liveobjc["diousage"]) {
                         //console.log("disk-usej-name-" + indx);
@@ -356,7 +378,6 @@ async function OverviewGraphAJAX() {
                         document.getElementById("cpuu-time-stel-"+indx).innerText = liveobjc.cputimes[indx]["steal"];
                         document.getElementById("cpuu-time-gest-"+indx).innerText = liveobjc.cputimes[indx]["guest"];
                         document.getElementById("cpuu-time-gtnc-"+indx).innerText = liveobjc.cputimes[indx]["guest_nice"];
-                        
                     }
                 } else {
                     $("#wrngiden").modal("setting", "closable", false).modal("show");
