@@ -19,21 +19,11 @@
 ##########################################################################
 '''
 
-import click
 import getpass
-import json
-import logging
-from flask import Flask, jsonify
 import os
 import psutil
 from secrets import choice
-import sys
 import time
-
-
-main = Flask(__name__)
-loge = logging.getLogger("werkzeug")
-loge.setLevel(logging.ERROR)
 
 
 class ConnectionManager():
@@ -345,9 +335,12 @@ class DeadUpdatingElements(LiveUpdatingElements):
             "netusage": self.GetNetworkIOUsage(),
             "netaddrs": self.GetNetworkIFAddresses(),
             "netstats": self.GetNetworkStatistics(),
-            "senstemp": self.GetSensorsTemperature(),
-            "fanspeed": self.GetSensorsFanSpeed(),
             "boottime": self.GetBootTime(),
             "procinfo": self.GetProcessInfo(),
+            "sensread": {
+                "senstemp": self.GetSensorsTemperature(),
+                "fanspeed": self.GetSensorsFanSpeed(),
+                "battstat": self.GetSensorsBatteryStatus()
+            }
         }
         return jsonobjc
