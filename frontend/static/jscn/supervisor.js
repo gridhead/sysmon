@@ -98,8 +98,12 @@ async function OverviewGraphAJAX () {
     let cyclgraf = [];
     let cyclline = [];
     let cpuquant = 0;
-    await $.getJSON(JSON.parse(sessionStorage.getItem("vsoniden"))["vsonsuri"] + "deadsync",
-        function (data) {
+    await $.getJSON(JSON.parse(sessionStorage.getItem("vsoniden"))["vsonsuri"] + "deadsync", {
+        passcode: JSON.parse(sessionStorage.getItem("vsoniden"))["passcode"]
+    }, function (data) {
+        if (data["retnmesg"] === "deny") {
+            $("#wrngiden").modal("setting", "closable", false).modal("show");
+        } else {
             let deadobjc = data;
             cpuquant = parseInt(deadobjc["cpuquant"]);
             // Rendered DOM for every temperature sensor and setting stage for live updating
@@ -258,17 +262,13 @@ async function OverviewGraphAJAX () {
                 cyclgraf[cyclgraf.length] = scycgraf;
                 cyclline[cyclline.length] = scycline;
             }
-            if (deadobjc.passcode === JSON.parse(sessionStorage.getItem("vsoniden"))["passcode"]) {
-                document.getElementById("systover").innerText = deadobjc.osnmdata["System name"];
-                document.getElementById("hostover").innerText = deadobjc.osnmdata["Host name"];
-                document.getElementById("versover").innerText = deadobjc.osnmdata["Version"];
-                document.getElementById("userover").innerText = deadobjc.osnmdata["Username"];
-                document.getElementById("bootover").innerText = deadobjc.boottime;
-            } else {
-                $("#wrngiden").modal("setting", "closable", false).modal("show");
-            }
+            document.getElementById("systover").innerText = deadobjc.osnmdata["System name"];
+            document.getElementById("hostover").innerText = deadobjc.osnmdata["Host name"];
+            document.getElementById("versover").innerText = deadobjc.osnmdata["Version"];
+            document.getElementById("userover").innerText = deadobjc.osnmdata["Username"];
+            document.getElementById("bootover").innerText = deadobjc.boottime;
         }
-    ).fail(function (err, status) {
+    }).fail(function (err, status) {
         $("#connlost").modal("setting", "closable", false).modal("show");
     });
     for (let indx = 0; indx < cpuquant; indx ++) {
@@ -290,137 +290,137 @@ async function OverviewGraphAJAX () {
     }
     while (1) {
         await new Promise(r => setTimeout(r, 1000));
-        $.getJSON(JSON.parse(sessionStorage.getItem("vsoniden"))["vsonsuri"] + "livesync",
-            function (data) {
+        $.getJSON(JSON.parse(sessionStorage.getItem("vsoniden"))["vsonsuri"] + "livesync", {
+            passcode:  JSON.parse(sessionStorage.getItem("vsoniden"))["passcode"]
+        }, function (data) {
+            if (data["retnmesg"] === "deny") {
+                $("#wrngiden").modal("setting", "closable", false).modal("show");
+            } else {
                 let liveobjc = data;
-                if (liveobjc.passcode === JSON.parse(sessionStorage.getItem("vsoniden"))["passcode"]) {
-                    for (let indx in liveobjc.cpuprcnt) {
-                        cpusline.append(new Date().getTime(), parseFloat(liveobjc.cpuprcnt[indx]).toPrecision(3));
-                        document.getElementById("cpusvalu").innerText = parseFloat(liveobjc.cpuprcnt[indx]).toPrecision(3);
-                    }
-                    depyline.append(new Date().getTime(), parseFloat(liveobjc.virtdata["percent"]).toPrecision(3));
-                    document.getElementById("phys-dedi-byte").innerText = parseInt(liveobjc.virtdata["used"]) + " of " + parseInt(liveobjc.virtdata["total"]);
-                    physline.append(new Date().getTime(), parseFloat(liveobjc.virtdata["percent"]).toPrecision(3));
-                    document.getElementById("physvalu").innerText = parseFloat(liveobjc.virtdata["percent"]).toPrecision(3);
-                    document.getElementById("phys-dedi-perc").innerText = parseFloat(liveobjc.virtdata["percent"]).toPrecision(3);
-                    devtline.append(new Date().getTime(), parseFloat(liveobjc.swapinfo["percent"]).toPrecision(3));
-                    document.getElementById("virt-dedi-byte").innerText = parseInt(liveobjc.swapinfo["used"]) + " of " + parseInt(liveobjc.swapinfo["total"]);
-                    swapline.append(new Date().getTime(), parseFloat(liveobjc.swapinfo["percent"]).toPrecision(3));
-                    document.getElementById("swapvalu").innerText = parseFloat(liveobjc.swapinfo["percent"]).toPrecision(3);
-                    document.getElementById("virt-dedi-perc").innerText = parseFloat(liveobjc.swapinfo["percent"]).toPrecision(3);
-                    battline.append(new Date().getTime(), parseFloat(liveobjc.sensread.battstat["percent"]).toPrecision(3));
-                    document.getElementById("battvalu").innerText = parseFloat(liveobjc.sensread.battstat["percent"]).toPrecision(3);
-                    for (let indx = 0; indx < cpuquant; indx ++) {
-                        prcpline[indx].append(new Date().getTime(), parseFloat(liveobjc.cpuprcnt[indx]).toPrecision(3));
-                        document.getElementById("cpuu-perc-"+indx).innerText = parseFloat(liveobjc.cpuprcnt[indx]).toPrecision(3);
-                        cyclline[indx].append(new Date().getTime(), parseFloat(liveobjc.cpuclock[indx]["current"]).toPrecision(5));
-                        document.getElementById("cpuu-cycl-curt-" + indx).innerText = parseFloat(liveobjc.cpuclock[indx]["current"]).toPrecision(5);
-                        document.getElementById("cpuu-cycl-mine-" + indx).innerText = parseFloat(liveobjc.cpuclock[indx]["min"]).toPrecision(5);
-                        document.getElementById("cpuu-cycl-maxe-" + indx).innerText = parseFloat(liveobjc.cpuclock[indx]["max"]).toPrecision(5);
-                    }
-                    document.getElementById("cpuu-stat-ctxs").innerText = liveobjc.cpustats["ctx_switches"];
-                    document.getElementById("cpuu-stat-intr").innerText = liveobjc.cpustats["interrupts"];
-                    document.getElementById("cpuu-stat-soft").innerText = liveobjc.cpustats["soft_interrupts"];
-                    document.getElementById("cpuu-stat-syst").innerText = liveobjc.cpustats["syscalls"];
-                    // Sensor battery section updater
-                    document.getElementById("sens-batt-plug").innerText = liveobjc.sensread.battstat["power_plugged"].toString().toUpperCase();
-                    document.getElementById("sens-batt-perc").innerText = parseFloat(liveobjc.sensread.battstat["percent"]).toPrecision(3);
-                    document.getElementById("sens-batt-time").innerText = liveobjc.sensread.battstat["secsleft"];
-                    snbtline.append(new Date().getTime(), parseFloat(liveobjc.sensread.battstat["percent"]).toPrecision(3));
-                    $("#sens-batt-prog").progress({
-                        percent: parseFloat(liveobjc.sensread.battstat["percent"]).toPrecision(3)
-                    });
-                    // Network usage secion updater
-                    for (let indx in liveobjc["netusage"]) {
-                        document.getElementById("netw-usej-bsnt-" + indx).innerText = liveobjc["netusage"][indx]["bytes_sent"];
-                        document.getElementById("netw-usej-psnt-" + indx).innerText = liveobjc["netusage"][indx]["packets_sent"];
-                        document.getElementById("netw-usej-brcv-" + indx).innerText = liveobjc["netusage"][indx]["bytes_recv"];
-                        document.getElementById("netw-usej-prcv-" + indx).innerText = liveobjc["netusage"][indx]["packets_recv"];
-
-                    }
-                    // Physical memory dedicated statistics table updater
-                    document.getElementById("memo-phys-totl").innerText = liveobjc.virtdata["total"];
-                    document.getElementById("memo-phys-free").innerText = liveobjc.virtdata["available"];
-                    document.getElementById("memo-phys-used").innerText = liveobjc.virtdata["used"];
-                    document.getElementById("memo-phys-actv").innerText = liveobjc.virtdata["active"];
-                    document.getElementById("memo-phys-inac").innerText = liveobjc.virtdata["inactive"];
-                    document.getElementById("memo-phys-buff").innerText = liveobjc.virtdata["buffers"];
-                    document.getElementById("memo-phys-cach").innerText = liveobjc.virtdata["cached"];
-                    document.getElementById("memo-phys-shar").innerText = liveobjc.virtdata["shared"];
-                    document.getElementById("memo-phys-slab").innerText = liveobjc.virtdata["slab"];
-                    // Virtual memory dedicated statistics table updater
-                    document.getElementById("memo-virt-totl").innerText = liveobjc.swapinfo["total"];
-                    document.getElementById("memo-virt-free").innerText = liveobjc.swapinfo["free"];
-                    document.getElementById("memo-virt-used").innerText = liveobjc.swapinfo["used"];
-                    document.getElementById("memo-virt-sine").innerText = liveobjc.swapinfo["sin"];
-                    document.getElementById("memo-virt-sout").innerText = liveobjc.swapinfo["sout"];
-                    // Fan speed sensor section updater
-                    for (let indx in liveobjc["sensread"]["fanspeed"]) {
-                        for (let jndx in liveobjc["sensread"]["fanspeed"][indx]) {
-                            document.getElementById("sens-fans-devc-curt-" + indx + "-" + jndx).innerText = liveobjc["sensread"]["fanspeed"][indx][jndx]["current"];
-                        }
-                    }
-                    // Thermal sensor section updater
-                    for (let indx in liveobjc["sensread"]["senstemp"]) {
-                        for (let jndx in liveobjc["sensread"]["senstemp"][indx]) {
-                            document.getElementById("sens-thrm-devc-tnow-" + indx + "-" + jndx).innerText = liveobjc["sensread"]["senstemp"][indx][jndx]["current"];
-                            document.getElementById("sens-thrm-devc-high-" + indx + "-" + jndx).innerText = liveobjc["sensread"]["senstemp"][indx][jndx]["high"];
-                            document.getElementById("sens-thrm-devc-crit-" + indx + "-" + jndx).innerText = liveobjc["sensread"]["senstemp"][indx][jndx]["critical"];
-                        }
-                    }
-                    // Disk usage body updater
-                    for (let indx in liveobjc["diousage"]) {
-                        document.getElementById("disk-usej-name-" + indx).innerText = indx;
-                        document.getElementById("disk-usej-bstm-" + indx).innerText = liveobjc["diousage"][indx]["busy_time"];
-                        document.getElementById("disk-usej-rdct-" + indx).innerText = liveobjc["diousage"][indx]["read_count"];
-                        document.getElementById("disk-usej-wrct-" + indx).innerText = liveobjc["diousage"][indx]["write_count"];
-                        document.getElementById("disk-usej-rdbt-" + indx).innerText = liveobjc["diousage"][indx]["read_bytes"];
-                        document.getElementById("disk-usej-wrbt-" + indx).innerText = liveobjc["diousage"][indx]["write_bytes"];
-                        document.getElementById("disk-usej-rdtm-" + indx).innerText = liveobjc["diousage"][indx]["read_time"];
-                        document.getElementById("disk-usej-wrtm-" + indx).innerText = liveobjc["diousage"][indx]["write_time"];
-                        document.getElementById("disk-usej-rdmc-" + indx).innerText = liveobjc["diousage"][indx]["read_merged_count"];
-                        document.getElementById("disk-usej-wrmc-" + indx).innerText = liveobjc["diousage"][indx]["write_merged_count"];
-                    }
-                    // Process listing live rendering
-                    document.getElementById("proc-tabl-dvsn").innerHTML = "<table class='ui fixed compact table'>" + "<tbody id='proc-tabl-main'>" + "</tbody>" + "</table>";
-                    for (let indx in liveobjc["procinfo"]) {
-                        $("#proc-tabl-main").append(
-                            "<tr>" +
-                            "<td class='two wide'>" + indx + "</td>" +
-                            "<td class='six wide' style='font-weight: bold;'><span onclick='ViewProcessInfo(\"" + indx + "\")'>" + liveobjc["procinfo"][indx]["name"] + "</span></td>" +
-                            "<td class='four wide'>" + liveobjc["procinfo"][indx]["username"] + "</td>" +
-                            "<td class='two wide'>" + parseFloat(liveobjc["procinfo"][indx]["memory_percent"]).toPrecision(3) + "%</td>" +
-                            "<td class='two wide'>" + parseFloat(liveobjc["procinfo"][indx]["cpu_percent"]).toPrecision(3) + "%</td>" +
-                            "</tr>"
-                        );
-                    }
-                    // Stream graphs to DOM Canvas elements
-                    cpusgraf.streamTo(document.getElementById("cpusover"), 1000);
-                    physgraf.streamTo(document.getElementById("physover"), 1000);
-                    swapgraf.streamTo(document.getElementById("swapover"), 1000);
-                    battgraf.streamTo(document.getElementById("battover"), 1000);
-                    dediphys.streamTo(document.getElementById("phys-dedi-graf"), 1000);
-                    dedivirt.streamTo(document.getElementById("virt-dedi-graf"), 1000);
-                    snbtgraf.streamTo(document.getElementById("sens-batt-graf"), 1000);
-                    for (let indx = 0; indx < cpuquant; indx ++) {
-                        cyclgraf[indx].streamTo(document.getElementById("cpuu-cygf-" + indx), 1000);
-                        prcpgraf[indx].streamTo(document.getElementById("cpuu-graf-" + indx), 1000);
-                    }
-                    for (let indx = 0; indx < cpuquant; indx ++) {
-                        document.getElementById("cpuu-time-user-"+indx).innerText = liveobjc.cputimes[indx]["user"];
-                        document.getElementById("cpuu-time-nice-"+indx).innerText = liveobjc.cputimes[indx]["nice"];
-                        document.getElementById("cpuu-time-syst-"+indx).innerText = liveobjc.cputimes[indx]["system"];
-                        document.getElementById("cpuu-time-idle-"+indx).innerText = liveobjc.cputimes[indx]["idle"];
-                        document.getElementById("cpuu-time-iowt-"+indx).innerText = liveobjc.cputimes[indx]["iowait"];
-                        document.getElementById("cpuu-time-ireq-"+indx).innerText = liveobjc.cputimes[indx]["irq"];
-                        document.getElementById("cpuu-time-soft-"+indx).innerText = liveobjc.cputimes[indx]["softirq"];
-                        document.getElementById("cpuu-time-stel-"+indx).innerText = liveobjc.cputimes[indx]["steal"];
-                        document.getElementById("cpuu-time-gest-"+indx).innerText = liveobjc.cputimes[indx]["guest"];
-                        document.getElementById("cpuu-time-gtnc-"+indx).innerText = liveobjc.cputimes[indx]["guest_nice"];
-                    }
-                } else {
-                    $("#wrngiden").modal("setting", "closable", false).modal("show");
+                for (let indx in liveobjc.cpuprcnt) {
+                    cpusline.append(new Date().getTime(), parseFloat(liveobjc.cpuprcnt[indx]).toPrecision(3));
+                    document.getElementById("cpusvalu").innerText = parseFloat(liveobjc.cpuprcnt[indx]).toPrecision(3);
                 }
+                depyline.append(new Date().getTime(), parseFloat(liveobjc.virtdata["percent"]).toPrecision(3));
+                document.getElementById("phys-dedi-byte").innerText = parseInt(liveobjc.virtdata["used"]) + " of " + parseInt(liveobjc.virtdata["total"]);
+                physline.append(new Date().getTime(), parseFloat(liveobjc.virtdata["percent"]).toPrecision(3));
+                document.getElementById("physvalu").innerText = parseFloat(liveobjc.virtdata["percent"]).toPrecision(3);
+                document.getElementById("phys-dedi-perc").innerText = parseFloat(liveobjc.virtdata["percent"]).toPrecision(3);
+                devtline.append(new Date().getTime(), parseFloat(liveobjc.swapinfo["percent"]).toPrecision(3));
+                document.getElementById("virt-dedi-byte").innerText = parseInt(liveobjc.swapinfo["used"]) + " of " + parseInt(liveobjc.swapinfo["total"]);
+                swapline.append(new Date().getTime(), parseFloat(liveobjc.swapinfo["percent"]).toPrecision(3));
+                document.getElementById("swapvalu").innerText = parseFloat(liveobjc.swapinfo["percent"]).toPrecision(3);
+                document.getElementById("virt-dedi-perc").innerText = parseFloat(liveobjc.swapinfo["percent"]).toPrecision(3);
+                battline.append(new Date().getTime(), parseFloat(liveobjc.sensread.battstat["percent"]).toPrecision(3));
+                document.getElementById("battvalu").innerText = parseFloat(liveobjc.sensread.battstat["percent"]).toPrecision(3);
+                for (let indx = 0; indx < cpuquant; indx++) {
+                    prcpline[indx].append(new Date().getTime(), parseFloat(liveobjc.cpuprcnt[indx]).toPrecision(3));
+                    document.getElementById("cpuu-perc-" + indx).innerText = parseFloat(liveobjc.cpuprcnt[indx]).toPrecision(3);
+                    cyclline[indx].append(new Date().getTime(), parseFloat(liveobjc.cpuclock[indx]["current"]).toPrecision(5));
+                    document.getElementById("cpuu-cycl-curt-" + indx).innerText = parseFloat(liveobjc.cpuclock[indx]["current"]).toPrecision(5);
+                    document.getElementById("cpuu-cycl-mine-" + indx).innerText = parseFloat(liveobjc.cpuclock[indx]["min"]).toPrecision(5);
+                    document.getElementById("cpuu-cycl-maxe-" + indx).innerText = parseFloat(liveobjc.cpuclock[indx]["max"]).toPrecision(5);
+                }
+                document.getElementById("cpuu-stat-ctxs").innerText = liveobjc.cpustats["ctx_switches"];
+                document.getElementById("cpuu-stat-intr").innerText = liveobjc.cpustats["interrupts"];
+                document.getElementById("cpuu-stat-soft").innerText = liveobjc.cpustats["soft_interrupts"];
+                document.getElementById("cpuu-stat-syst").innerText = liveobjc.cpustats["syscalls"];
+                // Sensor battery section updater
+                document.getElementById("sens-batt-plug").innerText = liveobjc.sensread.battstat["power_plugged"].toString().toUpperCase();
+                document.getElementById("sens-batt-perc").innerText = parseFloat(liveobjc.sensread.battstat["percent"]).toPrecision(3);
+                document.getElementById("sens-batt-time").innerText = liveobjc.sensread.battstat["secsleft"];
+                snbtline.append(new Date().getTime(), parseFloat(liveobjc.sensread.battstat["percent"]).toPrecision(3));
+                $("#sens-batt-prog").progress({
+                    percent: parseFloat(liveobjc.sensread.battstat["percent"]).toPrecision(3)
+                });
+                // Network usage secion updater
+                for (let indx in liveobjc["netusage"]) {
+                    document.getElementById("netw-usej-bsnt-" + indx).innerText = liveobjc["netusage"][indx]["bytes_sent"];
+                    document.getElementById("netw-usej-psnt-" + indx).innerText = liveobjc["netusage"][indx]["packets_sent"];
+                    document.getElementById("netw-usej-brcv-" + indx).innerText = liveobjc["netusage"][indx]["bytes_recv"];
+                    document.getElementById("netw-usej-prcv-" + indx).innerText = liveobjc["netusage"][indx]["packets_recv"];
+                }
+                // Physical memory dedicated statistics table updater
+                document.getElementById("memo-phys-totl").innerText = liveobjc.virtdata["total"];
+                document.getElementById("memo-phys-free").innerText = liveobjc.virtdata["available"];
+                document.getElementById("memo-phys-used").innerText = liveobjc.virtdata["used"];
+                document.getElementById("memo-phys-actv").innerText = liveobjc.virtdata["active"];
+                document.getElementById("memo-phys-inac").innerText = liveobjc.virtdata["inactive"];
+                document.getElementById("memo-phys-buff").innerText = liveobjc.virtdata["buffers"];
+                document.getElementById("memo-phys-cach").innerText = liveobjc.virtdata["cached"];
+                document.getElementById("memo-phys-shar").innerText = liveobjc.virtdata["shared"];
+                document.getElementById("memo-phys-slab").innerText = liveobjc.virtdata["slab"];
+                // Virtual memory dedicated statistics table updater
+                document.getElementById("memo-virt-totl").innerText = liveobjc.swapinfo["total"];
+                document.getElementById("memo-virt-free").innerText = liveobjc.swapinfo["free"];
+                document.getElementById("memo-virt-used").innerText = liveobjc.swapinfo["used"];
+                document.getElementById("memo-virt-sine").innerText = liveobjc.swapinfo["sin"];
+                document.getElementById("memo-virt-sout").innerText = liveobjc.swapinfo["sout"];
+                // Fan speed sensor section updater
+                for (let indx in liveobjc["sensread"]["fanspeed"]) {
+                    for (let jndx in liveobjc["sensread"]["fanspeed"][indx]) {
+                        document.getElementById("sens-fans-devc-curt-" + indx + "-" + jndx).innerText = liveobjc["sensread"]["fanspeed"][indx][jndx]["current"];
+                    }
+                }
+                // Thermal sensor section updater
+                for (let indx in liveobjc["sensread"]["senstemp"]) {
+                    for (let jndx in liveobjc["sensread"]["senstemp"][indx]) {
+                        document.getElementById("sens-thrm-devc-tnow-" + indx + "-" + jndx).innerText = liveobjc["sensread"]["senstemp"][indx][jndx]["current"];
+                        document.getElementById("sens-thrm-devc-high-" + indx + "-" + jndx).innerText = liveobjc["sensread"]["senstemp"][indx][jndx]["high"];
+                        document.getElementById("sens-thrm-devc-crit-" + indx + "-" + jndx).innerText = liveobjc["sensread"]["senstemp"][indx][jndx]["critical"];
+                    }
+                }
+                // Disk usage body updater
+                for (let indx in liveobjc["diousage"]) {
+                    document.getElementById("disk-usej-name-" + indx).innerText = indx;
+                    document.getElementById("disk-usej-bstm-" + indx).innerText = liveobjc["diousage"][indx]["busy_time"];
+                    document.getElementById("disk-usej-rdct-" + indx).innerText = liveobjc["diousage"][indx]["read_count"];
+                    document.getElementById("disk-usej-wrct-" + indx).innerText = liveobjc["diousage"][indx]["write_count"];
+                    document.getElementById("disk-usej-rdbt-" + indx).innerText = liveobjc["diousage"][indx]["read_bytes"];
+                    document.getElementById("disk-usej-wrbt-" + indx).innerText = liveobjc["diousage"][indx]["write_bytes"];
+                    document.getElementById("disk-usej-rdtm-" + indx).innerText = liveobjc["diousage"][indx]["read_time"];
+                    document.getElementById("disk-usej-wrtm-" + indx).innerText = liveobjc["diousage"][indx]["write_time"];
+                    document.getElementById("disk-usej-rdmc-" + indx).innerText = liveobjc["diousage"][indx]["read_merged_count"];
+                    document.getElementById("disk-usej-wrmc-" + indx).innerText = liveobjc["diousage"][indx]["write_merged_count"];
+                }
+                // Process listing live rendering
+                document.getElementById("proc-tabl-dvsn").innerHTML = "<table class='ui fixed compact table'>" + "<tbody id='proc-tabl-main'>" + "</tbody>" + "</table>";
+                for (let indx in liveobjc["procinfo"]) {
+                    $("#proc-tabl-main").append(
+                        "<tr>" +
+                        "<td class='two wide'>" + indx + "</td>" +
+                        "<td class='six wide' style='font-weight: bold;'><span onclick='ViewProcessInfo(\"" + indx + "\")'>" + liveobjc["procinfo"][indx]["name"] + "</span></td>" +
+                        "<td class='four wide'>" + liveobjc["procinfo"][indx]["username"] + "</td>" +
+                        "<td class='two wide'>" + parseFloat(liveobjc["procinfo"][indx]["memory_percent"]).toPrecision(3) + "%</td>" +
+                        "<td class='two wide'>" + parseFloat(liveobjc["procinfo"][indx]["cpu_percent"]).toPrecision(3) + "%</td>" +
+                        "</tr>"
+                    );
+                }
+                // Stream graphs to DOM Canvas elements
+                cpusgraf.streamTo(document.getElementById("cpusover"), 1000);
+                physgraf.streamTo(document.getElementById("physover"), 1000);
+                swapgraf.streamTo(document.getElementById("swapover"), 1000);
+                battgraf.streamTo(document.getElementById("battover"), 1000);
+                dediphys.streamTo(document.getElementById("phys-dedi-graf"), 1000);
+                dedivirt.streamTo(document.getElementById("virt-dedi-graf"), 1000);
+                snbtgraf.streamTo(document.getElementById("sens-batt-graf"), 1000);
+                for (let indx = 0; indx < cpuquant; indx++) {
+                    cyclgraf[indx].streamTo(document.getElementById("cpuu-cygf-" + indx), 1000);
+                    prcpgraf[indx].streamTo(document.getElementById("cpuu-graf-" + indx), 1000);
+                }
+                for (let indx = 0; indx < cpuquant; indx++) {
+                    document.getElementById("cpuu-time-user-" + indx).innerText = liveobjc.cputimes[indx]["user"];
+                    document.getElementById("cpuu-time-nice-" + indx).innerText = liveobjc.cputimes[indx]["nice"];
+                    document.getElementById("cpuu-time-syst-" + indx).innerText = liveobjc.cputimes[indx]["system"];
+                    document.getElementById("cpuu-time-idle-" + indx).innerText = liveobjc.cputimes[indx]["idle"];
+                    document.getElementById("cpuu-time-iowt-" + indx).innerText = liveobjc.cputimes[indx]["iowait"];
+                    document.getElementById("cpuu-time-ireq-" + indx).innerText = liveobjc.cputimes[indx]["irq"];
+                    document.getElementById("cpuu-time-soft-" + indx).innerText = liveobjc.cputimes[indx]["softirq"];
+                    document.getElementById("cpuu-time-stel-" + indx).innerText = liveobjc.cputimes[indx]["steal"];
+                    document.getElementById("cpuu-time-gest-" + indx).innerText = liveobjc.cputimes[indx]["guest"];
+                    document.getElementById("cpuu-time-gtnc-" + indx).innerText = liveobjc.cputimes[indx]["guest_nice"];
+                }
+            }
             }).fail(function () {
                 $("#connlost").modal("setting", "closable", false).modal("show");
             }
@@ -430,48 +430,52 @@ async function OverviewGraphAJAX () {
 
 function ViewProcessInfo (prociden) {
     $.getJSON(JSON.parse(sessionStorage.getItem("vsoniden"))["vsonsuri"] + "procinfo", {
-        prociden: prociden
+        prociden: prociden, passcode:  JSON.parse(sessionStorage.getItem("vsoniden"))["passcode"]
     }, function (data) {
-        document.getElementById("proc-info-name").innerText = data["name"];
-        document.getElementById("proc-info-iden").innerText = "#" + data["pid"];
-        document.getElementById("proc-info-cpuu-perc").innerText = parseFloat(data["cpu_percent"]).toPrecision(3) + "%";
-        document.getElementById("proc-info-memo-perc").innerText = parseFloat(data["memory_percent"]).toPrecision(3) + "%";
-        // Data section renderer
-        document.getElementById("proc-info-data-user").innerText = data["username"];
-        document.getElementById("proc-info-data-time").innerText = data["create_time"];
-        document.getElementById("proc-info-data-stat").innerText = data["status"];
-        document.getElementById("proc-info-data-term").innerText = data["terminal"];
-        document.getElementById("proc-info-data-last").innerText = new Date().toLocaleString();
-        // Memory info renderer
-        document.getElementById("proc-info-memo-rsts").innerText = data["memory_info"]["rss"] + " bytes";
-        document.getElementById("proc-info-memo-vmsz").innerText = data["memory_info"]["vms"] + " bytes";
-        document.getElementById("proc-info-memo-shsz").innerText = data["memory_info"]["shared"] + " bytes";
-        document.getElementById("proc-info-memo-text").innerText = data["memory_info"]["text"] + " bytes";
-        document.getElementById("proc-info-memo-data").innerText = data["memory_info"]["data"] + " bytes";
-        document.getElementById("proc-info-memo-libs").innerText = data["memory_info"]["lib"] + " bytes";
-        document.getElementById("proc-info-memo-dirt").innerText = data["memory_info"]["dirty"] + " pages";
-        // CPU times renderer
-        document.getElementById("proc-info-time-user").innerText = data["cpu_times"]["user"];
-        document.getElementById("proc-info-time-syst").innerText = data["cpu_times"]["system"];
-        document.getElementById("proc-info-time-cusr").innerText = data["cpu_times"]["children_user"];
-        document.getElementById("proc-info-time-csys").innerText = data["cpu_times"]["children_system"];
-        document.getElementById("proc-info-time-iowt").innerText = data["cpu_times"]["iowait"];
-        // Context switch renderer
-        document.getElementById("proc-info-ctxs-volu").innerText = data["num_ctx_switches"]["voluntary"];
-        document.getElementById("proc-info-ctxs-volu").innerText = data["num_ctx_switches"]["involuntary"];
-        // Group IDs renderer
-        document.getElementById("proc-info-gids-eftv").innerText = data["gids"]["effective"];
-        document.getElementById("proc-info-gids-real").innerText = data["gids"]["real"];
-        document.getElementById("proc-info-gids-save").innerText = data["gids"]["saved"];
-        // User IDs renderer
-        document.getElementById("proc-info-uids-eftv").innerText = data["uids"]["effective"];
-        document.getElementById("proc-info-uids-real").innerText = data["uids"]["real"];
-        document.getElementById("proc-info-uids-save").innerText = data["uids"]["saved"];
-        document.getElementById("proc-mode-kill").setAttribute("onclick", "KillProcess(" + data["pid"] + ")");
-        document.getElementById("proc-mode-term").setAttribute("onclick", "TerminateProcess(" + data["pid"] + ")");
-        document.getElementById("proc-mode-susp").setAttribute("onclick", "SuspendProcess(" + data["pid"] + ")");
-        document.getElementById("proc-mode-resm").setAttribute("onclick", "ResumeProcess(" + data["pid"] + ")");
-        $("#procinfo").modal("setting", "closable", false).modal("show");
+        if (data["retnmesg"] === "deny") {
+            $("#wrngiden").modal("setting", "closable", false).modal("show");
+        } else {
+            document.getElementById("proc-info-name").innerText = data["name"];
+            document.getElementById("proc-info-iden").innerText = "#" + data["pid"];
+            document.getElementById("proc-info-cpuu-perc").innerText = parseFloat(data["cpu_percent"]).toPrecision(3) + "%";
+            document.getElementById("proc-info-memo-perc").innerText = parseFloat(data["memory_percent"]).toPrecision(3) + "%";
+            // Data section renderer
+            document.getElementById("proc-info-data-user").innerText = data["username"];
+            document.getElementById("proc-info-data-time").innerText = data["create_time"];
+            document.getElementById("proc-info-data-stat").innerText = data["status"];
+            document.getElementById("proc-info-data-term").innerText = data["terminal"];
+            document.getElementById("proc-info-data-last").innerText = new Date().toLocaleString();
+            // Memory info renderer
+            document.getElementById("proc-info-memo-rsts").innerText = data["memory_info"]["rss"] + " bytes";
+            document.getElementById("proc-info-memo-vmsz").innerText = data["memory_info"]["vms"] + " bytes";
+            document.getElementById("proc-info-memo-shsz").innerText = data["memory_info"]["shared"] + " bytes";
+            document.getElementById("proc-info-memo-text").innerText = data["memory_info"]["text"] + " bytes";
+            document.getElementById("proc-info-memo-data").innerText = data["memory_info"]["data"] + " bytes";
+            document.getElementById("proc-info-memo-libs").innerText = data["memory_info"]["lib"] + " bytes";
+            document.getElementById("proc-info-memo-dirt").innerText = data["memory_info"]["dirty"] + " pages";
+            // CPU times renderer
+            document.getElementById("proc-info-time-user").innerText = data["cpu_times"]["user"];
+            document.getElementById("proc-info-time-syst").innerText = data["cpu_times"]["system"];
+            document.getElementById("proc-info-time-cusr").innerText = data["cpu_times"]["children_user"];
+            document.getElementById("proc-info-time-csys").innerText = data["cpu_times"]["children_system"];
+            document.getElementById("proc-info-time-iowt").innerText = data["cpu_times"]["iowait"];
+            // Context switch renderer
+            document.getElementById("proc-info-ctxs-volu").innerText = data["num_ctx_switches"]["voluntary"];
+            document.getElementById("proc-info-ctxs-volu").innerText = data["num_ctx_switches"]["involuntary"];
+            // Group IDs renderer
+            document.getElementById("proc-info-gids-eftv").innerText = data["gids"]["effective"];
+            document.getElementById("proc-info-gids-real").innerText = data["gids"]["real"];
+            document.getElementById("proc-info-gids-save").innerText = data["gids"]["saved"];
+            // User IDs renderer
+            document.getElementById("proc-info-uids-eftv").innerText = data["uids"]["effective"];
+            document.getElementById("proc-info-uids-real").innerText = data["uids"]["real"];
+            document.getElementById("proc-info-uids-save").innerText = data["uids"]["saved"];
+            document.getElementById("proc-mode-kill").setAttribute("onclick", "KillProcess(" + data["pid"] + ")");
+            document.getElementById("proc-mode-term").setAttribute("onclick", "TerminateProcess(" + data["pid"] + ")");
+            document.getElementById("proc-mode-susp").setAttribute("onclick", "SuspendProcess(" + data["pid"] + ")");
+            document.getElementById("proc-mode-resm").setAttribute("onclick", "ResumeProcess(" + data["pid"] + ")");
+            $("#procinfo").modal("setting", "closable", false).modal("show");
+        }
     }).fail(function () {
         $("body").toast({
             position: "bottom right",
@@ -482,7 +486,7 @@ function ViewProcessInfo (prociden) {
 
 function KillProcess (prociden) {
     $.getJSON(JSON.parse(sessionStorage.getItem("vsoniden"))["vsonsuri"] + "killproc", {
-        prociden: prociden
+        prociden: prociden, passcode: JSON.parse(sessionStorage.getItem("vsoniden"))["passcode"]
     }, function (data) {
         if (data["retnmesg"] === true) {
             $("body").toast({
@@ -506,7 +510,7 @@ function KillProcess (prociden) {
 
 function TerminateProcess (prociden) {
     $.getJSON(JSON.parse(sessionStorage.getItem("vsoniden"))["vsonsuri"] + "termproc", {
-        prociden: prociden
+        prociden: prociden, passcode: JSON.parse(sessionStorage.getItem("vsoniden"))["passcode"]
     }, function (data) {
         if (data["retnmesg"] === true) {
             $("body").toast({
@@ -530,7 +534,7 @@ function TerminateProcess (prociden) {
 
 function SuspendProcess (prociden) {
     $.getJSON(JSON.parse(sessionStorage.getItem("vsoniden"))["vsonsuri"] + "suspproc", {
-        prociden: prociden
+        prociden: prociden, passcode: JSON.parse(sessionStorage.getItem("vsoniden"))["passcode"]
     }, function (data) {
         if (data["retnmesg"] === true) {
             $("body").toast({
@@ -554,7 +558,7 @@ function SuspendProcess (prociden) {
 
 function ResumeProcess (prociden) {
     $.getJSON(JSON.parse(sessionStorage.getItem("vsoniden"))["vsonsuri"] + "resmproc", {
-        prociden: prociden
+        prociden: prociden, passcode: JSON.parse(sessionStorage.getItem("vsoniden"))["passcode"]
     }, function (data) {
         if (data["retnmesg"] === true) {
             $("body").toast({
