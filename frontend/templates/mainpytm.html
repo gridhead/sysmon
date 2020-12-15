@@ -31,7 +31,7 @@
         <script type="text/javascript" src="{{ url_for('static', filename='jscn/supervisor.js') }}"></script>
         <title>SuperVisor</title>
     </head>
-    <body onload="AskForWebSocketEndpoint();">
+    <body onload="AskForAJAXServiceEndpoint();" class="bodyfont">
         <div class="ui secondary pointing menu inverted" style="background-color: #00c080;">
             <div class="ui simple dropdown item">
                 <span style="font-weight: bold;" class="bodyfont">SuperVisor</span>
@@ -113,6 +113,16 @@
             </div>
         </div>
         <div class="ui container"><hr style="background-color: #cccccc; height: 2px; border: none; margin-bottom: 1.25%; margin-top: 2.5%"/></div>
+        <div class="ui container bodyfont">
+            <div class="ui top attached tabular menu bodyfont teal">
+                <a class="item" style="font-weight: bold; color: #008080;">Processes</a>
+                <a class="active item">Listing</a>
+            </div>
+            <div class="ui bottom attached active tab segment">
+                <table class="ui fixed compact table"><thead><tr><th class="two wide">#</th><th class="six wide">NAME</th><th class="four wide">USER</th><th class="two wide">PMEM</th><th class="two wide">PCPU</th></tr></thead></table>
+                <div style="height: 50vh; overflow: auto" id="proc-tabl-dvsn"></div>
+            </div>
+        </div>
         <div class="ui container bodyfont">
             <div class="ui top attached tabular menu bodyfont teal">
                 <a class="item" id="cpuu-head-ttle" style="font-weight: bold; color: #008080;">CPU usage</a>
@@ -210,7 +220,7 @@
         <div class="ui container"><hr style="background-color: #cccccc; height: 2px; border: none; margin-bottom: 2.5%; margin-top: 2.5%"/></div>
         <div class="ui container bodyfont">
             <div class="ui top attached tabular menu bodyfont teal">
-                <a class="item" id="memo-head-ttle" style="font-weight: bold; color: #008080;">Disks</a>
+                <a class="item" id="disk-head-ttle" style="font-weight: bold; color: #008080;">Disks</a>
                 <a class="active item" id="disk-usej-ttle" onclick="SwitchTab('disk-usej-ttle', 'disk');">Usage</a>
                 <a class="item" id="disk-part-ttle" onclick="SwitchTab('disk-part-ttle', 'disk');">Partitions</a>
             </div>
@@ -220,7 +230,7 @@
         <div class="ui container"><hr style="background-color: #cccccc; height: 2px; border: none; margin-bottom: 2.5%; margin-top: 2.5%"/></div>
         <div class="ui container bodyfont">
             <div class="ui top attached tabular menu bodyfont teal">
-                <a class="item" id="memo-head-ttle" style="font-weight: bold; color: #008080;">Network</a>
+                <a class="item" id="netw-head-ttle" style="font-weight: bold; color: #008080;">Network</a>
                 <a class="active item" id="netw-usej-ttle" onclick="SwitchTab('netw-usej-ttle', 'netw');">Usage</a>
                 <a class="item" id="netw-stat-ttle" onclick="SwitchTab('netw-stat-ttle', 'netw');">Statistics</a>
                 <a class="item" id="netw-addr-ttle" onclick="SwitchTab('netw-addr-ttle', 'netw');">Addresses</a>
@@ -232,7 +242,7 @@
         <div class="ui container"><hr style="background-color: #cccccc; height: 2px; border: none; margin-bottom: 2.5%; margin-top: 2.5%"/></div>
         <div class="ui container bodyfont">
             <div class="ui top attached tabular menu bodyfont teal">
-                <a class="item" id="memo-head-ttle" style="font-weight: bold; color: #008080;">Sensors</a>
+                <a class="item" id="sens-head-ttle" style="font-weight: bold; color: #008080;">Sensors</a>
                 <a class="active item" id="sens-batt-ttle" onclick="SwitchTab('sens-batt-ttle', 'sens');">Battery</a>
                 <a class="item" id="sens-fans-ttle" onclick="SwitchTab('sens-fans-ttle', 'sens');">Fans</a>
                 <a class="item" id="sens-thrm-ttle" onclick="SwitchTab('sens-thrm-ttle', 'sens');">Thermal</a>
@@ -274,8 +284,8 @@
                 </p>
             </div>
             <div class="actions cardinal" style="padding: 1.5%; background-color: #00c080;">
-                <div class="ui mini button bodyfont" onclick="FetchWebSocketEndpoint(); $('#restwarn').modal('hide');">
-                    <span><i style="color: #008080;" class="check icon"></i></span>
+                <div class="ui mini button bodyfont" onclick="FetchAJAXServiceEndpoint(); $('#restwarn').modal('hide');">
+                    <span><i style="color: #008080; margin: 0px;" class="check icon"></i></span>
                 </div>
             </div>
         </div>
@@ -290,6 +300,200 @@
             <div class="actions cardinal" style="padding: 1.5%; background-color: #00c080;">
                 <div class="ui mini button bodyfont" onclick="location.reload();">
                     <span><i style="color: #008080;" class="redo icon"></i></span>
+                </div>
+            </div>
+        </div>
+        <div class="ui tiny modal" id="connlost">
+            <div class="header bodyfont cardinal" style="padding: 1.5%; background-color: #00c080; color: #ffffff;">Connection lost</div>
+            <div class="content" style="padding: 1.5%;">
+                <p class="bodyfont" style="line-height: 1.25; text-align: justify; font-size: 15px;">
+                    The web interface is no longer connected to the driver service endpoint.
+                    Please reload the page and try establishing the connection again.
+                </p>
+            </div>
+            <div class="actions cardinal" style="padding: 1.5%; background-color: #00c080;">
+                <div class="ui mini button bodyfont" onclick="location.reload();">
+                    <span><i style="color: #008080;" class="redo icon"></i></span>
+                </div>
+            </div>
+        </div>
+        <div class="ui tiny modal" id="procinfo">
+            <div class="header bodyfont cardinal" style="padding: 1.5%; background-color: #00c080; color: #ffffff;">Process information</div>
+            <div class="content" style="padding: 1.5%;">
+                <div class="cuntainer" style="height: 50vh; overflow: auto;">
+                    <table class="ui compact fixed table">
+                        <thead>
+                            <tr>
+                                <th style="text-align: center;" colspan="2">
+                                    <div class="ui statistic"><div class="value dataread" id="proc-info-iden">#0</div><div class="label bodyfont" id="proc-info-name">Invalid</div></div>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td style="text-align: center;">
+                                    <div class="ui small statistic"><div class="value dataread" id="proc-info-memo-perc">0%</div><div class="label bodyfont">Memory usage</div></div>
+                                </td>
+                                <td style="text-align: center;">
+                                    <div class="ui small statistic"><div class="value dataread" id="proc-info-cpuu-perc">0%</div><div class="label bodyfont">CPU usage</div></div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <table class="ui compact fixed table">
+                        <tbody>
+                            <tr>
+                                <td class="bodyfont" style="font-weight: bold;">Username</td>
+                                <td class="bodyfont" id="proc-info-data-user">Invalid</td>
+                            </tr>
+                            <tr>
+                                <td class="bodyfont" style="font-weight: bold;">Created on</td>
+                                <td class="bodyfont" id="proc-info-data-time">Invalid</td>
+                            </tr>
+                            <tr>
+                                <td class="bodyfont" style="font-weight: bold;">Current state</td>
+                                <td class="bodyfont" id="proc-info-data-stat">Invalid</td>
+                            </tr>
+                            <tr>
+                                <td class="bodyfont" style="font-weight: bold;">Terminal</td>
+                                <td class="bodyfont" id="proc-info-data-term">Invalid</td>
+                            </tr>
+                            <tr>
+                                <td class="bodyfont" style="font-weight: bold;">Last updated on</td>
+                                <td class="bodyfont" id="proc-info-data-last">Invalid</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <table class="ui compact fixed table">
+                        <thead>
+                            <tr>
+                                <th colspan="2" style="text-align: center;" class="bodyfont">Memory information</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="bodyfont" style="font-weight: bold;">Resident set size</td>
+                                <td class="bodyfont" id="proc-info-memo-rsts">0 bytes</td>
+                            </tr>
+                            <tr>
+                                <td class="bodyfont" style="font-weight: bold;">Virtual memory size</td>
+                                <td class="bodyfont" id="proc-info-memo-vmsz">0 bytes</td>
+                            </tr>
+                            <tr>
+                                <td class="bodyfont" style="font-weight: bold;">Shared size</td>
+                                <td class="bodyfont" id="proc-info-memo-shsz">0 bytes</td>
+                            </tr>
+                            <tr>
+                                <td class="bodyfont" style="font-weight: bold;">Text resident size</td>
+                                <td class="bodyfont" id="proc-info-memo-text">0 bytes</td>
+                            </tr>
+                            <tr>
+                                <td class="bodyfont" style="font-weight: bold;">Data resident size</td>
+                                <td class="bodyfont" id="proc-info-memo-data">0 bytes</td>
+                            </tr>
+                            <tr>
+                                <td class="bodyfont" style="font-weight: bold;">Shared libraries size</td>
+                                <td class="bodyfont" id="proc-info-memo-libs">0 bytes</td>
+                            </tr>
+                            <tr>
+                                <td class="bodyfont" style="font-weight: bold;">Dirty pages</td>
+                                <td class="bodyfont" id="proc-info-memo-dirt">0 pages</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <table class="ui compact fixed table">
+                        <thead>
+                            <tr>
+                                <th colspan="5" style="text-align: center;" class="bodyfont">CPU times</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="bodyfont" style="text-align: center; font-weight: bold;">USER</td>
+                                <td class="bodyfont" style="text-align: center; font-weight: bold;">SYST</td>
+                                <td class="bodyfont" style="text-align: center; font-weight: bold;">CUSR</td>
+                                <td class="bodyfont" style="text-align: center; font-weight: bold;">CSYS</td>
+                                <td class="bodyfont" style="text-align: center; font-weight: bold;">IOWT</td>
+                            </tr>
+                            <tr>
+                                <td class="bodyfont" style="text-align: center;" id="proc-info-time-user">0</td>
+                                <td class="bodyfont" style="text-align: center;" id="proc-info-time-syst">0</td>
+                                <td class="bodyfont" style="text-align: center;" id="proc-info-time-cusr">0</td>
+                                <td class="bodyfont" style="text-align: center;" id="proc-info-time-csys">0</td>
+                                <td class="bodyfont" style="text-align: center;" id="proc-info-time-iowt">0</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <table class="ui compact fixed table">
+                        <thead>
+                            <tr>
+                                <th colspan="2" style="text-align: center;" class="bodyfont">Context switches</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="bodyfont" style="text-align: center; font-weight: bold;">VOLUNTARY</td>
+                                <td class="bodyfont" style="text-align: center; font-weight: bold;">INVOLUNTARY</td>
+                            </tr>
+                            <tr>
+                                <td class="bodyfont" style="text-align: center;" id="proc-info-ctxs-volu">0</td>
+                                <td class="bodyfont" style="text-align: center;" id="proc-info-ctxs-invo">0</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <table class="ui compact fixed table">
+                        <thead>
+                            <tr><th colspan="3" style="text-align: center;" class="bodyfont">Group IDs</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="bodyfont" style="text-align: center; font-weight: bold;">EFTV</td>
+                                <td class="bodyfont" style="text-align: center; font-weight: bold;">REAL</td>
+                                <td class="bodyfont" style="text-align: center; font-weight: bold;">SAVE</td>
+                            </tr>
+                            <tr>
+                                <td class="bodyfont" style="text-align: center;" id="proc-info-gids-eftv">0</td>
+                                <td class="bodyfont" style="text-align: center;" id="proc-info-gids-real">0</td>
+                                <td class="bodyfont" style="text-align: center;" id="proc-info-gids-save">0</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <table class="ui compact fixed table">
+                        <thead>
+                            <tr>
+                                <th colspan="3" style="text-align: center;" class="bodyfont">User IDs</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="bodyfont" style="text-align: center; font-weight: bold;">EFTV</td>
+                                <td class="bodyfont" style="text-align: center; font-weight: bold;">REAL</td>
+                                <td class="bodyfont" style="text-align: center; font-weight: bold;">SAVE</td>
+                            </tr>
+                            <tr>
+                                <td class="bodyfont" style="text-align: center;" id="proc-info-uids-eftv">0</td>
+                                <td class="bodyfont" style="text-align: center;" id="proc-info-uids-real">0</td>
+                                <td class="bodyfont" style="text-align: center;" id="proc-info-uids-save">0</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="actions cardinal" style="padding: 1.5%; background-color: #00c080;">
+                <div class="ui mini button bodyfont" id="proc-mode-term">
+                    <span><i style="color: #008080; margin: 0px;" class="trash icon"></i></span>
+                </div>
+                <div class="ui mini button bodyfont" id="proc-mode-kill">
+                    <span><i style="color: #008080; margin: 0px;" class="ban icon"></i></span>
+                </div>
+                <div class="ui mini button bodyfont" id="proc-mode-susp">
+                    <span><i style="color: #008080; margin: 0px;" class="pause icon"></i></span>
+                </div>
+                <div class="ui mini button bodyfont" id="proc-mode-resm">
+                    <span><i style="color: #008080; margin: 0px;" class="play icon"></i></span>
+                </div>
+                <div class="ui mini button bodyfont" onclick="$('#procinfo').modal('hide');">
+                    <span><i style="color: #008080; margin: 0px;" class="reply icon"></i></span>
                 </div>
             </div>
         </div>
