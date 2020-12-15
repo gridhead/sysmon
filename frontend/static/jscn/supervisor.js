@@ -20,7 +20,7 @@ let linestyl = {
     lineWidth: 2
 };
 
-function SwitchTab(head, sect) {
+function SwitchTab (head, sect) {
     let sectlist = {
         "cpuu": {
             "cpuu-usej-ttle": "cpuu-usej-body",
@@ -58,11 +58,11 @@ function SwitchTab(head, sect) {
     $("#" + sectlist[sect][head]).addClass("active");
 }
 
-function AskForWebSocketEndpoint() {
+function AskForAJAXServiceEndpoint () {
     $("#restwarn").modal("setting", "closable", false).modal("show");
 }
 
-function FetchWebSocketEndpoint() {
+function FetchAJAXServiceEndpoint () {
     credjson = {
         "vsonsuri": document.getElementById("vsonsuri").value,
         "passcode": document.getElementById("passcode").value,
@@ -71,7 +71,7 @@ function FetchWebSocketEndpoint() {
     OverviewGraphAJAX();
 }
 
-async function OverviewGraphAJAX() {
+async function OverviewGraphAJAX () {
     let cpusgraf = new SmoothieChart(grafstyl);
     let physgraf = new SmoothieChart(grafstyl);
     let swapgraf = new SmoothieChart(grafstyl);
@@ -99,7 +99,7 @@ async function OverviewGraphAJAX() {
     let cyclline = [];
     let cpuquant = 0;
     await $.getJSON(JSON.parse(sessionStorage.getItem("vsoniden"))["vsonsuri"] + "deadsync",
-        function(data) {
+        function (data) {
             let deadobjc = data;
             cpuquant = parseInt(deadobjc["cpuquant"]);
             // Rendered DOM for every temperature sensor and setting stage for live updating
@@ -268,7 +268,9 @@ async function OverviewGraphAJAX() {
                 $("#wrngiden").modal("setting", "closable", false).modal("show");
             }
         }
-    );
+    ).fail(function (err, status) {
+        $("#connlost").modal("setting", "closable", false).modal("show");
+    });
     for (let indx = 0; indx < cpuquant; indx ++) {
         $("#cpuu-time-tabl-cont").append(
             "<tr>" +
@@ -368,7 +370,6 @@ async function OverviewGraphAJAX() {
                     }
                     // Disk usage body updater
                     for (let indx in liveobjc["diousage"]) {
-                        //console.log("disk-usej-name-" + indx);
                         document.getElementById("disk-usej-name-" + indx).innerText = indx;
                         document.getElementById("disk-usej-bstm-" + indx).innerText = liveobjc["diousage"][indx]["busy_time"];
                         document.getElementById("disk-usej-rdct-" + indx).innerText = liveobjc["diousage"][indx]["read_count"];
@@ -379,6 +380,19 @@ async function OverviewGraphAJAX() {
                         document.getElementById("disk-usej-wrtm-" + indx).innerText = liveobjc["diousage"][indx]["write_time"];
                         document.getElementById("disk-usej-rdmc-" + indx).innerText = liveobjc["diousage"][indx]["read_merged_count"];
                         document.getElementById("disk-usej-wrmc-" + indx).innerText = liveobjc["diousage"][indx]["write_merged_count"];
+                    }
+                    // Process listing live rendering
+                    document.getElementById("proc-tabl-dvsn").innerHTML = "<table class='ui fixed compact table'>" + "<tbody id='proc-tabl-main'>" + "</tbody>" + "</table>";
+                    for (let indx in liveobjc["procinfo"]) {
+                        $("#proc-tabl-main").append(
+                            "<tr>" +
+                            "<td class='two wide'>" + indx + "</td>" +
+                            "<td class='six wide' style='font-weight: bold;'><span onclick='ViewProcessInfo(\"" + indx + "\")'>" + liveobjc["procinfo"][indx]["name"] + "</span></td>" +
+                            "<td class='four wide'>" + liveobjc["procinfo"][indx]["username"] + "</td>" +
+                            "<td class='two wide'>" + parseFloat(liveobjc["procinfo"][indx]["memory_percent"]).toPrecision(3) + "%</td>" +
+                            "<td class='two wide'>" + parseFloat(liveobjc["procinfo"][indx]["cpu_percent"]).toPrecision(3) + "%</td>" +
+                            "</tr>"
+                        );
                     }
                     // Stream graphs to DOM Canvas elements
                     cpusgraf.streamTo(document.getElementById("cpusover"), 1000);
@@ -407,7 +421,157 @@ async function OverviewGraphAJAX() {
                 } else {
                     $("#wrngiden").modal("setting", "closable", false).modal("show");
                 }
+            }).fail(function () {
+                $("#connlost").modal("setting", "closable", false).modal("show");
             }
         );
     }
+}
+
+function ViewProcessInfo (prociden) {
+    $.getJSON(JSON.parse(sessionStorage.getItem("vsoniden"))["vsonsuri"] + "procinfo", {
+        prociden: prociden
+    }, function (data) {
+        document.getElementById("proc-info-name").innerText = data["name"];
+        document.getElementById("proc-info-iden").innerText = "#" + data["pid"];
+        document.getElementById("proc-info-cpuu-perc").innerText = parseFloat(data["cpu_percent"]).toPrecision(3) + "%";
+        document.getElementById("proc-info-memo-perc").innerText = parseFloat(data["memory_percent"]).toPrecision(3) + "%";
+        // Data section renderer
+        document.getElementById("proc-info-data-user").innerText = data["username"];
+        document.getElementById("proc-info-data-time").innerText = data["create_time"];
+        document.getElementById("proc-info-data-stat").innerText = data["status"];
+        document.getElementById("proc-info-data-term").innerText = data["terminal"];
+        document.getElementById("proc-info-data-last").innerText = new Date().toLocaleString();
+        // Memory info renderer
+        document.getElementById("proc-info-memo-rsts").innerText = data["memory_info"]["rss"] + " bytes";
+        document.getElementById("proc-info-memo-vmsz").innerText = data["memory_info"]["vms"] + " bytes";
+        document.getElementById("proc-info-memo-shsz").innerText = data["memory_info"]["shared"] + " bytes";
+        document.getElementById("proc-info-memo-text").innerText = data["memory_info"]["text"] + " bytes";
+        document.getElementById("proc-info-memo-data").innerText = data["memory_info"]["data"] + " bytes";
+        document.getElementById("proc-info-memo-libs").innerText = data["memory_info"]["lib"] + " bytes";
+        document.getElementById("proc-info-memo-dirt").innerText = data["memory_info"]["dirty"] + " pages";
+        // CPU times renderer
+        document.getElementById("proc-info-time-user").innerText = data["cpu_times"]["user"];
+        document.getElementById("proc-info-time-syst").innerText = data["cpu_times"]["system"];
+        document.getElementById("proc-info-time-cusr").innerText = data["cpu_times"]["children_user"];
+        document.getElementById("proc-info-time-csys").innerText = data["cpu_times"]["children_system"];
+        document.getElementById("proc-info-time-iowt").innerText = data["cpu_times"]["iowait"];
+        // Context switch renderer
+        document.getElementById("proc-info-ctxs-volu").innerText = data["num_ctx_switches"]["voluntary"];
+        document.getElementById("proc-info-ctxs-volu").innerText = data["num_ctx_switches"]["involuntary"];
+        // Group IDs renderer
+        document.getElementById("proc-info-gids-eftv").innerText = data["gids"]["effective"];
+        document.getElementById("proc-info-gids-real").innerText = data["gids"]["real"];
+        document.getElementById("proc-info-gids-save").innerText = data["gids"]["saved"];
+        // User IDs renderer
+        document.getElementById("proc-info-uids-eftv").innerText = data["uids"]["effective"];
+        document.getElementById("proc-info-uids-real").innerText = data["uids"]["real"];
+        document.getElementById("proc-info-uids-save").innerText = data["uids"]["saved"];
+        document.getElementById("proc-mode-kill").setAttribute("onclick", "KillProcess(" + data["pid"] + ")");
+        document.getElementById("proc-mode-term").setAttribute("onclick", "TerminateProcess(" + data["pid"] + ")");
+        document.getElementById("proc-mode-susp").setAttribute("onclick", "SuspendProcess(" + data["pid"] + ")");
+        document.getElementById("proc-mode-resm").setAttribute("onclick", "ResumeProcess(" + data["pid"] + ")");
+        $("#procinfo").modal("setting", "closable", false).modal("show");
+    }).fail(function () {
+        $("body").toast({
+            position: "bottom right",
+            message: "Process information could not be retrieved"
+        });
+    });
+}
+
+function KillProcess (prociden) {
+    $.getJSON(JSON.parse(sessionStorage.getItem("vsoniden"))["vsonsuri"] + "killproc", {
+        prociden: prociden
+    }, function (data) {
+        if (data["retnmesg"] === true) {
+            $("body").toast({
+                position: "bottom right",
+                message: "Process kill was conveyed"
+            });
+        } else {
+            $("body").toast({
+                position: "bottom right",
+                message: "Process kill could not be conveyed"
+            });
+        }
+    }).fail(function () {
+        $("body").toast({
+            position: "bottom right",
+            message: "Process kill could not be conveyed"
+        });
+    });
+    $("#procinfo").modal("hide");
+}
+
+function TerminateProcess (prociden) {
+    $.getJSON(JSON.parse(sessionStorage.getItem("vsoniden"))["vsonsuri"] + "termproc", {
+        prociden: prociden
+    }, function (data) {
+        if (data["retnmesg"] === true) {
+            $("body").toast({
+                position: "bottom right",
+                message: "Process termination was conveyed"
+            });
+        } else {
+            $("body").toast({
+                position: "bottom right",
+                message: "Process termination could not be conveyed"
+            });
+        }
+    }).fail(function () {
+        $("body").toast({
+            position: "bottom right",
+            message: "Process termination could not be conveyed"
+        });
+    });
+    $("#procinfo").modal("hide");
+}
+
+function SuspendProcess (prociden) {
+    $.getJSON(JSON.parse(sessionStorage.getItem("vsoniden"))["vsonsuri"] + "suspproc", {
+        prociden: prociden
+    }, function (data) {
+        if (data["retnmesg"] === true) {
+            $("body").toast({
+                position: "bottom right",
+                message: "Process suspension was conveyed"
+            });
+        } else {
+            $("body").toast({
+                position: "bottom right",
+                message: "Process suspension could not be conveyed"
+            });
+        }
+    }).fail(function () {
+        $("body").toast({
+            position: "bottom right",
+            message: "Process suspension could not be conveyed"
+        });
+    });
+    $("#procinfo").modal("hide");
+}
+
+function ResumeProcess (prociden) {
+    $.getJSON(JSON.parse(sessionStorage.getItem("vsoniden"))["vsonsuri"] + "resmproc", {
+        prociden: prociden
+    }, function (data) {
+        if (data["retnmesg"] === true) {
+            $("body").toast({
+                position: "bottom right",
+                message: "Process resuming was conveyed"
+            });
+        } else {
+            $("body").toast({
+                position: "bottom right",
+                message: "Process resuming could not be conveyed"
+            });
+        }
+    }).fail(function () {
+        $("body").toast({
+            position: "bottom right",
+            message: "Process resuming could not be conveyed"
+        });
+    });
+    $("#procinfo").modal("hide");
 }
