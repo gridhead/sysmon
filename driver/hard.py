@@ -32,6 +32,86 @@ class ConnectionManager():
         return retndata
 
 
+class ProcessHandler():
+    def __init__(self, prociden):
+        self.prociden = prociden
+
+    def ReturnProcessInfo(self):
+        procstmp = psutil.Process(self.prociden).as_dict()
+        retndata = {
+            "pid": procstmp["pid"],
+            "username": procstmp["username"],
+            "uids": {
+                "real": procstmp["uids"].real,
+                "effective": procstmp["uids"].effective,
+                "saved": procstmp["uids"].saved
+            },
+            "memory_percent": procstmp["memory_percent"],
+            "name": procstmp["name"],
+            "create_time": time.ctime(procstmp["create_time"]),
+            "num_ctx_switches": {
+                "voluntary": procstmp["num_ctx_switches"].voluntary,
+                "involuntary": procstmp["num_ctx_switches"].involuntary,
+            },
+            "cpu_percent": procstmp["cpu_percent"],
+            "cpu_times": {
+                "user": procstmp["cpu_times"].user,
+                "system": procstmp["cpu_times"].system,
+                "children_user": procstmp["cpu_times"].children_user,
+                "children_system": procstmp["cpu_times"].children_system,
+                "iowait": procstmp["cpu_times"].iowait,
+            },
+            "memory_info": {
+                "rss": procstmp["memory_info"].rss,
+                "vms": procstmp["memory_info"].vms,
+                "shared": procstmp["memory_info"].shared,
+                "text": procstmp["memory_info"].text,
+                "lib": procstmp["memory_info"].lib,
+                "data": procstmp["memory_info"].data,
+                "dirty": procstmp["memory_info"].dirty,
+            },
+            "status": procstmp["status"],
+            "num_threads": procstmp["num_threads"],
+            "gids": {
+                "real": procstmp["gids"].real,
+                "effective": procstmp["gids"].effective,
+                "saved": procstmp["gids"].saved,
+            },
+            "terminal": procstmp["terminal"]
+        }
+        return retndata
+
+    def GetSingleProcess(self, prociden):
+        try:
+            return psutil.Process(int(prociden))
+        except Exception as e:
+            return str(e)
+
+    def ProcessKiller(self):
+        singproc = self.GetSingleProcess(self.prociden)
+        if type(singproc) == psutil.Process:
+            singproc.kill()
+        return {"retnmesg": True}
+
+    def ProcessTerminator(self):
+        singproc = self.GetSingleProcess(self.prociden)
+        if type(singproc) == psutil.Process:
+            singproc.terminate()
+        return {"retnmesg": True}
+
+    def ProcessSuspender(self):
+        singproc = self.GetSingleProcess(self.prociden)
+        if type(singproc) == psutil.Process:
+            singproc.suspend()
+        return {"retnmesg": True}
+
+    def ProcessResumer(self):
+        singproc = self.GetSingleProcess(self.prociden)
+        if type(singproc) == psutil.Process:
+            singproc.resume()
+        return {"retnmesg": True}
+
+
 class LiveUpdatingElements():
     def __init__(self, passcode):
         self.passcode = passcode
@@ -147,55 +227,16 @@ class LiveUpdatingElements():
             retndata[indx] = singlist
         return retndata
 
-    def GetProcessInfo(self):
-        procstmp = psutil.process_iter(["pid", "cpu_affinity", "cpu_percent",
-                                         "cpu_times", "create_time", "gids",
-                                         "memory_info", "memory_percent", "name",
-                                         "num_ctx_switches", "num_threads", "status",
-                                         "terminal", "threads", "uids",
-                                         "username"])
+    def GetProcessListingInfo(self):
+        procstmp = psutil.process_iter(["pid", "name", "username", "memory_percent", "cpu_percent"])
         retndata = {}
         for indx in procstmp:
             singlist = {
-                "username": indx.info["username"],
                 "pid": indx.info["pid"],
-                "uid": {
-                    "real": indx.info["uids"].real,
-                    "effective": indx.info["uids"].effective,
-                    "saved": indx.info["uids"].saved,
-                },
-                "memory_percent": indx.info["memory_percent"],
                 "name": indx.info["name"],
-                "create_time": time.ctime(indx.info["create_time"]),
-                "num_ctx_switches": {
-                    "voluntary": indx.info["num_ctx_switches"].voluntary,
-                    "involuntary": indx.info["num_ctx_switches"].involuntary,
-                },
+                "username": indx.info["username"],
+                "memory_percent": indx.info["memory_percent"],
                 "cpu_percent": indx.info["cpu_percent"],
-                "cpu_times": {
-                    "user": indx.info["cpu_times"].user,
-                    "system": indx.info["cpu_times"].system,
-                    "children_user": indx.info["cpu_times"].children_user,
-                    "children_system": indx.info["cpu_times"].children_system,
-                    "iowait": indx.info["cpu_times"].iowait,
-                },
-                "memory_info": {
-                    "rss": indx.info["memory_info"].rss,
-                    "vms": indx.info["memory_info"].vms,
-                    "shared": indx.info["memory_info"].shared,
-                    "text": indx.info["memory_info"].text,
-                    "lib": indx.info["memory_info"].lib,
-                    "data": indx.info["memory_info"].data,
-                    "dirty": indx.info["memory_info"].dirty,
-                },
-                "status": indx.info["status"],
-                "num_threads": indx.info["num_threads"],
-                "gids": {
-                    "real": indx.info["gids"].real,
-                    "effective": indx.info["gids"].effective,
-                    "saved": indx.info["gids"].saved,
-                },
-                "terminal": indx.info["terminal"],
             }
             retndata[indx.info["pid"]] = singlist
         return retndata
@@ -256,7 +297,7 @@ class LiveUpdatingElements():
             "cpuclock": self.GetCPUClockSpeed(),
             "diousage": self.GetDiskIOUsage(),
             "netusage": self.GetNetworkIOUsage(),
-            "procinfo": self.GetProcessInfo(),
+            "procinfo": self.GetProcessListingInfo(),
             "sensread": {
                 "senstemp": self.GetSensorsTemperature(),
                 "fanspeed": self.GetSensorsFanSpeed(),
@@ -341,7 +382,7 @@ class DeadUpdatingElements(LiveUpdatingElements):
             "netaddrs": self.GetNetworkIFAddresses(),
             "netstats": self.GetNetworkStatistics(),
             "boottime": self.GetBootTime(),
-            "procinfo": self.GetProcessInfo(),
+            "procinfo": self.GetProcessListingInfo(),
             "sensread": {
                 "senstemp": self.GetSensorsTemperature(),
                 "fanspeed": self.GetSensorsFanSpeed(),
