@@ -105,7 +105,7 @@ async function OverviewGraphAJAX () {
             // Rendered DOM for every temperature sensor and setting stage for live updating
             for (let indx in deadobjc["sensread"]["senstemp"]) {
                 $("#sens-thrm-body").append(
-                    "<table class='ui compact fixed table'>" +
+                    "<table class='ui teal compact fixed table'>" +
                     "<thead><tr><th colspan='4'><h1 class='bodyfont' style='color: #008080;'>" + indx + "</h1></th></tr></thead>" +
                     "<tbody id='sens-thrm-devc-" + indx + "'>" + "</tbody>" + "</table>"
                 );
@@ -122,7 +122,7 @@ async function OverviewGraphAJAX () {
             // Rendered DOM for every fan and setting stage for live updating
             for (let indx in deadobjc["sensread"]["fanspeed"]) {
                 $("#sens-fans-body").append(
-                    "<table class='ui fixed compact table'>" +
+                    "<table class='ui teal fixed compact table'>" +
                     "<thead><tr><th colspan='2'><h1 class='bodyfont' style='color: #008080;'>" + indx + "</h1></th></tr></thead>" +
                     "<tbody id='sens-fans-devc-" + indx + "'></tbody>" + "</table>"
                 );
@@ -138,7 +138,7 @@ async function OverviewGraphAJAX () {
             // Rendered DOM for every disk partition and setting stage for live updating
             for (let indx in deadobjc["diousage"]) {
                 $("#disk-usej-body").append(
-                    "<table class='ui fixed compact tablet stackable table' id='disk-usej-tabl-" + indx + "'>" + "<thead>" + "<tr>" +
+                    "<table class='ui teal fixed compact tablet stackable table' id='disk-usej-tabl-" + indx + "'>" + "<thead>" + "<tr>" +
                     "<th colspan='3'><h2 class='bodyfont' id='disk-usej-name-" + indx + "' style='color: #008080;'>" + indx + "</h2></th>" +
                     "<th><div class='ui tiny horizontal statistic'><div class='value dataread' id='disk-usej-bstm-" + indx + "'>0</div><div class='label bodyfont'>BSTM</div></div></th>" +
                     "</tr>" + "</thead>" + "<tbody>" + "<tr>" +
@@ -157,7 +157,7 @@ async function OverviewGraphAJAX () {
             // Rendered DOM for every network interface card and setting stage for live updating
             for (let indx in deadobjc["netusage"]) {
                 $("#netw-usej-body").append(
-                    "<table class='ui definition fixed compact table'>" + "<tbody>" + "<tr>" +
+                    "<table class='ui teal definition fixed compact table'>" + "<tbody>" + "<tr>" +
                     "<td rowspan='2' class='four wide'>" + "<h1 class='bodyfont' id='netw-usej-name-" + indx + "' style='color: #008080; margin: 0px;'>" + indx + "</h1>" +
                     "<pre style='margin: 0px;' id='disk-part-fsys-0'>SNIC</pre>" + "</td>" +
                     "<td class='six wide'><div class='ui teal horizontal label monofont'>BSNT</div><span class='monofont'><span id='netw-usej-bsnt-" + indx + "'>0</span>&nbsp;bytes</span></td>" +
@@ -171,7 +171,7 @@ async function OverviewGraphAJAX () {
             // One-time rendering of network interface addresses
             for (let indx in deadobjc["netaddrs"]) {
                 $("#netw-addr-body").append(
-                    "<table class='ui fixed compact tablet stackable table'>" +
+                    "<table class='ui teal fixed compact tablet stackable table'>" +
                     "<thead><tr><th colspan='4'><h1 style='color: #008080;' class='bodyfont'>" + indx + "</h1></th></tr></thead>" +
                     "<tbody id='netw-addr-tabl-" + indx + "'>" + "</tbody>" + "</table>"
                 );
@@ -189,7 +189,7 @@ async function OverviewGraphAJAX () {
             // One-time rendering of network statistics
             for (let indx in deadobjc["netstats"]) {
                 $("#netw-stat-body").append(
-                    "<table class='ui fixed definition compact table'>" +
+                    "<table class='ui teal fixed definition compact table'>" +
                     "<tbody>" +
                     "<tr>" +
                     "<td rowspan='2' class='eight wide'>" +
@@ -209,7 +209,7 @@ async function OverviewGraphAJAX () {
             // One-time rendering of disk partitions
             for (let indx = 0; indx < deadobjc.diskpart.length; indx ++) {
                 $("#disk-part-body").append(
-                    "<table class='ui definition fixed compact table'>" + "<tbody>" + "<tr>" + "<td rowspan='2' class='four wide'>" +
+                    "<table class='ui teal definition fixed compact table'>" + "<tbody>" + "<tr>" + "<td rowspan='2' class='four wide'>" +
                     "<h1 class='bodyfont' style='margin: 0px; color: #008080;' id='disk-part-name-" + indx + "'>" + deadobjc.diskpart[indx]["device"] + "</h1>" +
                     "<pre style='margin: 0px;' id='disk-part-fsys-" + indx + "'>" + deadobjc.diskpart[indx]["fstype"] + "</pre>" + "</td>" +
                     "<td class='twelve wide'><div class='ui teal horizontal label monofont'>MLOC</div><span id='disk-part-mloc-" + indx + "' class='monofont'>" + deadobjc.diskpart[indx]["mountpoint"] + "</span></td>" +
