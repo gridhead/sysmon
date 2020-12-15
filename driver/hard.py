@@ -1,4 +1,4 @@
-'''
+"""
 ##########################################################################
 *
 *   Copyright © 2019-2020 Akashdeep Dhar <t0xic0der@fedoraproject.org>
@@ -17,26 +17,27 @@
 *   along with this program.  If not, see <https://www.gnu.org/licenses/>.
 *
 ##########################################################################
-'''
+"""
 
 import getpass
 import os
-import psutil
-from secrets import choice
 import time
+from secrets import choice
+
+import psutil
 
 
-class ConnectionManager():
-    def PassphraseGenerator(self, lent=16):
+class ConnectionManager:
+    def passphrase_generator(self, lent=16):
         retndata = "".join(choice("ABCDEF0123456789") for i in range(lent))
         return retndata
 
 
-class ProcessHandler():
+class ProcessHandler:
     def __init__(self, prociden):
         self.prociden = prociden
 
-    def ReturnProcessInfo(self):
+    def return_process_info(self):
         procstmp = psutil.Process(self.prociden).as_dict()
         retndata = {
             "pid": procstmp["pid"],
@@ -81,42 +82,39 @@ class ProcessHandler():
         }
         return retndata
 
-    def GetSingleProcess(self, prociden):
+    def get_single_process(self):
         try:
-            return psutil.Process(int(prociden))
+            return psutil.Process(int(self.prociden))
         except Exception as e:
             return str(e)
 
-    def ProcessKiller(self):
-        singproc = self.GetSingleProcess(self.prociden)
+    def process_killer(self):
+        singproc = self.get_single_process()
         if type(singproc) == psutil.Process:
             singproc.kill()
         return {"retnmesg": True}
 
-    def ProcessTerminator(self):
-        singproc = self.GetSingleProcess(self.prociden)
+    def process_terminator(self):
+        singproc = self.get_single_process()
         if type(singproc) == psutil.Process:
             singproc.terminate()
         return {"retnmesg": True}
 
-    def ProcessSuspender(self):
-        singproc = self.GetSingleProcess(self.prociden)
+    def process_suspender(self):
+        singproc = self.get_single_process()
         if type(singproc) == psutil.Process:
             singproc.suspend()
         return {"retnmesg": True}
 
-    def ProcessResumer(self):
-        singproc = self.GetSingleProcess(self.prociden)
+    def process_resumer(self):
+        singproc = self.get_single_process()
         if type(singproc) == psutil.Process:
             singproc.resume()
         return {"retnmesg": True}
 
 
-class LiveUpdatingElements():
-    def __init__(self, passcode):
-        self.passcode = passcode
-
-    def GetVirtualMemoryData(self):
+class LiveUpdatingElements:
+    def get_virtual_memory_data(self):
         bruhdata = psutil.virtual_memory()
         retndata = {
             "total": bruhdata.total,
@@ -132,7 +130,7 @@ class LiveUpdatingElements():
         }
         return retndata
 
-    def GetSwapMemoryInfo(self):
+    def get_swap_memory_info(self):
         swapinfo = psutil.swap_memory()
         retndata = {
             "total": swapinfo.total,
@@ -144,7 +142,7 @@ class LiveUpdatingElements():
         }
         return retndata
 
-    def GetCPUStateTimes(self):
+    def get_cpu_state_times(self):
         timedata = psutil.cpu_times(percpu=True)
         retndata = {}
         for indx in range(len(timedata)):
@@ -163,14 +161,14 @@ class LiveUpdatingElements():
             retndata[indx] = elemobjc
         return retndata
 
-    def GetCPUUsagePercent(self):
+    def get_cpu_usage_percent(self):
         cpuprcnt = psutil.cpu_percent(percpu=True)
         retndata = {}
         for indx in range(len(cpuprcnt)):
             retndata[indx] = cpuprcnt[indx]
         return retndata
 
-    def GetCPUStatistics(self):
+    def get_cpu_statistics(self):
         cpustats = psutil.cpu_stats()
         retndata = {
             "ctx_switches": cpustats.ctx_switches,
@@ -180,7 +178,7 @@ class LiveUpdatingElements():
         }
         return retndata
 
-    def GetCPUClockSpeed(self):
+    def get_cpu_clock_speed(self):
         cpuclock = psutil.cpu_freq(percpu=True)
         retndata = {}
         for indx in range(len(cpuclock)):
@@ -192,7 +190,7 @@ class LiveUpdatingElements():
             retndata[indx] = singlist
         return retndata
 
-    def GetDiskIOUsage(self):
+    def get_disk_io_usage(self):
         diousage = psutil.disk_io_counters(perdisk=True)
         retndata = {}
         for indx in diousage.keys():
@@ -210,7 +208,7 @@ class LiveUpdatingElements():
             retndata[indx] = singlist
         return retndata
 
-    def GetNetworkIOUsage(self):
+    def get_network_io_usage(self):
         netusage = psutil.net_io_counters(pernic=True)
         retndata = {}
         for indx in netusage.keys():
@@ -227,7 +225,7 @@ class LiveUpdatingElements():
             retndata[indx] = singlist
         return retndata
 
-    def GetProcessListingInfo(self):
+    def get_process_listing_info(self):
         procstmp = psutil.process_iter(["pid", "name", "username", "memory_percent", "cpu_percent"])
         retndata = {}
         for indx in procstmp:
@@ -241,7 +239,7 @@ class LiveUpdatingElements():
             retndata[indx.info["pid"]] = singlist
         return retndata
 
-    def GetSensorsTemperature(self):
+    def get_sensors_temperature(self):
         senstemp = psutil.sensors_temperatures(fahrenheit=False)
         retndata = {}
         for indx in senstemp.keys():
@@ -256,7 +254,7 @@ class LiveUpdatingElements():
                 retndata[indx].append(singdict)
         return retndata
 
-    def GetSensorsFanSpeed(self):
+    def get_sensors_fan_speed(self):
         senstemp = psutil.sensors_fans()
         retndata = {}
         for indx in senstemp.keys():
@@ -269,7 +267,7 @@ class LiveUpdatingElements():
                 retndata[indx].append(singdict)
         return retndata
 
-    def GetSensorsBatteryStatus(self):
+    def get_sensors_battery_status(self):
         retndata = {}
         try:
             battstat = psutil.sensors_battery()
@@ -286,32 +284,28 @@ class LiveUpdatingElements():
             }
         return retndata
 
-    def ReturnLiveData(self):
+    def return_live_data(self):
         jsonobjc = {
-            "passcode": self.passcode,
-            "virtdata": self.GetVirtualMemoryData(),
-            "swapinfo": self.GetSwapMemoryInfo(),
-            "cpustats": self.GetCPUStatistics(),
-            "cputimes": self.GetCPUStateTimes(),
-            "cpuprcnt": self.GetCPUUsagePercent(),
-            "cpuclock": self.GetCPUClockSpeed(),
-            "diousage": self.GetDiskIOUsage(),
-            "netusage": self.GetNetworkIOUsage(),
-            "procinfo": self.GetProcessListingInfo(),
+            "virtdata": self.get_virtual_memory_data(),
+            "swapinfo": self.get_swap_memory_info(),
+            "cpustats": self.get_cpu_statistics(),
+            "cputimes": self.get_cpu_state_times(),
+            "cpuprcnt": self.get_cpu_usage_percent(),
+            "cpuclock": self.get_cpu_clock_speed(),
+            "diousage": self.get_disk_io_usage(),
+            "netusage": self.get_network_io_usage(),
+            "procinfo": self.get_process_listing_info(),
             "sensread": {
-                "senstemp": self.GetSensorsTemperature(),
-                "fanspeed": self.GetSensorsFanSpeed(),
-                "battstat": self.GetSensorsBatteryStatus(),
+                "senstemp": self.get_sensors_temperature(),
+                "fanspeed": self.get_sensors_fan_speed(),
+                "battstat": self.get_sensors_battery_status(),
             }
         }
         return jsonobjc
 
 
 class DeadUpdatingElements(LiveUpdatingElements):
-    def __init__(self, passcode):
-        self.passcode = passcode
-
-    def GetOSUnameData(self):
+    def get_os_uname_data(self):
         unamdata = os.uname()
         retndata = {
             "System name": unamdata.sysname + " " + unamdata.release,
@@ -321,11 +315,11 @@ class DeadUpdatingElements(LiveUpdatingElements):
         }
         return retndata
 
-    def GetCPULogicalCount(self):
+    def get_cpu_logical_count(self):
         cpuquant = psutil.cpu_count(logical=True)
         return str(cpuquant)
 
-    def GetAllDiskPartitions(self):
+    def get_all_disk_partitions(self):
         diskpart = psutil.disk_partitions(all=True)
         retndata = []
         for indx in diskpart:
@@ -338,7 +332,7 @@ class DeadUpdatingElements(LiveUpdatingElements):
             retndata.append(singinfo)
         return retndata
 
-    def GetNetworkStatistics(self):
+    def get_network_statistics(self):
         netstats = psutil.net_if_stats()
         retndata = {}
         for indx in netstats.keys():
@@ -351,7 +345,7 @@ class DeadUpdatingElements(LiveUpdatingElements):
             retndata[indx] = singinfo
         return retndata
 
-    def GetNetworkIFAddresses(self):
+    def get_network_if_addresses(self):
         netaddrs = psutil.net_if_addrs()
         retndata = {}
         for indx in netaddrs.keys():
@@ -366,27 +360,26 @@ class DeadUpdatingElements(LiveUpdatingElements):
                 retndata[indx][jndx.family] = addrobjc
         return retndata
 
-    def GetBootTime(self):
+    def get_boot_time(self):
         boottime = time.ctime(psutil.boot_time())
         return boottime
 
-    def ReturnDeadData(self):
+    def return_dead_data(self):
         jsonobjc = {
-            "passcode": self.passcode,
-            "osnmdata": self.GetOSUnameData(),
-            "cpuquant": self.GetCPULogicalCount(),
-            "cpuclock": self.GetCPUClockSpeed(),
-            "diskpart": self.GetAllDiskPartitions(),
-            "diousage": self.GetDiskIOUsage(),
-            "netusage": self.GetNetworkIOUsage(),
-            "netaddrs": self.GetNetworkIFAddresses(),
-            "netstats": self.GetNetworkStatistics(),
-            "boottime": self.GetBootTime(),
-            "procinfo": self.GetProcessListingInfo(),
+            "osnmdata": self.get_os_uname_data(),
+            "cpuquant": self.get_cpu_logical_count(),
+            "cpuclock": self.get_cpu_clock_speed(),
+            "diskpart": self.get_all_disk_partitions(),
+            "diousage": self.get_disk_io_usage(),
+            "netusage": self.get_network_io_usage(),
+            "netaddrs": self.get_network_if_addresses(),
+            "netstats": self.get_network_statistics(),
+            "boottime": self.get_boot_time(),
+            "procinfo": self.get_process_listing_info(),
             "sensread": {
-                "senstemp": self.GetSensorsTemperature(),
-                "fanspeed": self.GetSensorsFanSpeed(),
-                "battstat": self.GetSensorsBatteryStatus()
+                "senstemp": self.get_sensors_temperature(),
+                "fanspeed": self.get_sensors_fan_speed(),
+                "battstat": self.get_sensors_battery_status()
             }
         }
         return jsonobjc
