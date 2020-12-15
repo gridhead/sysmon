@@ -24,7 +24,7 @@ import json
 import click
 import falcon
 from falcon import __version__ as flcnvers
-from hard import ConnectionManager, DeadUpdatingElements, LiveUpdatingElements
+from hard import ConnectionManager, DeadUpdatingElements, LiveUpdatingElements, ProcessHandler
 from werkzeug import __version__ as wkzgvers
 from werkzeug import serving
 
@@ -46,6 +46,61 @@ class DeadUpdatingEndpoint(object):
 
     def on_get(self, rqst, resp):
         retnjson = DeadUpdatingElements(self.passcode).ReturnDeadData()
+        resp.body = json.dumps(retnjson, ensure_ascii=False)
+        resp.set_header("Access-Control-Allow-Origin", "*")
+        resp.status = falcon.HTTP_200
+
+
+class ProcessHandlingEndpoint(object):
+    def __init__(self, passcode):
+        self.passcode = passcode
+
+    def on_get(self, rqst, resp):
+        retnjson = ProcessHandler(int(rqst.get_param("prociden"))).ReturnProcessInfo()
+        resp.body = json.dumps(retnjson, ensure_ascii=False)
+        resp.set_header("Access-Control-Allow-Origin", "*")
+        resp.status = falcon.HTTP_200
+
+
+class ProcessKillingEndpoint(object):
+    def __init__(self, passcode):
+        self.passcode = passcode
+
+    def on_get(self, rqst, resp):
+        retnjson = ProcessHandler(int(rqst.get_param("prociden"))).ProcessKiller()
+        resp.body = json.dumps(retnjson, ensure_ascii=False)
+        resp.set_header("Access-Control-Allow-Origin", "*")
+        resp.status = falcon.HTTP_200
+
+
+class ProcessTerminatingEndpoint(object):
+    def __init__(self, passcode):
+        self.passcode = passcode
+
+    def on_get(self, rqst, resp):
+        retnjson = ProcessHandler(int(rqst.get_param("prociden"))).ProcessTerminator()
+        resp.body = json.dumps(retnjson, ensure_ascii=False)
+        resp.set_header("Access-Control-Allow-Origin", "*")
+        resp.status = falcon.HTTP_200
+
+
+class ProcessSuspendingEndpoint(object):
+    def __init__(self, passcode):
+        self.passcode = passcode
+
+    def on_get(self, rqst, resp):
+        retnjson = ProcessHandler(int(rqst.get_param("prociden"))).ProcessSuspender()
+        resp.body = json.dumps(retnjson, ensure_ascii=False)
+        resp.set_header("Access-Control-Allow-Origin", "*")
+        resp.status = falcon.HTTP_200
+
+
+class ProcessResumingEndpoint(object):
+    def __init__(self, passcode):
+        self.passcode = passcode
+
+    def on_get(self, rqst, resp):
+        retnjson = ProcessHandler(int(rqst.get_param("prociden"))).ProcessResumer()
         resp.body = json.dumps(retnjson, ensure_ascii=False)
         resp.set_header("Access-Control-Allow-Origin", "*")
         resp.status = falcon.HTTP_200
@@ -78,8 +133,18 @@ def mainfunc(portdata, netprotc):
                " * " + click.style("HTTP server   ", fg="magenta") + ": " + "Werkzeug v" + wkzgvers)
     livesync = LiveUpdatingEndpoint(passcode)
     deadsync = DeadUpdatingEndpoint(passcode)
+    procinfo = ProcessHandlingEndpoint(passcode)
+    killproc = ProcessKillingEndpoint(passcode)
+    termproc = ProcessTerminatingEndpoint(passcode)
+    suspproc = ProcessSuspendingEndpoint(passcode)
+    resmproc = ProcessResumingEndpoint(passcode)
     main.add_route("/livesync", livesync)
     main.add_route("/deadsync", deadsync)
+    main.add_route("/procinfo", procinfo)
+    main.add_route("/killproc", killproc)
+    main.add_route("/termproc", termproc)
+    main.add_route("/suspproc", suspproc)
+    main.add_route("/resmproc", resmproc)
     serving.run_simple(netpdata, int(portdata), main)
 
 
