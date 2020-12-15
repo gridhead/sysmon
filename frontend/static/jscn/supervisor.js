@@ -112,9 +112,9 @@ async function OverviewGraphAJAX () {
                 for (let jndx in deadobjc["sensread"]["senstemp"][indx]) {
                     $("#sens-thrm-devc-" + indx).append(
                         "<tr>" + "<td class='four wide'>" + deadobjc["sensread"]["senstemp"][indx][jndx]["label"] + "</td>" +
-                        "<td class='four wide'><div class='ui teal horizontal label'><code>TNOW</code></div>&nbsp;<code><span id='sens-thrm-devc-tnow-" + indx + "-" + jndx + "'>" + deadobjc["sensread"]["senstemp"][indx][jndx]["current"] + "</span>&nbsp;C</code></td>" +
-                        "<td class='four wide'><div class='ui teal horizontal label'><code>HIGH</code></div>&nbsp;<code><span id='sens-thrm-devc-high-" + indx + "-" + jndx + "'>" + deadobjc["sensread"]["senstemp"][indx][jndx]["high"] + "</span>&nbsp;C</code></td>" +
-                        "<td class='four wide'><div class='ui teal horizontal label'><code>CRIT</code></div>&nbsp;<code><span id='sens-thrm-devc-crit-" + indx + "-" + jndx + "'>" + deadobjc["sensread"]["senstemp"][indx][jndx]["critical"] + "</span>&nbsp;C</code></td>" +
+                        "<td class='four wide'><div class='ui teal horizontal label monofont'>TNOW</div>&nbsp;<span class='monofont'><span id='sens-thrm-devc-tnow-" + indx + "-" + jndx + "'>" + deadobjc["sensread"]["senstemp"][indx][jndx]["current"] + "</span>&nbsp;C</span></td>" +
+                        "<td class='four wide'><div class='ui teal horizontal label monofont'>HIGH</div>&nbsp;<span class='monofont'><span id='sens-thrm-devc-high-" + indx + "-" + jndx + "'>" + deadobjc["sensread"]["senstemp"][indx][jndx]["high"] + "</span>&nbsp;C</span></td>" +
+                        "<td class='four wide'><div class='ui teal horizontal label monofont'>CRIT</div>&nbsp;<span class='monofont'><span id='sens-thrm-devc-crit-" + indx + "-" + jndx + "'>" + deadobjc["sensread"]["senstemp"][indx][jndx]["critical"] + "</span>&nbsp;C</span></td>" +
                         "</tr>"
                     );
                 }
@@ -130,7 +130,7 @@ async function OverviewGraphAJAX () {
                     $("#sens-fans-devc-" + indx).append(
                         "<tr>" +
                         "<td class='twelve wide' id='sens-fans-devc-labl-" + indx + "-" + jndx + "'>" + deadobjc["sensread"]["fanspeed"][indx][jndx]["label"] + "</td>" +
-                        "<td class='four wide'><span id='sens-fans-devc-curt-" + indx + "-" + jndx + "'>" + deadobjc["sensread"]["fanspeed"][indx][jndx]["current"] + "</span> RPM</td>" +
+                        "<td class='four wide'><span id='sens-fans-devc-curt-" + indx + "-" + jndx + "' class='monofont'>" + deadobjc["sensread"]["fanspeed"][indx][jndx]["current"] + "</span> RPM</td>" +
                         "</tr>"
                     );
                 }
@@ -140,17 +140,17 @@ async function OverviewGraphAJAX () {
                 $("#disk-usej-body").append(
                     "<table class='ui fixed compact tablet stackable table' id='disk-usej-tabl-" + indx + "'>" + "<thead>" + "<tr>" +
                     "<th colspan='3'><h2 class='bodyfont' id='disk-usej-name-" + indx + "' style='color: #008080;'>" + indx + "</h2></th>" +
-                    "<th><div class='ui small horizontal statistic'><div class='value bodyfont' id='disk-usej-bstm-" + indx + "'>0</div><div class='label bodyfont'>BSTM</div></div></th>" +
+                    "<th><div class='ui tiny horizontal statistic'><div class='value dataread' id='disk-usej-bstm-" + indx + "'>0</div><div class='label bodyfont'>BSTM</div></div></th>" +
                     "</tr>" + "</thead>" + "<tbody>" + "<tr>" +
-                    "<td><div class='ui small horizontal statistic'><div class='value bodyfont' id='disk-usej-rdct-" + indx + "'>0</div><div class='label bodyfont'>RDCT</div></div></td>" +
-                    "<td><div class='ui small horizontal statistic'><div class='value bodyfont' id='disk-usej-wrct-" + indx + "'>0</div><div class='label bodyfont'>WRCT</div></div></td>" +
-                    "<td><div class='ui small horizontal statistic'><div class='value bodyfont' id='disk-usej-rdbt-" + indx + "'>0</div><div class='label bodyfont'>RDBT</div></div></td>" +
-                    "<td><div class='ui small horizontal statistic'><div class='value bodyfont' id='disk-usej-wrbt-" + indx + "'>0</div><div class='label bodyfont'>WRBT</div></div></td>" +
+                    "<td><div class='ui tiny horizontal statistic'><div class='value dataread' id='disk-usej-rdct-" + indx + "'>0</div><div class='label bodyfont'>RDCT</div></div></td>" +
+                    "<td><div class='ui tiny horizontal statistic'><div class='value dataread' id='disk-usej-wrct-" + indx + "'>0</div><div class='label bodyfont'>WRCT</div></div></td>" +
+                    "<td><div class='ui tiny horizontal statistic'><div class='value dataread' id='disk-usej-rdbt-" + indx + "'>0</div><div class='label bodyfont'>RDBT</div></div></td>" +
+                    "<td><div class='ui tiny horizontal statistic'><div class='value dataread' id='disk-usej-wrbt-" + indx + "'>0</div><div class='label bodyfont'>WRBT</div></div></td>" +
                     "</tr>" + "<tr>" +
-                    "<td><div class='ui small horizontal statistic'><div class='value bodyfont' id='disk-usej-rdtm-" + indx + "'>0</div><div class='label bodyfont'>RDTM</div></div></td>" +
-                    "<td><div class='ui small horizontal statistic'><div class='value bodyfont' id='disk-usej-wrtm-" + indx + "'>0</div><div class='label bodyfont'>WRTM</div></div></td>" +
-                    "<td><div class='ui small horizontal statistic'><div class='value bodyfont' id='disk-usej-rdmc-" + indx + "'>0</div><div class='label bodyfont'>RDMC</div></div></td>" +
-                    "<td><div class='ui small horizontal statistic'><div class='value bodyfont' id='disk-usej-wrmc-" + indx + "'>0</div><div class='label bodyfont'>WRMC</div></div></td>" +
+                    "<td><div class='ui tiny horizontal statistic'><div class='value dataread' id='disk-usej-rdtm-" + indx + "'>0</div><div class='label bodyfont'>RDTM</div></div></td>" +
+                    "<td><div class='ui tiny horizontal statistic'><div class='value dataread' id='disk-usej-wrtm-" + indx + "'>0</div><div class='label bodyfont'>WRTM</div></div></td>" +
+                    "<td><div class='ui tiny horizontal statistic'><div class='value dataread' id='disk-usej-rdmc-" + indx + "'>0</div><div class='label bodyfont'>RDMC</div></div></td>" +
+                    "<td><div class='ui tiny horizontal statistic'><div class='value dataread' id='disk-usej-wrmc-" + indx + "'>0</div><div class='label bodyfont'>WRMC</div></div></td>" +
                     "</tr>" + "</tbody>" + "</table>"
                 );
             }
@@ -160,11 +160,11 @@ async function OverviewGraphAJAX () {
                     "<table class='ui definition fixed compact table'>" + "<tbody>" + "<tr>" +
                     "<td rowspan='2' class='four wide'>" + "<h1 class='bodyfont' id='netw-usej-name-" + indx + "' style='color: #008080; margin: 0px;'>" + indx + "</h1>" +
                     "<pre style='margin: 0px;' id='disk-part-fsys-0'>SNIC</pre>" + "</td>" +
-                    "<td class='six wide'><div class='ui teal horizontal label'><code>BSNT</code></div><code id='netw-usej-bsnt-" + indx + "'>0</code><code> bytes</code></td>" +
-                    "<td class='six wide'><div class='ui teal horizontal label'><code>PSNT</code></div><code id='netw-usej-psnt-" + indx + "'>0</code><code> packets</code></td>" +
+                    "<td class='six wide'><div class='ui teal horizontal label monofont'>BSNT</div><span class='monofont'><span id='netw-usej-bsnt-" + indx + "'>0</span>&nbsp;bytes</span></td>" +
+                    "<td class='six wide'><div class='ui teal horizontal label monofont'>PSNT</div><span class='monofont'><span id='netw-usej-psnt-" + indx + "'>0</span>&nbsp;packets</span></td>" +
                     "</tr>" + "<tr>" + "<td class='rowspanned'></td>" +
-                    "<td><div class='ui teal horizontal label'><code>BRCV</code></div><code id='netw-usej-brcv-" + indx + "'>0</code><code> bytes</code></td>" +
-                    "<td><div class='ui teal horizontal label'><code>PRCV</code></div><code id='netw-usej-prcv-" + indx + "'>0</code><code> packets</code></td>" +
+                    "<td><div class='ui teal horizontal label monofont'>BRCV</div><span class='monofont'><span id='netw-usej-brcv-" + indx + "'>0</span>&nbsp;bytes</span></td>" +
+                    "<td><div class='ui teal horizontal label monofont'>PRCV</div><span class='monofont'><span id='netw-usej-prcv-" + indx + "'>0</span>&nbsp;packets</span></td>" +
                     "</tr>" + "</tbody>" + "</table>"
                 );
             }
@@ -196,10 +196,10 @@ async function OverviewGraphAJAX () {
                     "<h1 class='bodyfont' style='color: #008080; margin: 0px;'>" + indx + "</h1>" +
                     "<pre style='margin: 0px'>" + deadobjc["netstats"][indx]["isup"] + "</pre>" +
                     "</td>" +
-                    "<td class='eight wide'><div class='ui teal horizontal label'><code>NSPD</code></div><code>" + deadobjc["netstats"][indx]["speed"] + "</code></td>" +
+                    "<td class='eight wide'><div class='ui teal horizontal label monofont'>NSPD</div><span class='monofont'>" + deadobjc["netstats"][indx]["speed"] + "</span></td>" +
                     "<tr>" +
                     "<td class='eight wide rowspanned'></td>" +
-                    "<td class='eight wide'><div class='ui teal horizontal label'><code>NMTU</code></div><code>" + deadobjc["netstats"][indx]["mtu"] + "</code></td>" +
+                    "<td class='eight wide'><div class='ui teal horizontal label monofont'>NMTU</div><span class='monofont'>" + deadobjc["netstats"][indx]["mtu"] + "</span></td>" +
                     "</tr>" +
                     "</tr>" +
                     "</tbody>" +
@@ -212,9 +212,9 @@ async function OverviewGraphAJAX () {
                     "<table class='ui definition fixed compact table'>" + "<tbody>" + "<tr>" + "<td rowspan='2' class='four wide'>" +
                     "<h1 class='bodyfont' style='margin: 0px; color: #008080;' id='disk-part-name-" + indx + "'>" + deadobjc.diskpart[indx]["device"] + "</h1>" +
                     "<pre style='margin: 0px;' id='disk-part-fsys-" + indx + "'>" + deadobjc.diskpart[indx]["fstype"] + "</pre>" + "</td>" +
-                    "<td class='twelve wide'><div class='ui teal horizontal label'><code>MLOC</code></div><code id='disk-part-mloc-" + indx + "'>" + deadobjc.diskpart[indx]["mountpoint"] + "</code></td>" +
+                    "<td class='twelve wide'><div class='ui teal horizontal label monofont'>MLOC</div><span id='disk-part-mloc-" + indx + "' class='monofont'>" + deadobjc.diskpart[indx]["mountpoint"] + "</span></td>" +
                     "</tr>" + "<tr>" + "<td class='rowspanned'></td>" +
-                    "<td><div class='ui teal horizontal label'><code>OPTS</code></div><code id='disk-part-opts-" + indx + "'>" + deadobjc.diskpart[indx]["opts"] + "</code></td>" +
+                    "<td><div class='ui teal horizontal label monofont'>OPTS</div><span id='disk-part-opts-" + indx + "' class='monofont'>" + deadobjc.diskpart[indx]["opts"] + "</span></td>" +
                     "</tr>" + "</tbody>" + "</table>"
                 );
             }
@@ -274,17 +274,17 @@ async function OverviewGraphAJAX () {
     for (let indx = 0; indx < cpuquant; indx ++) {
         $("#cpuu-time-tabl-cont").append(
             "<tr>" +
-            "<td id='cpuu-time-name-" + indx + "'>CPU #" + indx + "</td>" +
-            "<td id='cpuu-time-user-" + indx + "'>Unavailable</td>" +
-            "<td id='cpuu-time-nice-" + indx + "'>Unavailable</td>" +
-            "<td id='cpuu-time-syst-" + indx + "'>Unavailable</td>" +
-            "<td id='cpuu-time-idle-" + indx + "'>Unavailable</td>" +
-            "<td id='cpuu-time-iowt-" + indx + "'>Unavailable</td>" +
-            "<td id='cpuu-time-ireq-" + indx + "'>Unavailable</td>" +
-            "<td id='cpuu-time-soft-" + indx + "'>Unavailable</td>" +
-            "<td id='cpuu-time-stel-" + indx + "'>Unavailable</td>" +
-            "<td id='cpuu-time-gest-" + indx + "'>Unavailable</td>" +
-            "<td id='cpuu-time-gtnc-" + indx + "'>Unavailable</td>" + 
+            "<td class='monofont' id='cpuu-time-name-" + indx + "'>CPU #" + indx + "</td>" +
+            "<td class='monofont' id='cpuu-time-user-" + indx + "'>Unavailable</td>" +
+            "<td class='monofont' id='cpuu-time-nice-" + indx + "'>Unavailable</td>" +
+            "<td class='monofont' id='cpuu-time-syst-" + indx + "'>Unavailable</td>" +
+            "<td class='monofont' id='cpuu-time-idle-" + indx + "'>Unavailable</td>" +
+            "<td class='monofont' id='cpuu-time-iowt-" + indx + "'>Unavailable</td>" +
+            "<td class='monofont' id='cpuu-time-ireq-" + indx + "'>Unavailable</td>" +
+            "<td class='monofont' id='cpuu-time-soft-" + indx + "'>Unavailable</td>" +
+            "<td class='monofont' id='cpuu-time-stel-" + indx + "'>Unavailable</td>" +
+            "<td class='monofont' id='cpuu-time-gest-" + indx + "'>Unavailable</td>" +
+            "<td class='monofont' id='cpuu-time-gtnc-" + indx + "'>Unavailable</td>" +
             "</tr>"
         );
     }
@@ -302,12 +302,12 @@ async function OverviewGraphAJAX () {
                     document.getElementById("phys-dedi-byte").innerText = parseInt(liveobjc.virtdata["used"]) + " of " + parseInt(liveobjc.virtdata["total"]);
                     physline.append(new Date().getTime(), parseFloat(liveobjc.virtdata["percent"]).toPrecision(3));
                     document.getElementById("physvalu").innerText = parseFloat(liveobjc.virtdata["percent"]).toPrecision(3);
-                    document.getElementById("phys-dedi-perc").innerText = parseInt(liveobjc.virtdata["percent"]);
+                    document.getElementById("phys-dedi-perc").innerText = parseFloat(liveobjc.virtdata["percent"]).toPrecision(3);
                     devtline.append(new Date().getTime(), parseFloat(liveobjc.swapinfo["percent"]).toPrecision(3));
                     document.getElementById("virt-dedi-byte").innerText = parseInt(liveobjc.swapinfo["used"]) + " of " + parseInt(liveobjc.swapinfo["total"]);
                     swapline.append(new Date().getTime(), parseFloat(liveobjc.swapinfo["percent"]).toPrecision(3));
                     document.getElementById("swapvalu").innerText = parseFloat(liveobjc.swapinfo["percent"]).toPrecision(3);
-                    document.getElementById("virt-dedi-perc").innerText = parseInt(liveobjc.swapinfo["percent"]);
+                    document.getElementById("virt-dedi-perc").innerText = parseFloat(liveobjc.swapinfo["percent"]).toPrecision(3);
                     battline.append(new Date().getTime(), parseFloat(liveobjc.sensread.battstat["percent"]).toPrecision(3));
                     document.getElementById("battvalu").innerText = parseFloat(liveobjc.sensread.battstat["percent"]).toPrecision(3);
                     for (let indx = 0; indx < cpuquant; indx ++) {
