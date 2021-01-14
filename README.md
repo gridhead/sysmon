@@ -2,6 +2,10 @@
 <p align="center">An intuitive remotely-accessible system performance monitoring and task management tool for servers and headless Raspberry Pi setups</p>
 
 <p align="center">
+    <img src="https://awesome.re/mentioned-badge.svg">
+</p>
+
+<p align="center">
     <img src="https://img.shields.io/github/issues/t0xic0der/sysmon?style=flat-square&logo=appveyor&color=teal">
     <img src="https://img.shields.io/github/forks/t0xic0der/sysmon?style=flat-square&logo=appveyor&color=teal">
     <img src="https://img.shields.io/github/stars/t0xic0der/sysmon?style=flat-square&logo=appveyor&color=teal">
