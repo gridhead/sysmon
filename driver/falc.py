@@ -45,7 +45,7 @@ class LiveUpdatingEndpoint(object):
             retnjson = LiveUpdatingElements().return_live_data()
         else:
             retnjson = {"retnmesg": "deny"}
-        resp.body = json.dumps(retnjson, ensure_ascii=False)
+        resp.text = json.dumps(retnjson, ensure_ascii=False)
         resp.set_header("Access-Control-Allow-Origin", "*")
         resp.status = falcon.HTTP_200
 
@@ -60,7 +60,7 @@ class DeadUpdatingEndpoint(object):
             retnjson = DeadUpdatingElements().return_dead_data()
         else:
             retnjson = {"retnmesg": "deny"}
-        resp.body = json.dumps(retnjson, ensure_ascii=False)
+        resp.text = json.dumps(retnjson, ensure_ascii=False)
         resp.set_header("Access-Control-Allow-Origin", "*")
         resp.status = falcon.HTTP_200
 
@@ -75,7 +75,7 @@ class ProcessHandlingEndpoint(object):
             retnjson = ProcessHandler(int(rqst.get_param("prociden"))).return_process_info()
         else:
             retnjson = {"retnmesg": "deny"}
-        resp.body = json.dumps(retnjson, ensure_ascii=False)
+        resp.text = json.dumps(retnjson, ensure_ascii=False)
         resp.set_header("Access-Control-Allow-Origin", "*")
         resp.status = falcon.HTTP_200
 
@@ -90,7 +90,7 @@ class ProcessKillingEndpoint(object):
             retnjson = ProcessHandler(int(rqst.get_param("prociden"))).process_killer()
         else:
             retnjson = {"retnmesg": "deny"}
-        resp.body = json.dumps(retnjson, ensure_ascii=False)
+        resp.text = json.dumps(retnjson, ensure_ascii=False)
         resp.set_header("Access-Control-Allow-Origin", "*")
         resp.status = falcon.HTTP_200
 
@@ -105,7 +105,7 @@ class ProcessTerminatingEndpoint(object):
             retnjson = ProcessHandler(int(rqst.get_param("prociden"))).process_terminator()
         else:
             retnjson = {"retnmesg": "deny"}
-        resp.body = json.dumps(retnjson, ensure_ascii=False)
+        resp.text = json.dumps(retnjson, ensure_ascii=False)
         resp.set_header("Access-Control-Allow-Origin", "*")
         resp.status = falcon.HTTP_200
 
@@ -120,7 +120,7 @@ class ProcessSuspendingEndpoint(object):
             retnjson = ProcessHandler(int(rqst.get_param("prociden"))).process_suspender()
         else:
             retnjson = {"retnmesg": "deny"}
-        resp.body = json.dumps(retnjson, ensure_ascii=False)
+        resp.text = json.dumps(retnjson, ensure_ascii=False)
         resp.set_header("Access-Control-Allow-Origin", "*")
         resp.status = falcon.HTTP_200
 
@@ -135,7 +135,7 @@ class ProcessResumingEndpoint(object):
             retnjson = ProcessHandler(int(rqst.get_param("prociden"))).process_resumer()
         else:
             retnjson = {"retnmesg": "deny"}
-        resp.body = json.dumps(retnjson, ensure_ascii=False)
+        resp.text = json.dumps(retnjson, ensure_ascii=False)
         resp.set_header("Access-Control-Allow-Origin", "*")
         resp.status = falcon.HTTP_200
 
