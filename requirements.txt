@@ -5,3 +5,4 @@ Jinja2==3.1.4
 MarkupSafe==1.1.1
 psutil==5.7.0
 Werkzeug==3.0.6
+falcon==4.0.0

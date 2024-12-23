@@ -1,0 +1,506 @@
+<!--
+##########################################################################
+*
+*   Copyright © 2019-2020 Akashdeep Dhar <t0xic0der@fedoraproject.org>
+*
+*   This program is free software: you can redistribute it and/or modify
+*   it under the terms of the GNU General Public License as published by
+*   the Free Software Foundation, either version 3 of the License, or
+*   (at your option) any later version.
+*
+*   This program is distributed in the hope that it will be useful,
+*   but WITHOUT ANY WARRANTY; without even the implied warranty of
+*   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+*   GNU General Public License for more details.
+*
+*   You should have received a copy of the GNU General Public License
+*   along with this program.  If not, see <https://www.gnu.org/licenses/>.
+*
+##########################################################################
+-->
+
+<!DOCTYPE html>
+<meta charset="UTF-8">
+<html lang="en">
+    <head>
+        <script type="text/javascript" src="{{ url_for('static', filename='jscn/jquery.min.js') }}"></script>
+        <script type="text/javascript" src="{{ url_for('static', filename='jscn/semantic.js') }}"></script>
+        <link type="text/css" rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css3/semantic.css') }}">
+        <link type="text/css" rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css3/custfrmt.css') }}">
+        <script type="text/javascript" src="{{ url_for('static', filename='jscn/smoothie.js') }}"></script>
+        <script type="text/javascript" src="{{ url_for('static', filename='jscn/supervisor.js') }}"></script>
+        <title>SuperVisor v1.0.1</title>
+    </head>
+    <body onload="AskForAJAXServiceEndpoint();" class="bodyfont noselect">
+        <div class="ui secondary pointing menu inverted" style="background-color: #00c080;">
+            <div class="ui simple dropdown item">
+                <span style="font-weight: bold;" class="bodyfont">SuperVisor</span>
+                <i class="dropdown icon"></i>
+                <div class="menu bodyfont">
+                    <a class="item" onclick="location.href = '#';"><i class="chart line circle icon"></i>Overview</a>
+                    <a class="item" onclick="location.href = '#sect-proc';"><i class="server icon"></i>Processes</a>
+                    <a class="item" onclick="location.href = '#sect-cpuu';"><i class="microchip icon"></i>CPU</a>
+                    <a class="item" onclick="location.href = '#sect-memo';"><i class="memory icon"></i>Memory</a>
+                    <a class="item" onclick="location.href = '#sect-disk';"><i class="upload icon"></i>Storage</a>
+                    <a class="item" onclick="location.href = '#sect-netw';"><i class="wifi icon"></i>Network</a>
+                    <a class="item" onclick="location.href = '#sect-sens';"><i class="compass icon"></i>Sensors</a>
+                </div>
+            </div>
+            <div class="right menu">
+                <a class="ui item" onclick="location.reload();"><i class="power off icon"></i></a>
+            </div>
+        </div>
+        <h2 class="ui container center aligned icon header bodyfont" style="color: #00c080;">
+            <i class="circular eye icon"></i>SuperVisor
+            <div class="sub header">
+                An intuitive remotely-accessible system performance monitoring and task management tool for servers and headless Raspberry Pi setups.
+            </div>
+        </h2>
+        <div class="ui container"><hr style="background-color: #cccccc; height: 2px; border: none; margin-bottom: 2.5%; margin-top: 2.5%"/></div>
+        <div class="ui container one cards">
+            <div class="ui padded card bodyfont">
+                <div class="content">
+                    <div class="description">
+                        <table class="ui very basic compact fixed table">
+                            <tbody><tr><td style="font-weight: bold;">Username</td><td id="userover">Unavailable</td></tr></tbody>
+                            <tbody><tr><td style="font-weight: bold;">System name</td><td id="systover">Unavailable</td></tr></tbody>
+                            <tbody><tr><td style="font-weight: bold;">Host name</td><td id="hostover">Unavailable</td></tr></tbody>
+                            <tbody><tr><td style="font-weight: bold;">Version</td><td id="versover">Unavailable</td></tr></tbody>
+                            <tbody><tr><td style="font-weight: bold;">Boot time</td><td id="bootover">Unavailable</td></tr></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="ui container two cards">
+            <div class="teal padded card bodyfont">
+                <div class="content">
+                    <div class="header bodyfont" style="color: #00c080;">CPU Usage</div>
+                    <div class="description">
+                        <h1 class="dataread"><span id="cpusvalu">0</span>%</h1>
+                        <canvas id="cpusover" style="width:100%; height:12.5vh;"></canvas>
+                    </div>
+                </div>
+            </div>
+            <div class="teal padded card bodyfont">
+                <div class="content">
+                    <div class="header bodyfont" style="color: #00c080;">Physical memory</div>
+                    <div class="description">
+                        <h1 class="dataread"><span id="physvalu">0</span>%</h1>
+                        <canvas id="physover" style="width:100%; height:12.5vh;"></canvas>
+                    </div>
+                </div>
+            </div>
+            <div class="teal padded card bodyfont">
+                <div class="content">
+                    <div class="header bodyfont" style="color: #00c080;">Virtual memory</div>
+                    <div class="description">
+                        <h1 class="dataread"><span id="swapvalu">0</span>%</h1>
+                        <canvas id="swapover" style="width:100%; height:12.5vh;"></canvas>
+                    </div>
+                </div>
+            </div>
+            <div class="teal padded card bodyfont">
+                <div class="content">
+                    <div class="header bodyfont" style="color: #00c080;">Battery</div>
+                    <div class="description">
+                        <h1 class="dataread"><span id="battvalu">0</span>%</h1>
+                        <canvas id="battover" style="width:100%; height:12.5vh;"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="ui container"><hr style="background-color: #cccccc; height: 2px; border: none; margin-bottom: 2.5%; margin-top: 2.5%"/></div>
+        <div class="ui container bodyfont" id="sect-proc">
+            <div class="ui top attached tabular menu bodyfont teal">
+                <a class="item" style="font-weight: bold; color: #008080;">Processes</a>
+                <a class="active item">Listing</a>
+                <a class="item" onclick="location.href = '#';"><i class="ui arrow up icon" style="margin: 0px;"></i></a>
+            </div>
+            <div class="ui bottom attached active tab segment">
+                <table class="ui teal fixed compact table"><thead><tr><th class="two wide">#</th><th class="six wide">NAME</th><th class="four wide">USER</th><th class="two wide">PMEM</th><th class="two wide">PCPU</th></tr></thead></table>
+                <div style="height: 50vh; overflow: auto" id="proc-tabl-dvsn"></div>
+            </div>
+        </div>
+        <div class="ui container"><hr style="background-color: #cccccc; height: 2px; border: none; margin-bottom: 2.5%; margin-top: 2.5%"/></div>
+        <div class="ui container bodyfont" id="sect-cpuu">
+            <div class="ui top attached tabular menu bodyfont teal">
+                <a class="item" id="cpuu-head-ttle" style="font-weight: bold; color: #008080;">CPU usage</a>
+                <a class="active item" id="cpuu-usej-ttle" onclick="SwitchTab('cpuu-usej-ttle', 'cpuu');">Usage</a>
+                <a class="item" id="cpuu-cycl-ttle" onclick="SwitchTab('cpuu-cycl-ttle', 'cpuu');">Cycles</a>
+                <a class="item" id="cpuu-time-ttle" onclick="SwitchTab('cpuu-time-ttle', 'cpuu');">Times</a>
+                <a class="item" id="cpuu-stat-ttle" onclick="SwitchTab('cpuu-stat-ttle', 'cpuu');">Statistics</a>
+                <a class="item" onclick="location.href = '#';"><i class="ui arrow up icon" style="margin: 0px;"></i></a>
+            </div>
+            <div class="ui bottom attached active tab segment" id="cpuu-usej-body">
+                <div class="ui two cards" id="prcpgraf"></div>
+            </div>
+            <div class="ui bottom attached tab segment" id="cpuu-cycl-body">
+                <div class="ui two cards" id="cyclgraf"></div>
+            </div>
+            <div class="ui bottom attached tab segment" id="cpuu-time-body">
+                <table class="ui teal fixed compact definition table bodyfont">
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th>USER</th><th>NICE</th><th>SYST</th><th>IDLE</th><th>IOWT</th>
+                            <th>IREQ</th><th>SOFT</th><th>STEL</th><th>GEST</th><th>GTNC</th>
+                        </tr>
+                    </thead>
+                    <tbody id="cpuu-time-tabl-cont"></tbody>
+                </table>
+            </div>
+            <div class="ui bottom attached tab segment" id="cpuu-stat-body">
+                <table class="ui fixed very basic table">
+                    <thead>
+                        <tr>
+                            <td><div class="ui small horizontal statistic"><div class="value dataread" id="cpuu-stat-ctxs">0</div><div class="label bodyfont">CTXS</div></div></td>
+                            <td><div class="ui small horizontal statistic"><div class="value dataread" id="cpuu-stat-intr">0</div><div class="label bodyfont">INTR</div></div></td>
+                            <td><div class="ui small horizontal statistic"><div class="value dataread" id="cpuu-stat-soft">0</div><div class="label bodyfont">SOFT</div></div></td>
+                            <td><div class="ui small horizontal statistic"><div class="value dataread" id="cpuu-stat-syst">0</div><div class="label bodyfont">SYST</div></div></td>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+        </div>
+        <div class="ui container"><hr style="background-color: #cccccc; height: 2px; border: none; margin-bottom: 2.5%; margin-top: 2.5%"/></div>
+        <div class="ui container bodyfont" id="sect-memo">
+            <div class="ui top attached tabular menu bodyfont teal">
+                <a class="item" id="memo-head-ttle" style="font-weight: bold; color: #008080;">Memory</a>
+                <a class="active item" id="memo-over-ttle" onclick="SwitchTab('memo-over-ttle', 'memo');">Overview</a>
+                <a class="item" id="memo-phys-ttle" onclick="SwitchTab('memo-phys-ttle', 'memo');">Physical</a>
+                <a class="item" id="memo-virt-ttle" onclick="SwitchTab('memo-virt-ttle', 'memo');">Virtual</a>
+                <a class="item" onclick="location.href = '#';"><i class="ui arrow up icon" style="margin: 0px;"></i></a>
+            </div>
+            <div class="ui bottom attached active tab segment" id="memo-over-body">
+                <div class="ui two cards">
+                    <div class="teal padded card bodyfont">
+                        <div class="content">
+                            <div class="header bodyfont" style="color: #00c080;">Physical memory</div>
+                            <div class="meta"><span id="phys-dedi-byte">0</span> bytes in use</div>
+                            <div class="description">
+                                <h1 class="dataread"><span id="phys-dedi-perc">0</span>%</h1>
+                                <canvas id="phys-dedi-graf" style="width:100%; height:12.5vh;"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="teal padded card bodyfont">
+                        <div class="content">
+                            <div class="header bodyfont" style="color: #00c080;">Virtual memory</div>
+                            <div class="meta"><span id="virt-dedi-byte">0</span> bytes in use</div>
+                            <div class="description">
+                                <h1 class="dataread"><span id="virt-dedi-perc">0</span>%</h1>
+                                <canvas id="virt-dedi-graf" style="width:100%; height:12.5vh;"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="ui bottom attached tab segment" id="memo-phys-body">
+                <table class="ui very basic compact fixed table">
+                    <tbody><tr><td style="font-weight: bold;">Total</td><td class="monofont"><span id="memo-phys-totl">0</span> bytes</td></tr></tbody>
+                    <tbody><tr><td style="font-weight: bold;">Free</td><td class="monofont"><span id="memo-phys-free">0</span> bytes</td></tr></tbody>
+                    <tbody><tr><td style="font-weight: bold;">Used</td><td class="monofont"><span id="memo-phys-used">0</span> bytes</td></tr></tbody>
+                    <tbody><tr><td style="font-weight: bold;">Active</td><td class="monofont"><span id="memo-phys-actv">0</span> bytes</td></tr></tbody>
+                    <tbody><tr><td style="font-weight: bold;">Inactive</td><td class="monofont"><span id="memo-phys-inac">0</span> bytes</td></tr></tbody>
+                    <tbody><tr><td style="font-weight: bold;">Buffers</td><td class="monofont"><span id="memo-phys-buff">0</span> bytes</td></tr></tbody>
+                    <tbody><tr><td style="font-weight: bold;">Cached</td><td class="monofont"><span id="memo-phys-cach">0</span> bytes</td></tr></tbody>
+                    <tbody><tr><td style="font-weight: bold;">Shared</td><td class="monofont"><span id="memo-phys-shar">0</span> bytes</td></tr></tbody>
+                    <tbody><tr><td style="font-weight: bold;">Slab</td><td class="monofont"><span id="memo-phys-slab">0</span> bytes</td></tr></tbody>
+                </table>
+            </div>
+            <div class="ui bottom attached tab segment" id="memo-virt-body">
+                <table class="ui very basic compact fixed table">
+                    <tbody><tr><td style="font-weight: bold;">Total</td><td class="monofont"><span id="memo-virt-totl">0</span> bytes</td></tr></tbody>
+                    <tbody><tr><td style="font-weight: bold;">Free</td><td class="monofont"><span id="memo-virt-free">0</span> bytes</td></tr></tbody>
+                    <tbody><tr><td style="font-weight: bold;">Used</td><td class="monofont"><span id="memo-virt-used">0</span> bytes</td></tr></tbody>
+                    <tbody><tr><td style="font-weight: bold;">Swapped in</td><td class="monofont"><span id="memo-virt-sine">0</span> bytes</td></tr></tbody>
+                    <tbody><tr><td style="font-weight: bold;">Swapped out</td><td class="monofont"><span id="memo-virt-sout">0</span> bytes</td></tr></tbody>
+                </table>
+            </div>
+        </div>
+        <div class="ui container"><hr style="background-color: #cccccc; height: 2px; border: none; margin-bottom: 2.5%; margin-top: 2.5%"/></div>
+        <div class="ui container bodyfont" id="sect-disk">
+            <div class="ui top attached tabular menu bodyfont teal">
+                <a class="item" id="disk-head-ttle" style="font-weight: bold; color: #008080;">Storage</a>
+                <a class="active item" id="disk-usej-ttle" onclick="SwitchTab('disk-usej-ttle', 'disk');">Usage</a>
+                <a class="item" id="disk-part-ttle" onclick="SwitchTab('disk-part-ttle', 'disk');">Partitions</a>
+                <a class="item" onclick="location.href = '#';"><i class="ui arrow up icon" style="margin: 0px;"></i></a>
+            </div>
+            <div class="ui bottom attached active tab segment" id="disk-usej-body"></div>
+            <div class="ui bottom attached tab segment" id="disk-part-body"></div>
+        </div>
+        <div class="ui container"><hr style="background-color: #cccccc; height: 2px; border: none; margin-bottom: 2.5%; margin-top: 2.5%"/></div>
+        <div class="ui container bodyfont" id="sect-netw">
+            <div class="ui top attached tabular menu bodyfont teal">
+                <a class="item" id="netw-head-ttle" style="font-weight: bold; color: #008080;">Network</a>
+                <a class="active item" id="netw-usej-ttle" onclick="SwitchTab('netw-usej-ttle', 'netw');">Usage</a>
+                <a class="item" id="netw-stat-ttle" onclick="SwitchTab('netw-stat-ttle', 'netw');">Statistics</a>
+                <a class="item" id="netw-addr-ttle" onclick="SwitchTab('netw-addr-ttle', 'netw');">Addresses</a>
+                <a class="item" onclick="location.href = '#';"><i class="ui arrow up icon" style="margin: 0px;"></i></a>
+            </div>
+            <div class="ui bottom attached active tab segment" id="netw-usej-body"></div>
+            <div class="ui bottom attached tab segment" id="netw-stat-body"></div>
+            <div class="ui bottom attached tab segment" id="netw-addr-body"></div>
+        </div>
+        <div class="ui container"><hr style="background-color: #cccccc; height: 2px; border: none; margin-bottom: 2.5%; margin-top: 2.5%"/></div>
+        <div class="ui container bodyfont" id="sect-sens">
+            <div class="ui top attached tabular menu bodyfont teal">
+                <a class="item" id="sens-head-ttle" style="font-weight: bold; color: #008080;">Sensors</a>
+                <a class="active item" id="sens-batt-ttle" onclick="SwitchTab('sens-batt-ttle', 'sens');">Battery</a>
+                <a class="item" id="sens-fans-ttle" onclick="SwitchTab('sens-fans-ttle', 'sens');">Fans</a>
+                <a class="item" id="sens-thrm-ttle" onclick="SwitchTab('sens-thrm-ttle', 'sens');">Thermal</a>
+                <a class="item" onclick="location.href = '#';"><i class="ui arrow up icon" style="margin: 0px;"></i></a>
+            </div>
+            <div class="ui bottom attached active tab segment" id="sens-batt-body">
+                <div class="ui teal padded card bodyfont" style="width: 100%;">
+                    <div class="content">
+                        <div class="header bodyfont" style="color: #00c080;">Battery</div>
+                        <div class="meta">Plugged&nbsp;<span id="sens-batt-plug">0</span>&nbsp;|&nbsp;Standby&nbsp;<span id="sens-batt-time">0</span>&nbsp;secs</div>
+                        <div class="description">
+                            <div class="ui tiny indicating progress" data-value="0" data-total="100" id="sens-batt-prog" style="margin-bottom: 0px;"><div class="bar"><div class="progress"></div></div></div>
+                            <h1 class="dataread" style="margin-top: 0.5%; margin-bottom: 0.5%;"><span id="sens-batt-perc">0</span>%</h1>
+                            <canvas id="sens-batt-graf" style="width:100%; height:12.5vh;"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="ui bottom attached tab segment" id="sens-fans-body"></div>
+            <div class="ui bottom attached tab segment" id="sens-thrm-body"></div>
+        </div>
+        <div class="ui container"><hr style="background-color: #cccccc; height: 2px; border: none; margin-bottom: 2.5%; margin-top: 2.5%"/></div>
+        <div class="ui tiny modal" id="restwarn">
+            <div class="header bodyfont cardinal" style="padding: 1.5%; background-color: #00c080; color: #ffffff;">Connect now</div>
+            <div class="content" style="padding: 1.5%;">
+                <p class="bodyfont" style="line-height: 1.25; text-align: justify; font-size: 15px;">
+                    Enable the SuperVisor driver service on your remote device first. Once the driver has been set up,
+                    take a note of the uniform resource identifier and the connector passphrase enter it here to begin
+                    monitoring its performance.
+                    <div class="ui form">
+                        <div class="two fields bodyfont">
+                            <div class="field">
+                                <input class="bodyfont" id="vsonsuri" placeholder="LiveSync URI" type="text">
+                            </div>
+                            <div class="field">
+                                <input class="bodyfont" id="passcode" placeholder="Connector passphrase" type="text">
+                            </div>
+                        </div>
+                    </div>
+                </p>
+            </div>
+            <div class="actions cardinal" style="padding: 1.5%; background-color: #00c080;">
+                <div class="ui mini button bodyfont" onclick="FetchAJAXServiceEndpoint(); $('#restwarn').modal('hide');">
+                    <span><i style="color: #008080; margin: 0px;" class="check icon"></i></span>
+                </div>
+            </div>
+        </div>
+        <div class="ui tiny modal" id="wrngiden">
+            <div class="header bodyfont cardinal" style="padding: 1.5%; background-color: #00c080; color: #ffffff;">Access denied</div>
+            <div class="content" style="padding: 1.5%;">
+                <p class="bodyfont" style="line-height: 1.25; text-align: justify; font-size: 15px;">
+                    The connector passphrase provided does not match with that of the driver service.
+                    Please reload the page and try entering the passphrase correctly.
+                </p>
+            </div>
+            <div class="actions cardinal" style="padding: 1.5%; background-color: #00c080;">
+                <div class="ui mini button bodyfont" onclick="location.reload();">
+                    <span><i style="color: #008080; margin: 0px;" class="redo icon"></i></span>
+                </div>
+            </div>
+        </div>
+        <div class="ui tiny modal" id="connlost">
+            <div class="header bodyfont cardinal" style="padding: 1.5%; background-color: #00c080; color: #ffffff;">Connection lost</div>
+            <div class="content" style="padding: 1.5%;">
+                <p class="bodyfont" style="line-height: 1.25; text-align: justify; font-size: 15px;">
+                    The web interface is no longer connected to the driver service endpoint.
+                    Please reload the page and try establishing the connection again.
+                </p>
+            </div>
+            <div class="actions cardinal" style="padding: 1.5%; background-color: #00c080;">
+                <div class="ui mini button bodyfont" onclick="location.reload();">
+                    <span><i style="color: #008080; margin: 0px;" class="redo icon"></i></span>
+                </div>
+            </div>
+        </div>
+        <div class="ui tiny modal" id="procinfo">
+            <div class="header bodyfont cardinal" style="padding: 1.5%; background-color: #00c080; color: #ffffff;">Process information</div>
+            <div class="content" style="padding: 1.5%;">
+                <div class="cuntainer" style="height: 50vh; overflow: auto;">
+                    <table class="ui compact fixed table">
+                        <thead>
+                            <tr>
+                                <th style="text-align: center;" colspan="2">
+                                    <div class="ui statistic"><div class="value dataread" id="proc-info-iden">#0</div><div class="label bodyfont" id="proc-info-name">Invalid</div></div>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td style="text-align: center;">
+                                    <div class="ui small statistic"><div class="value dataread" id="proc-info-memo-perc">0%</div><div class="label bodyfont">Memory usage</div></div>
+                                </td>
+                                <td style="text-align: center;">
+                                    <div class="ui small statistic"><div class="value dataread" id="proc-info-cpuu-perc">0%</div><div class="label bodyfont">CPU usage</div></div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <table class="ui compact fixed table">
+                        <tbody>
+                            <tr>
+                                <td class="bodyfont" style="font-weight: bold;">Username</td>
+                                <td class="bodyfont" id="proc-info-data-user">Invalid</td>
+                            </tr>
+                            <tr>
+                                <td class="bodyfont" style="font-weight: bold;">Created on</td>
+                                <td class="bodyfont" id="proc-info-data-time">Invalid</td>
+                            </tr>
+                            <tr>
+                                <td class="bodyfont" style="font-weight: bold;">Current state</td>
+                                <td class="bodyfont" id="proc-info-data-stat">Invalid</td>
+                            </tr>
+                            <tr>
+                                <td class="bodyfont" style="font-weight: bold;">Terminal</td>
+                                <td class="bodyfont" id="proc-info-data-term">Invalid</td>
+                            </tr>
+                            <tr>
+                                <td class="bodyfont" style="font-weight: bold;">Last updated on</td>
+                                <td class="bodyfont" id="proc-info-data-last">Invalid</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <table class="ui compact fixed table">
+                        <thead>
+                            <tr>
+                                <th colspan="2" style="text-align: center;" class="bodyfont">Memory information</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="bodyfont" style="font-weight: bold;">Resident set size</td>
+                                <td class="bodyfont" id="proc-info-memo-rsts">0 bytes</td>
+                            </tr>
+                            <tr>
+                                <td class="bodyfont" style="font-weight: bold;">Virtual memory size</td>
+                                <td class="bodyfont" id="proc-info-memo-vmsz">0 bytes</td>
+                            </tr>
+                            <tr>
+                                <td class="bodyfont" style="font-weight: bold;">Shared size</td>
+                                <td class="bodyfont" id="proc-info-memo-shsz">0 bytes</td>
+                            </tr>
+                            <tr>
+                                <td class="bodyfont" style="font-weight: bold;">Text resident size</td>
+                                <td class="bodyfont" id="proc-info-memo-text">0 bytes</td>
+                            </tr>
+                            <tr>
+                                <td class="bodyfont" style="font-weight: bold;">Data resident size</td>
+                                <td class="bodyfont" id="proc-info-memo-data">0 bytes</td>
+                            </tr>
+                            <tr>
+                                <td class="bodyfont" style="font-weight: bold;">Shared libraries size</td>
+                                <td class="bodyfont" id="proc-info-memo-libs">0 bytes</td>
+                            </tr>
+                            <tr>
+                                <td class="bodyfont" style="font-weight: bold;">Dirty pages</td>
+                                <td class="bodyfont" id="proc-info-memo-dirt">0 pages</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <table class="ui compact fixed table">
+                        <thead>
+                            <tr>
+                                <th colspan="5" style="text-align: center;" class="bodyfont">CPU times</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="bodyfont" style="text-align: center; font-weight: bold;">USER</td>
+                                <td class="bodyfont" style="text-align: center; font-weight: bold;">SYST</td>
+                                <td class="bodyfont" style="text-align: center; font-weight: bold;">CUSR</td>
+                                <td class="bodyfont" style="text-align: center; font-weight: bold;">CSYS</td>
+                                <td class="bodyfont" style="text-align: center; font-weight: bold;">IOWT</td>
+                            </tr>
+                            <tr>
+                                <td class="bodyfont" style="text-align: center;" id="proc-info-time-user">0</td>
+                                <td class="bodyfont" style="text-align: center;" id="proc-info-time-syst">0</td>
+                                <td class="bodyfont" style="text-align: center;" id="proc-info-time-cusr">0</td>
+                                <td class="bodyfont" style="text-align: center;" id="proc-info-time-csys">0</td>
+                                <td class="bodyfont" style="text-align: center;" id="proc-info-time-iowt">0</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <table class="ui compact fixed table">
+                        <thead>
+                            <tr>
+                                <th colspan="2" style="text-align: center;" class="bodyfont">Context switches</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="bodyfont" style="text-align: center; font-weight: bold;">VOLUNTARY</td>
+                                <td class="bodyfont" style="text-align: center; font-weight: bold;">INVOLUNTARY</td>
+                            </tr>
+                            <tr>
+                                <td class="bodyfont" style="text-align: center;" id="proc-info-ctxs-volu">0</td>
+                                <td class="bodyfont" style="text-align: center;" id="proc-info-ctxs-invo">0</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <table class="ui compact fixed table">
+                        <thead>
+                            <tr><th colspan="3" style="text-align: center;" class="bodyfont">Group IDs</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="bodyfont" style="text-align: center; font-weight: bold;">EFTV</td>
+                                <td class="bodyfont" style="text-align: center; font-weight: bold;">REAL</td>
+                                <td class="bodyfont" style="text-align: center; font-weight: bold;">SAVE</td>
+                            </tr>
+                            <tr>
+                                <td class="bodyfont" style="text-align: center;" id="proc-info-gids-eftv">0</td>
+                                <td class="bodyfont" style="text-align: center;" id="proc-info-gids-real">0</td>
+                                <td class="bodyfont" style="text-align: center;" id="proc-info-gids-save">0</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <table class="ui compact fixed table">
+                        <thead>
+                            <tr>
+                                <th colspan="3" style="text-align: center;" class="bodyfont">User IDs</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="bodyfont" style="text-align: center; font-weight: bold;">EFTV</td>
+                                <td class="bodyfont" style="text-align: center; font-weight: bold;">REAL</td>
+                                <td class="bodyfont" style="text-align: center; font-weight: bold;">SAVE</td>
+                            </tr>
+                            <tr>
+                                <td class="bodyfont" style="text-align: center;" id="proc-info-uids-eftv">0</td>
+                                <td class="bodyfont" style="text-align: center;" id="proc-info-uids-real">0</td>
+                                <td class="bodyfont" style="text-align: center;" id="proc-info-uids-save">0</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="actions cardinal" style="padding: 1.5%; background-color: #00c080;">
+                <div class="ui mini button bodyfont" id="proc-mode-term">
+                    <span><i style="color: #008080; margin: 0px;" class="trash icon"></i></span>
+                </div>
+                <div class="ui mini button bodyfont" id="proc-mode-kill">
+                    <span><i style="color: #008080; margin: 0px;" class="ban icon"></i></span>
+                </div>
+                <div class="ui mini button bodyfont" id="proc-mode-susp">
+                    <span><i style="color: #008080; margin: 0px;" class="pause icon"></i></span>
+                </div>
+                <div class="ui mini button bodyfont" id="proc-mode-resm">
+                    <span><i style="color: #008080; margin: 0px;" class="play icon"></i></span>
+                </div>
+                <div class="ui mini button bodyfont" onclick="$('#procinfo').modal('hide');">
+                    <span><i style="color: #008080; margin: 0px;" class="reply icon"></i></span>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
