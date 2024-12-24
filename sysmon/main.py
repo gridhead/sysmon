@@ -21,9 +21,12 @@ or replicated with the express permission of Red Hat, Inc.
 """
 
 
+from os import urandom
+
 from click import group, option, version_option
 
 from sysmon import __versdata__, conf
+from sysmon.dyno import work
 
 
 @group(
@@ -44,3 +47,43 @@ from sysmon import __versdata__, conf
 )
 def main(repair):
     conf.repair = repair
+    conf.secret = urandom(32).hex().upper()
+    if repair:
+        conf.logrconf["handlers"]["console"]["level"] = "DEBUG"
+        conf.logrconf["root"]["level"] = "DEBUG"
+
+
+@main.command(
+    name="remote",
+    help="Start the remote server",
+    context_settings={"show_default": True},
+)
+@option(
+    "-p",
+    "--port",
+    "port",
+    type=int,
+    default=conf.port,
+    help="Set the port value for the service frontend endpoints.",
+)
+@option(
+    "-u",
+    "--username",
+    "username",
+    type=str,
+    default=conf.username,
+    help="Set the username for service authentication.",
+)
+@option(
+    "-w",
+    "--password",
+    "password",
+    type=str,
+    default=conf.password,
+    help="Set the password for service authentication.",
+)
+def remote(port, username, password):
+    conf.port = port
+    conf.username = username
+    conf.password = password
+    work()

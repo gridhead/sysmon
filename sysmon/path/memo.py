@@ -21,44 +21,18 @@ or replicated with the express permission of Red Hat, Inc.
 """
 
 
-from logging import getLogger
-from logging.config import dictConfig
+from flask import Blueprint, Response, jsonify
 
-port = 8080
+from sysmon.base.memo import obtain_overflow_memory_data, obtain_physical_memory_data
 
-repair = False
+memo = Blueprint("memo", __name__, url_prefix="/memo")
 
-secret = "secret"
 
-username = "root"
+@memo.route("/physical", methods=["GET"])
+def endpoint_obtain_physical_memory_data() -> Response:
+    return jsonify(obtain_physical_memory_data()), 200
 
-password = "root"
 
-# Default configuration for service logging
-
-logrconf = {
-    "version": 1,
-    "disable_existing_loggers": False,
-    "formatters": {
-        "standard": {
-            "format": "%(asctime)s %(message)s",
-            "datefmt": "[%Y-%m-%d %H:%M:%S %z]",
-        },
-    },
-    "handlers": {
-        "console": {
-            "level": "INFO",
-            "formatter": "standard",
-            "class": "logging.StreamHandler",
-            "stream": "ext://sys.stdout",
-        },
-    },
-    "root": {
-        "level": "INFO",
-        "handlers": ["console"],
-    },
-}
-
-dictConfig(logrconf)
-
-logger = getLogger(__name__)
+@memo.route("/overflow", methods=["GET"])
+def endpoint_obtain_overflow_memory_data() -> Response:
+    return jsonify(obtain_overflow_memory_data()), 200
