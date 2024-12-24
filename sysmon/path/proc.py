@@ -21,44 +21,33 @@ or replicated with the express permission of Red Hat, Inc.
 """
 
 
-from logging import getLogger
-from logging.config import dictConfig
+from flask import Blueprint, Response, jsonify
 
-port = 8080
+from sysmon.base.proc import (
+    obtain_proc_info_full,
+    obtain_proc_info_unit,
+    obtain_proc_load,
+    obtain_proc_stat,
+)
 
-repair = False
+proc = Blueprint("proc", __name__, url_prefix="/proc")
 
-secret = "secret"
 
-username = "root"
+@proc.route("/load", methods=["GET"])
+def endpoint_obtain_proc_load() -> Response:
+    return jsonify(obtain_proc_load()), 200
 
-password = "root"
 
-# Default configuration for service logging
+@proc.route("/stat", methods=["GET"])
+def endpoint_obtain_proc_stat() -> Response:
+    return jsonify(obtain_proc_stat()), 200
 
-logrconf = {
-    "version": 1,
-    "disable_existing_loggers": False,
-    "formatters": {
-        "standard": {
-            "format": "%(asctime)s %(message)s",
-            "datefmt": "[%Y-%m-%d %H:%M:%S %z]",
-        },
-    },
-    "handlers": {
-        "console": {
-            "level": "INFO",
-            "formatter": "standard",
-            "class": "logging.StreamHandler",
-            "stream": "ext://sys.stdout",
-        },
-    },
-    "root": {
-        "level": "INFO",
-        "handlers": ["console"],
-    },
-}
 
-dictConfig(logrconf)
+@proc.route("/full", methods=["GET"])
+def endpoint_obtain_proc_info_full() -> Response:
+    return jsonify(obtain_proc_info_full()), 200
 
-logger = getLogger(__name__)
+
+@proc.route("/unit", methods=["GET"])
+def endpoint_obtain_proc_info_unit() -> Response:
+    return jsonify(obtain_proc_info_unit()), 200

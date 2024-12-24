@@ -21,44 +21,18 @@ or replicated with the express permission of Red Hat, Inc.
 """
 
 
-from logging import getLogger
-from logging.config import dictConfig
+from flask import Blueprint, Response, jsonify
 
-port = 8080
+from sysmon.base.disk import obtain_disk_counters, obtain_disk_partitions
 
-repair = False
+disk = Blueprint("disk", __name__, url_prefix="/disk")
 
-secret = "secret"
 
-username = "root"
+@disk.route("/part", methods=["GET"])
+def endpoint_obtain_disk_partitions() -> Response:
+    return jsonify(obtain_disk_partitions()), 200
 
-password = "root"
 
-# Default configuration for service logging
-
-logrconf = {
-    "version": 1,
-    "disable_existing_loggers": False,
-    "formatters": {
-        "standard": {
-            "format": "%(asctime)s %(message)s",
-            "datefmt": "[%Y-%m-%d %H:%M:%S %z]",
-        },
-    },
-    "handlers": {
-        "console": {
-            "level": "INFO",
-            "formatter": "standard",
-            "class": "logging.StreamHandler",
-            "stream": "ext://sys.stdout",
-        },
-    },
-    "root": {
-        "level": "INFO",
-        "handlers": ["console"],
-    },
-}
-
-dictConfig(logrconf)
-
-logger = getLogger(__name__)
+@disk.route("/numb", methods=["GET"])
+def endpoint_obtain_disk_counters() -> Response:
+    return jsonify(obtain_disk_counters()), 200

@@ -21,44 +21,24 @@ or replicated with the express permission of Red Hat, Inc.
 """
 
 
-from logging import getLogger
-from logging.config import dictConfig
+from functools import wraps
+from typing import Callable
 
-port = 8080
+from flask import abort, request, session
 
-repair = False
+from sysmon import conf
 
-secret = "secret"
 
-username = "root"
+def checkpoint(path: Callable) -> Callable:
+    """
+    Confirm if the session is valid before allowing the access to the endpoints
 
-password = "root"
-
-# Default configuration for service logging
-
-logrconf = {
-    "version": 1,
-    "disable_existing_loggers": False,
-    "formatters": {
-        "standard": {
-            "format": "%(asctime)s %(message)s",
-            "datefmt": "[%Y-%m-%d %H:%M:%S %z]",
-        },
-    },
-    "handlers": {
-        "console": {
-            "level": "INFO",
-            "formatter": "standard",
-            "class": "logging.StreamHandler",
-            "stream": "ext://sys.stdout",
-        },
-    },
-    "root": {
-        "level": "INFO",
-        "handlers": ["console"],
-    },
-}
-
-dictConfig(logrconf)
-
-logger = getLogger(__name__)
+    :return:
+    """
+    @wraps(path)
+    def authenticate(*args, **kwargs) -> Callable:
+        username, password = request.headers.get("username"), request.headers.get("password")
+        if ("username" in session and "password" in session) or (username == conf.username and password == conf.password):  # noqa: E501
+            return path(*args, **kwargs)
+        return abort(401, "Invalid credentials")
+    return authenticate
