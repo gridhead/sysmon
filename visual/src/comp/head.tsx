@@ -7,15 +7,15 @@ export default function ObtainHeader() {
     switch (location.pathname) {
       case "/":
         return "Resources";
-      case "/task":
+      case "/page_task":
         return "Activities";
-      case "/proc":
+      case "/page_proc":
         return "Processing";
-      case "/memo":
+      case "/page_memo":
         return "Performance";
-      case "/ntwk":
+      case "/page_ntwk":
         return "Connections";
-      case "/disk":
+      case "/page_disk":
         return "Partitions";
       default:
         return "Resources";

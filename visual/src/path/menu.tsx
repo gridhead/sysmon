@@ -25,14 +25,15 @@ import ListItemText from "@mui/material/ListItemText";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import * as React from "react";
+import { useSelector } from "react-redux";
 import { NavLink, Outlet } from "react-router";
 
-import BasicCard from "../comp/card.tsx";
 import ObtainHeader from "../comp/head.tsx";
 
 const drawerWidth = 240;
 
 export default function ResponsiveDrawer() {
+  const vibe = useSelector((area) => area.area.vibe);
   const [mobileOpen, setMobileOpen] = React.useState(false);
   const [isClosing, setIsClosing] = React.useState(false);
 
@@ -53,12 +54,12 @@ export default function ResponsiveDrawer() {
 
   const drawer = (
     <div>
-      <Toolbar variant="dense" sx={{ backgroundColor: "#008080" }}>
-        Observer
+      <Toolbar variant="dense" sx={{ color: vibe }}>
+        <Typography fontWeight="bold">Observer</Typography>
       </Toolbar>
       <Divider />
       <List>
-        <NavLink to="/">
+        <NavLink to="/" className="sidelink">
           <ListItem disablePadding>
             <ListItemButton>
               <ListItemIcon>
@@ -68,7 +69,7 @@ export default function ResponsiveDrawer() {
             </ListItemButton>
           </ListItem>
         </NavLink>
-        <NavLink to="/task">
+        <NavLink to="/page_task" className="sidelink">
           <ListItem disablePadding>
             <ListItemButton>
               <ListItemIcon>
@@ -78,7 +79,7 @@ export default function ResponsiveDrawer() {
             </ListItemButton>
           </ListItem>
         </NavLink>
-        <NavLink to="/proc">
+        <NavLink to="/page_proc" className="sidelink">
           <ListItem disablePadding>
             <ListItemButton>
               <ListItemIcon>
@@ -88,7 +89,7 @@ export default function ResponsiveDrawer() {
             </ListItemButton>
           </ListItem>
         </NavLink>
-        <NavLink to="/memo">
+        <NavLink to="/page_memo" className="sidelink">
           <ListItem disablePadding>
             <ListItemButton>
               <ListItemIcon>
@@ -98,7 +99,7 @@ export default function ResponsiveDrawer() {
             </ListItemButton>
           </ListItem>
         </NavLink>
-        <NavLink to="/ntwk">
+        <NavLink to="/page_ntwk" className="sidelink">
           <ListItem disablePadding>
             <ListItemButton>
               <ListItemIcon>
@@ -108,7 +109,7 @@ export default function ResponsiveDrawer() {
             </ListItemButton>
           </ListItem>
         </NavLink>
-        <NavLink to="/disk">
+        <NavLink to="/page_disk" className="sidelink">
           <ListItem disablePadding>
             <ListItemButton>
               <ListItemIcon>
@@ -165,8 +166,9 @@ export default function ResponsiveDrawer() {
         sx={{
           width: { sm: `calc(100% - ${drawerWidth}px)` },
           ml: { sm: `${drawerWidth}px` },
-          backgroundColor: "#008080",
+          color: { vibe },
         }}
+        color="default"
       >
         <Toolbar variant="dense">
           <IconButton
@@ -178,7 +180,9 @@ export default function ResponsiveDrawer() {
           >
             <MenuIcon />
           </IconButton>
-          <ObtainHeader />
+          <Typography className="headelem">
+            <ObtainHeader />
+          </Typography>
         </Toolbar>
       </AppBar>
       <Box component="nav" sx={{ width: { sm: drawerWidth }, flexShrink: { sm: 0 } }} aria-label="mailbox folders">
@@ -211,41 +215,17 @@ export default function ResponsiveDrawer() {
           {drawer}
         </Drawer>
       </Box>
-      <Box component="main" sx={{ flexGrow: 1, p: 3, width: { sm: `calc(100% - ${drawerWidth}px)` } }}>
+      <Box
+        component="main"
+        sx={{
+          flexGrow: 1,
+          p: 3,
+          width: { sm: `calc(100% - ${drawerWidth}px)` },
+          backgroundColor: "rgba(224, 224,  224, 0.5)",
+        }}
+      >
         <Toolbar variant="dense" />
         <Outlet />
-        <Typography sx={{ marginBottom: 2 }}>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore
-          magna aliqua. Rhoncus dolor purus non enim praesent elementum facilisis leo vel. Risus at ultrices mi tempus
-          imperdiet. Semper risus in hendrerit gravida rutrum quisque non tellus. Convallis convallis tellus id interdum
-          velit laoreet id donec ultrices. Odio morbi quis commodo odio aenean sed adipiscing. Amet nisl suscipit
-          adipiscing bibendum est ultricies integer quis. Cursus euismod quis viverra nibh cras. Metus vulputate eu
-          scelerisque felis imperdiet proin fermentum leo. Mauris commodo quis imperdiet massa tincidunt. Cras tincidunt
-          lobortis feugiat vivamus at augue. At augue eget arcu dictum varius duis at consectetur lorem. Velit sed
-          ullamcorper morbi tincidunt. Lorem donec massa sapien faucibus et molestie ac.
-        </Typography>
-        <Typography sx={{ marginBottom: 2 }}>
-          Consequat mauris nunc congue nisi vitae suscipit. Fringilla est ullamcorper eget nulla facilisi etiam
-          dignissim diam. Pulvinar elementum integer enim neque volutpat ac tincidunt. Ornare suspendisse sed nisi lacus
-          sed viverra tellus. Purus sit amet volutpat consequat mauris. Elementum eu facilisis sed odio morbi. Euismod
-          lacinia at quis risus sed vulputate odio. Morbi tincidunt ornare massa eget egestas purus viverra accumsan in.
-          In hendrerit gravida rutrum quisque non tellus orci ac. Pellentesque nec nam aliquam sem et tortor. Habitant
-          morbi tristique senectus et. Adipiscing elit duis tristique sollicitudin nibh sit. Ornare aenean euismod
-          elementum nisi quis eleifend. Commodo viverra maecenas accumsan lacus vel facilisis. Nulla posuere
-          sollicitudin aliquam ultrices sagittis orci a.
-        </Typography>
-        <div
-          style={{
-            display: "flex",
-            flexWrap: "wrap",
-            gap: "1rem",
-            justifyContent: "space-evenly",
-            alignItems: "center",
-          }}
-        >
-          <BasicCard />
-          <BasicCard />
-        </div>
       </Box>
     </Box>
   );

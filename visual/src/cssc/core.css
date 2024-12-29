@@ -1,0 +1,116 @@
+/*
+SysMon
+Copyright (C) 2024 Akashdeep Dhar
+
+This program is free software: you can redistribute it and/or modify it under
+the terms of the GNU Affero General Public License as published by the Free
+Software Foundation, either version 3 of the License, or (at your option) any
+later version.
+
+This program is distributed in the hope that it will be useful, but WITHOUT
+ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more
+details.
+
+You should have received a copy of the GNU Affero General Public License along
+with this program.  If not, see <https://www.gnu.org/licenses/>.
+
+Any Red Hat trademarks that are incorporated in the codebase or documentation
+are not subject to the GNU Affero General Public License and may only be used
+or replicated with the express permission of Red Hat, Inc.
+*/
+
+@font-face {
+  font-family: "Inter";
+  font-weight: 400;
+  font-style: normal;
+  src: url("../font/sans_rlar.ttf");
+}
+
+@font-face {
+  font-family: "Inter";
+  font-weight: 400;
+  font-style: italic;
+  src: url("../font/sans_rlit.ttf");
+}
+
+@font-face {
+  font-family: "Inter";
+  font-weight: 700;
+  font-style: normal;
+  src: url("../font/sans_bold.ttf");
+}
+
+@font-face {
+  font-family: "Inter";
+  font-weight: 700;
+  font-style: italic;
+  src: url("../font/sans_bdit.ttf");
+}
+
+@font-face {
+  font-family: "JetBrains Mono";
+  font-weight: 400;
+  font-style: normal;
+  src: url("../font/mono_rlar.ttf");
+}
+
+@font-face {
+  font-family: "JetBrains Mono";
+  font-weight: 400;
+  font-style: italic;
+  src: url("../font/mono_rlit.ttf");
+}
+
+@font-face {
+  font-family: "JetBrains Mono";
+  font-weight: 700;
+  font-style: normal;
+  src: url("../font/mono_bold.ttf");
+}
+
+@font-face {
+  font-family: "JetBrains Mono";
+  font-weight: 700;
+  font-style: italic;
+  src: url("../font/mono_bdit.ttf");
+}
+
+@font-face {
+  font-family: "DIN 1451 Std Engschrift";
+  font-weight: 700;
+  font-style: normal;
+  src: url("../font/dine_rlar.otf");
+}
+
+@font-face {
+  font-family: "DIN 1451 Std Mittelschrift";
+  font-weight: 700;
+  font-style: normal;
+  src: url("../font/dinm_rlar.otf");
+}
+
+.headelem {
+  font-family: "DIN 1451 Std Mittelschrift", sans-serif;
+}
+
+.dataelem {
+  font-family: "DIN 1451 Std Engschrift", sans-serif;
+}
+
+body {
+  font-family: "Inter", sans-serif !important;
+}
+
+.sidelink {
+  all: unset;
+}
+
+.sidelink.active {
+  display: block;
+  background-color: rgba(224, 224, 224, 0.5);
+}
+
+html {
+  background-color: rgba(224, 224,  224, 0.5);
+}
