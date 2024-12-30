@@ -11,6 +11,11 @@ export default defineConfig({
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/proc/, "/proc"),
       },
+      "/memo": {
+        target: "http://localhost:8080",
+        changeOrigin: true,
+        rewrite: (path) => path.replace("/^\/memo/", "/memo"),
+      },
     },
   },
 });
