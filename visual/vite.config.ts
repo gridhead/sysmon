@@ -14,7 +14,12 @@ export default defineConfig({
       "/memo": {
         target: "http://localhost:8080",
         changeOrigin: true,
-        rewrite: (path) => path.replace("/^\/memo/", "/memo"),
+        rewrite: (path) => path.replace(/^\/memo/, "/memo"),
+      },
+      "/disk": {
+        target: "http://localhost:8080",
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/disk/, "/disk"),
       },
     },
   },
